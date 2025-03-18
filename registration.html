@@ -28,11 +28,17 @@
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="Email" placeholder="example@RoseBrokers.com">
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="***********">
-                <!-- add a eye icon? when clicked the password should be unhidden-->
-                <label for="vpassword">Enter your password again:</label>
-                <input type="vpassword" id="vpassword" name="vpassword" placeholder="***********">
-                <!-- add a eye icon? when clicked the password should be unhidden-->
+    <div class="password-container">
+        <input type="password" id="password" name="password" placeholder="***********" required>
+        <span class="toggle-password" onclick="togglePassword('password')">👁️</span>
+    </div>
+
+    <label for="vpassword">Confirm Password:</label>
+    <div class="password-container">
+        <input type="password" id="vpassword" name="vpassword" placeholder="***********" required>
+        <span class="toggle-password" onclick="togglePassword('vpassword')">👁️</span>
+    </div>
+
                 <button type="submit">Register</button>
             </form>
         </div>
