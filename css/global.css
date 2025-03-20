@@ -1,0 +1,311 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white
+}
+
+.navbar {
+    background-color: #FF0000;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+}
+
+.navbar__title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar__buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn a {
+    text-decoration: none;
+}
+
+.btn1 {
+    background-color: black;
+    color: #FF0000;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.btn2 {
+    background-color: #FF0000;
+    color: black;
+    border: black;
+    border-style: double;
+    padding: 10px 30px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.intro-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 10%;
+    margin-top: 20px;
+    position: relative;
+}
+
+.intro-section__content {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 25px 40px;
+    max-width: 450px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-right: -50px;
+    z-index: 2;
+}
+
+.intro-section__title {
+    font-size: 28px;
+    color: #1d3557;
+    font-weight: bold;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+.intro-section__text {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.intro-section__image img {
+    width: 300px;
+    height: auto;
+    border-radius: 12px;
+    background-color: #FF0000;
+    padding: 25px;
+    display: block;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.divider {
+    border: 1px solid #ddd;
+    margin: 50px 10%;
+}
+
+.mortgage-options {
+    text-align: center;
+    padding: 20px 10%;
+}
+
+.mortgage-options__title {
+    color: #bd0f0f;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.mortgage-options__subtitle {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.options-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    width: 280px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card__title {
+    font-size: 18px;
+    color: #1d3557;
+    margin-bottom: 10px;
+}
+
+.card img {
+    width: 100px;
+    height: auto;
+    margin: 20px 0;
+}
+
+.card__description {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.card__link {
+    color: #FF0000;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.card__link:hover {
+    text-decoration: underline;
+}
+.container {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-section {
+    margin-right: 500px;
+}
+
+.login-section h2 {
+    font-size: 28px;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.login-section p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.login-form label {
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.btn {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+}
+
+
+.btn--login {
+    background-color: #FF0000;
+    color: black;
+    font-weight: bold;
+    border-color: black;
+    border-width: 3px;
+}
+
+.btn--register {
+    background-color: black;
+    color: #FF0000;
+    border: 1px solid #FF0000;
+}
+
+.or-text {
+    font-size: 14px;
+    color: #555;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.logo-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-section img {
+    width: 400px;
+    height: auto;
+}
+
+.footer {
+    background-color: #FF0000;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 40px;
+}
+
+.footer__text a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 14px;
+}
+
+.footer__text a:hover {
+    text-decoration: underline;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    /* Stack intro section vertically on small screens */
+    .intro-section {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .intro-section__content {
+        margin: 0 auto;
+        max-width: 90%;
+    }
+
+    .intro-section__image img {
+        margin-top: 20px;
+    }
+
+    /* Stack cards vertically on smaller screens */
+    .options-container {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .card {
+        width: 90%;
+    }
+
+    .welcome-box {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .login-form__input {
+        padding: 10px;
+    }
+
+    .btn {
+        padding: 10px;
+    }
+}
