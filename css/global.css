@@ -7,7 +7,7 @@ body {
 }
 
 .navbar {
-    background-color: #FF0000;
+    background-color: #01A7F0;
     color: black;
     display: flex;
     justify-content: space-between;
@@ -32,7 +32,7 @@ body {
 
 .btn1 {
     background-color: black;
-    color: #FF0000;
+    color: #01A7F0;
     border: none;
     padding: 10px 30px;
     border-radius: 7px;
@@ -40,7 +40,7 @@ body {
 }
 
 .btn2 {
-    background-color: #FF0000;
+    background-color: #01A7F0;
     color: black;
     border: black;
     border-style: double;
@@ -87,7 +87,7 @@ body {
     width: 300px;
     height: auto;
     border-radius: 12px;
-    background-color: #FF0000;
+    background-color: #0056c3;
     padding: 25px;
     display: block;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -104,7 +104,7 @@ body {
 }
 
 .mortgage-options__title {
-    color: #bd0f0f;
+    color: #0056c3;
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 5px;
@@ -156,7 +156,7 @@ body {
 }
 
 .card__link {
-    color: #FF0000;
+    color: #01A7F0;
     text-decoration: none;
     font-weight: bold;
 }
@@ -215,7 +215,7 @@ body {
 
 
 .btn--login {
-    background-color: #FF0000;
+    background-color: #0056c3;
     color: black;
     font-weight: bold;
     border-color: black;
@@ -224,8 +224,8 @@ body {
 
 .btn--register {
     background-color: black;
-    color: #FF0000;
-    border: 1px solid #FF0000;
+    color: #01A7F0;
+    border: 1px solid #01A7F0;
 }
 
 .or-text {
@@ -248,7 +248,7 @@ body {
 }
 
 .footer {
-    background-color: #FF0000;
+    background-color: #01A7F0;
     color: white;
     text-align: center;
     padding: 15px;
