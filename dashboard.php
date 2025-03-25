@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+?>
+
 <!--Add stuff here-->
 
 <!DOCTYPE html>
@@ -18,8 +26,7 @@
     <header class="navbar">
         <h1 class="navbar__title">ROSE BROKERS</h1>
         <div class="navbar__buttons">
-            <a href="register.html"><button class="btn btn--register">Register</button></a>
-            <a href="login.html"><button class="btn btn--login">Log In</button></a>
+            <a href="logout.php"><button class="btn btn--register">Logout</button></a>
         </div>
     </header>
 
@@ -28,6 +35,7 @@
 
     <section class="intro-section">
         <div class="intro-section__content">
+            <h1>Welcome, <?php echo $_SESSION['fullname']; ?>!</h1>
             <h2 class="intro-section__title">My profile</h2>
             <p class="intro-section__text">settings/defaults-</p>
         </div>
