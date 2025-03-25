@@ -5,18 +5,13 @@ include 'db.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
-
-    // Check if email exists in the database
     $stmt = $conn->prepare("SELECT * FROM Users WHERE Email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user && password_verify($password, $user['Password'])) {
-        // Store user details in session
         $_SESSION['user_id'] = $user['UserId'];
         $_SESSION['fullname'] = $user['FullName'];
-
-        // Redirect to a dashboard (or home page)
         header("Location: dashboard.php");
         exit();
     } else {

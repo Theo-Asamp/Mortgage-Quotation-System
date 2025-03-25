@@ -5,16 +5,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fullname = $_POST['FullName'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-
-    // Hash the password before storing it
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     try {
-        // Insert user into database
         $stmt = $conn->prepare("INSERT INTO Users (FullName, Email, Password) VALUES (?, ?, ?)");
         $stmt->execute([$fullname, $email, $hashed_password]);
-
-        // Redirect to login.php after successful registration
         header("Location: login.php");
         exit();
     } catch (PDOException $e) {
