@@ -25,6 +25,13 @@ body {
     display: flex;
     gap: 10px;
 }
+.navbar__menu {
+    list-style: none;
+    display: flex;
+    gap: 15px; /* Space between items */
+    padding: 0;
+    margin: 0;
+}
 
 .btn a {
     text-decoration: none;
