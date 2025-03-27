@@ -24,6 +24,9 @@ body {
 .navbar__buttons {
     display: flex;
     gap: 10px;
+    justify-content: flex-end; /* Moves buttons to the right */
+    align-items: center;
+    margin-left: auto; /* Pushes items to the right */
 }
 .navbar__menu {
     list-style: none;
