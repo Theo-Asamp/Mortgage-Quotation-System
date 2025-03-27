@@ -10,7 +10,6 @@
     <link rel="icon" href="/src/images/Favicon.jpg">
 </head>
 <body>
-
     <header class="navbar">
         <h1 class="navbar__title">ROSE BROKERS</h1>
         <div class="navbar__buttons">
@@ -22,6 +21,8 @@
 
     <section class="intro-section">
         <div class="intro-section__content">
+            <form method="POST">
+
             <h4 class="card__title"> How Much can I Borrow? </h4>
             <p>
                 Use our mortgage calculator to get a rough idea of what you could borrow - in 
@@ -39,35 +40,35 @@
 
             <p class="box-titles"> Your base income before tax and National insurance </p>
             <p class="description">Your yearly basic income before tax and National income deductions. </p>
-            <input type="text" class="input-field" placeholder="£">
+            <input type="text" id="income" name="income" class="input-field" placeholder="£">
 
             <p class="box-titles"> Your bonus </p>
             <p class="description"> A rough total of all the bonuses you were paid in the last year. </p>
-            <input type="text" class="input-field" placeholder="£">
+            <input type="text" id="bonus" name= "bonus" class="input-field" placeholder="£">
 
             <p class="box-titles"> Your overtime and commission </p>
             <p class="description"> A rough total of all overtime and commission you were paid in the last year </p>
-            <input type="text" class="input-field" placeholder="£">
+            <input type="text" id="overtime" name="overtime" class="input-field" placeholder="£">
 
             <p class="box-titles"> Your outgoings </p>
             <p class="description">Your yearly basic outgoings </p>
-            <input type="text" class="input-field" placeholder="£">
+            <input type="text" id="outcome" name="outcome" class="input-field" placeholder="£">
 
             <hr/>
 
             <p class="box-titles"> Estimated property value  </p>
             <p class="description">Value of the property</p>
-            <input type="text" class="input-field" placeholder="£">
+            <input type="text" id="property" name="property" class="input-field" placeholder="£">
 
             <p class="box-titles"> I want to borrow </p>
             <p class="description">Enter how much you would like to borrow</p>
-            <input type="text" class="input-field" placeholder="£">
+            <input type="text" id="borrow" name="borrow" class="input-field" placeholder="£">
 
             <br>
 
             <p class="box-titles"> Pay back mortgage over</p>
 
-            <select name="" id="">	<option value="">Years</option>
+            <select name="years" id="years">	<option value="">Years</option>
                 <option value="40 years">40 years</option>
                 <option value="39 years">39 years</option>
                 <option value="38 years">38 years</option>
@@ -111,7 +112,7 @@
                 <option value="0 years" selected="selected">0 years</option>
             </select>
 
-            <select name="" id="">	<option value="" disabled="disabled">Months</option>
+            <select name="months" id="months">	<option value="" disabled="disabled">Months</option>
                 <option value="0 months" selected="selected">0 months</option>
                 <option value="1 months">1 months</option>
                 <option value="2 months">2 months</option>
@@ -125,9 +126,11 @@
                 <option value="10 months">10 months</option>
                 <option value="11 months">11 months</option>
             </select>
-            <br>
-            <br>
-            <button> Submit </button>
+
+            <button type="submit" class="btn btn--login">Submit</button>
+
+            
+            </form>
 
         </div>
     </section>
