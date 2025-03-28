@@ -28,24 +28,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 
-   <header class="navbar">
-    <h1 class="navbar__title">ROSE BROKERS</h1>
+     <header class="navbar">
+        <h1 class="navbar__title">ROSE BROKERS</h1>
+        <div class="navbar__buttons">
+            <a href="register.html"><button class="btn btn--register">Register</button></a>
+            <a href="login.html"><button class="btn btn--login">Log In</button></a>
+        </div>
+    </header>
 
-    <ul class="navbar__menu">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="affordibility.html">Affordability</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="dashboard.php">Dashboard</a></li>
-        <li><a href="privacy.html">Privacy Policy</a></li>
-        <li><a href="terms.html">Terms & Conditions</a></li>
-    </ul>
-
-    <div class="navbar__buttons">
-        <a href="register.php"><button class="btn btn--register">Register</button></a>
-        <a href="login.php"><button class="btn btn--login">Log In</button></a>
-    </div>
-</header>
 
 
     <div class="container">
