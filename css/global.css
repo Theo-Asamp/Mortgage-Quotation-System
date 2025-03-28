@@ -21,19 +21,16 @@ body {
     font-weight: bold;
 }
 
+.navbar__title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
 .navbar__buttons {
     display: flex;
     gap: 10px;
-    justify-content: flex-end; /* Moves buttons to the right */
-    align-items: center;
-    margin-left: auto; /* Pushes items to the right */
-}
-.navbar__menu {
-    list-style: none;
-    display: flex;
-    gap: 15px; /* Space between items */
-    padding: 0;
-    margin: 0;
 }
 
 .btn a {
