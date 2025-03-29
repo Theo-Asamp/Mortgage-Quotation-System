@@ -31,8 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      <header class="navbar">
         <h1 class="navbar__title">ROSE BROKERS</h1>
         <div class="navbar__buttons">
-            <a href="register.html"><button class="btn btn--register">Register</button></a>
-            <a href="login.html"><button class="btn btn--login">Log In</button></a>
         </div>
     </header>
 
