@@ -2,13 +2,11 @@
 session_start();
 include 'db.php';
 
-// Redirect if not logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-// Fetch current user data
 $user_id = $_SESSION['user_id'];
 $stmt = $conn->prepare("SELECT FullName, Email FROM Users WHERE UserId = ?");
 $stmt->execute([$user_id]);
@@ -21,20 +19,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
 
-    // Check if the email or name is changed
     $update_query = "UPDATE Users SET FullName = ?, Email = ? WHERE UserId = ?";
     $update_params = [$fullname, $email, $user_id];
 
-    // Handle password change
     if (!empty($old_password) && !empty($new_password) && !empty($confirm_password)) {
-        // Fetch current password hash
         $stmt = $conn->prepare("SELECT Password FROM Users WHERE UserId = ?");
         $stmt->execute([$user_id]);
         $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (password_verify($old_password, $user_data['Password'])) {
             if ($new_password === $confirm_password) {
-                // Hash the new password
                 $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
                 $update_query = "UPDATE Users SET FullName = ?, Email = ?, Password = ? WHERE UserId = ?";
                 $update_params = [$fullname, $email, $hashed_password, $user_id];
@@ -51,7 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt = $conn->prepare($update_query);
             $stmt->execute($update_params);
 
-            // Update session data
             $_SESSION['fullname'] = $fullname;
 
             $success = "Profile updated successfully!";
@@ -92,10 +85,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php if (isset($success)) echo "<p style='color: green;'>$success</p>"; ?>
 
             <form class="login-form" method="POST">
-                <label for="FullName">Full Name<span style="color: red;">*</span></label>
+                <label for="FullName">Full Name</label>
                 <input type="text" id="FullName" name="FullName" value="<?php echo htmlspecialchars($user['FullName']); ?>" required>
 
-                <label for="email">Email<span style="color: red;">*</span></label>
+                <label for="email">Email</label>
                 <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['Email']); ?>" required>
 
                 <label for="old_password">Old Password</label>
