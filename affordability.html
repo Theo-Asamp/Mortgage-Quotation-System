@@ -19,7 +19,7 @@
     </header>
 
 
-
+<!--This all needs styling before we show the client, this is a rough draft of how it *should* be like based on mock plus-->
 
     <section class="intro-section">
         <div class="intro-section__content">
@@ -39,6 +39,9 @@
         
 
             <h4 class="card__title"> Your details </h4>
+
+            <p class="box-titles"> Your Age </p>
+            <input type="number" id="age" name="age" class="input-field" required>
 
             <p class="box-titles"> Your base income before tax and National insurance </p>
             <p class="description">Your yearly basic income before tax and National income deductions. </p>
@@ -70,6 +73,7 @@
 
             <p class="box-titles"> Pay back mortgage over</p>
 
+            <!--I think we could do a cool javascript function for this, at least after we finish so we can flex our js knowlege-->
             <select name="years" id="years">	<option value="">Years</option>
                 <option value="40 years">40 years</option>
                 <option value="39 years">39 years</option>
@@ -114,6 +118,7 @@
                 <option value="0 years" selected="selected">0 years</option>
             </select>
 
+            <!--what i said above-->
             <select name="months" id="months">	<option value="" disabled="disabled">Months</option>
                 <option value="0 months" selected="selected">0 months</option>
                 <option value="1 months">1 months</option>
@@ -130,7 +135,9 @@
                 <option value="12 months">12 months</option>
             </select>
 
-            <button type="button" class="btn btn--login">Submit</button>
+
+            <!--This should send off the form and "search the databse for eligible products, sends the user to the next page"-->
+            <button type="button" class="btn btn--login"> <a href="/productsUser.html">Submit</a></button>
 
             
             </form>
