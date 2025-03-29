@@ -23,13 +23,14 @@ if (!isset($_SESSION['user_id'])) {
 <body>
 
 
-    <header class="navbar">
+  <header class="navbar">
         <h1 class="navbar__title">ROSE BROKERS</h1>
         <div class="navbar__buttons">
             <a href="settings.php"><button class="btn btn--register">Account Settings</button></a>
             <a href="logout.php"><button class="btn btn--register">Logout</button></a>
         </div>
     </header>
+
 
 
 
