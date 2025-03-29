@@ -11,15 +11,15 @@
 </head>
 <body>
   <header class="navbar">
-        <h1 class="navbar__title">ROSE BROKERS</h1>
-        <div class="navbar__buttons">
-            <a href="register.php"><button class="btn btn--register">Register</button></a>
-            <a href="login.php"><button class="btn btn--login">Log In</button></a>
-        </div>
-    </header>
+    <a href="index.html"><h1 class="navbar__title">ROSE BROKERS</h1></a>
+    <div class="navbar__buttons">
+        <a href="register.php"><button class="btn btn--register">Register</button></a>
+        <a href="login.php"><button class="btn btn--login">Log In</button></a>
+    </div>
+</header>
 
 
-<!--This all needs styling before we show the client, this is a rough draft of how it *should* be like based on mock plus-->
+
 
     <section class="intro-section">
         <div class="intro-section__content">
@@ -38,106 +38,107 @@
             <hr/>
         
 
-            <h3 class="card__title"> Your details </h3>
+            <h4 class="card__title"> Your details </h4>
 
-            <h4 class="card__title"> Your age </h4>
-            <input type="number" id="age" name="age" class="input-field" required>
-
-            <h4 class="card__title"> Your base income before tax and National insurance </h4>
+            <p class="box-titles"> Your base income before tax and National insurance </p>
             <p class="description">Your yearly basic income before tax and National income deductions. </p>
-            <input type="number" id="income" name="income" class="input-field" placeholder="£" required>
+            <input type="text" id="income" name="income" class="input-field" placeholder="£">
 
-            <h4 class="card__title"> Your bonus </h4>
+            <p class="box-titles"> Your bonus </p>
             <p class="description"> A rough total of all the bonuses you were paid in the last year. </p>
-            <input type="number" id="bonus" name= "bonus" class="input-field" placeholder="£" required>
+            <input type="text" id="bonus" name= "bonus" class="input-field" placeholder="£">
 
-            <h4 class="card__title"> Your overtime and commission </h4>
+            <p class="box-titles"> Your overtime and commission </p>
             <p class="description"> A rough total of all overtime and commission you were paid in the last year </p>
-            <input type="number" id="overtime" name="overtime" class="input-field" placeholder="£" required>
+            <input type="text" id="overtime" name="overtime" class="input-field" placeholder="£">
 
-            <h4 class="card__title"> Your outgoings </h4>
+            <p class="box-titles"> Your outgoings </p>
             <p class="description">Your yearly basic outgoings </p>
-            <input type="number" id="outcome" name="outcome" class="input-field" placeholder="£" required>
+            <input type="text" id="outcome" name="outcome" class="input-field" placeholder="£">
 
             <hr/>
 
-            <h4 class="card__title"> Estimated property value  </h4>
+            <p class="box-titles"> Estimated property value  </p>
             <p class="description">Value of the property</p>
-            <input type="number" id="property" name="property" class="input-field" placeholder="£" required>
+            <input type="text" id="property" name="property" class="input-field" placeholder="£">
 
-            <h4 class="card__title"> I want to borrow </h4>
+            <p class="box-titles"> I want to borrow </p>
             <p class="description">Enter how much you would like to borrow</p>
-            <input type="number" id="borrow" name="borrow" class="input-field" placeholder="£" required>
+            <input type="text" id="borrow" name="borrow" class="input-field" placeholder="£">
 
             <br>
 
-            <h4 class="card__title"> Pay back mortgage over</h4>
+            <p class="box-titles"> Pay back mortgage over</p>
+            <div class="duration-container">
+                <div>
+                    <label for="years" class="duration-label">Years</label>
+                    <select name="years" id="years" class="duration-select">
+                        <option value="">Years</option>
+                        <option value="40 years">40 years</option>
+                        <option value="39 years">39 years</option>
+                        <option value="38 years">38 years</option>
+                        <option value="37 years">37 years</option>
+                        <option value="36 years">36 years</option>
+                        <option value="35 years">35 years</option>
+                        <option value="34 years">34 years</option>
+                        <option value="33 years">33 years</option>
+                        <option value="32 years">32 years</option>
+                        <option value="31 years">31 years</option>
+                        <option value="30 years">30 years</option>
+                        <option value="29 years">29 years</option>
+                        <option value="28 years">28 years</option>
+                        <option value="27 years">27 years</option>
+                        <option value="26 years">26 years</option>
+                        <option value="25 years">25 years</option>
+                        <option value="24 years">24 years</option>
+                        <option value="23 years">23 years</option>
+                        <option value="22 years">22 years</option>
+                        <option value="21 years">21 years</option>
+                        <option value="20 years">20 years</option>
+                        <option value="19 years">19 years</option>
+                        <option value="18 years">18 years</option>
+                        <option value="17 years">17 years</option>
+                        <option value="16 years">16 years</option>
+                        <option value="15 years">15 years</option>
+                        <option value="14 years">14 years</option>
+                        <option value="13 years">13 years</option>
+                        <option value="12 years">12 years</option>
+                        <option value="11 years">11 years</option>
+                        <option value="10 years">10 years</option>
+                        <option value="9 years">9 years</option>
+                        <option value="8 years">8 years</option>
+                        <option value="7 years">7 years</option>
+                        <option value="6 years">6 years</option>
+                        <option value="5 years">5 years</option>
+                        <option value="4 years">4 years</option>
+                        <option value="3 years">3 years</option>
+                        <option value="2 years">2 years</option>
+                        <option value="1 years">1 years</option>
+                        <option value="0 years" selected="selected">0 years</option>
+                    </select>
+                </div>
+            
+                <div>
+                    <label for="months" class="duration-label">Months</label>
+                    <select name="months" id="months" class="duration-select">
+                        <option value="" disabled="disabled">Months</option>
+                        <option value="0 months" selected="selected">0 months</option>
+                        <option value="1 months">1 months</option>
+                        <option value="2 months">2 months</option>
+                        <option value="3 months">3 months</option>
+                        <option value="4 months">4 months</option>
+                        <option value="5 months">5 months</option>
+                        <option value="6 months">6 months</option>
+                        <option value="7 months">7 months</option>
+                        <option value="8 months">8 months</option>
+                        <option value="9 months">9 months</option>
+                        <option value="10 months">10 months</option>
+                        <option value="11 months">11 months</option>
+                    </select>
+                </div>
+            </div>
 
-            <!--I think we could do a cool javascript function for this, at least after we finish so we can flex our js knowlege-->
-            <select name="years" id="years">	<option value="">Years</option>
-                <option value="40 years">40 years</option>
-                <option value="39 years">39 years</option>
-                <option value="38 years">38 years</option>
-                <option value="37 years">37 years</option>
-                <option value="36 years">36 years</option>
-                <option value="35 years">35 years</option>
-                <option value="34 years">34 years</option>
-                <option value="33 years">33 years</option>
-                <option value="32 years">32 years</option>
-                <option value="31 years">31 years</option>
-                <option value="30 years">30 years</option>
-                <option value="29 years">29 years</option>
-                <option value="28 years">28 years</option>
-                <option value="27 years">27 years</option>
-                <option value="26 years">26 years</option>
-                <option value="25 years">25 years</option>
-                <option value="24 years">24 years</option>
-                <option value="23 years">23 years</option>
-                <option value="22 years">22 years</option>
-                <option value="21 years">21 years</option>
-                <option value="20 years">20 years</option>
-                <option value="19 years">19 years</option>
-                <option value="18 years">18 years</option>
-                <option value="17 years">17 years</option>
-                <option value="16 years">16 years</option>
-                <option value="15 years">15 years</option>
-                <option value="14 years">14 years</option>
-                <option value="13 years">13 years</option>
-                <option value="12 years">12 years</option>
-                <option value="11 years">11 years</option>
-                <option value="10 years">10 years</option>
-                <option value="9 years">9 years</option>
-                <option value="8 years">8 years</option>
-                <option value="7 years">7 years</option>
-                <option value="6 years">6 years</option>
-                <option value="5 years">5 years</option>
-                <option value="4 years">4 years</option>
-                <option value="3 years">3 years</option>
-                <option value="2 years">2 years</option>
-                <option value="1 years">1 years</option>
-                <option value="0 years" selected="selected">0 years</option>
-            </select>
-
-            <!--what i said above-->
-            <select name="months" id="months">	<option value="" disabled="disabled">Months</option>
-                <option value="0 months" selected="selected">0 months</option>
-                <option value="1 months">1 months</option>
-                <option value="2 months">2 months</option>
-                <option value="3 months">3 months</option>
-                <option value="4 months">4 months</option>
-                <option value="5 months">5 months</option>
-                <option value="6 months">6 months</option>
-                <option value="7 months">7 months</option>
-                <option value="8 months">8 months</option>
-                <option value="9 months">9 months</option>
-                <option value="10 months">10 months</option>
-                <option value="11 months">11 months</option>
-                <option value="12 months">12 months</option>
-            </select>
-
-
-            <!--This should send off the form and "search the databse for eligible products, sends the user to the next page"-->
-            <button type="button" class="btn btn--login"> <a href="/productsUser.html">Submit</a></button>
+            <button type="submit" class="btn btn--login">Submit</button>
 
             
             </form>
