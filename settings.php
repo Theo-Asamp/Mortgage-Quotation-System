@@ -62,56 +62,80 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/global.css" />
-    <title>Rose Mortgages Profile</title>
+    <title>Rose Mortgages - Profile</title>
 </head>
 
 <body>
 
 <header class="navbar">
-    <h1 class="navbar__title">ROSE BROKERS</h1>
+    <a href="dashboard.php"><h1 class="navbar__title">ROSE BROKERS</h1></a>
     <div class="navbar__buttons">
         <a href="dashboard.php"><button class="btn btn--register">Dashboard</button></a>
-        <a href="logout.php"><button class="btn btn--register">Logout</button></a>
+        <a href="logout.php"><button class="btn btn--login">log out</button></a>
     </div>
 </header>
 
-<section class="intro-section">
-    <div class="intro-section__content">
-        <h1>Welcome, <?php echo htmlspecialchars($_SESSION['fullname']); ?>!</h1>
-        <div class="register-section">
-            <h2>Profile Settings</h2>
+<section class="profile-page__container">
+    <div class="profile-page__content">
 
-            <?php if (isset($error)) echo "<p style='color: red;'>$error</p>"; ?>
-            <?php if (isset($success)) echo "<p style='color: green;'>$success</p>"; ?>
+        <h2 class="profile-page__title">Welcome, <?php echo htmlspecialchars($_SESSION['fullname']); ?>!</h2>
 
-            <form class="login-form" method="POST">
-                <label for="FullName">Full Name</label>
-                <input type="text" id="FullName" name="FullName" value="<?php echo htmlspecialchars($user['FullName']); ?>" required>
+        <div class="profile-page__section">
+            <h3 class="profile-page__section-title">Profile Settings</h3>
 
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['Email']); ?>" required>
+            <?php if (isset($error)) echo "<p class='profile-page__msg profile-page__msg--error'>$error</p>"; ?>
+            <?php if (isset($success)) echo "<p class='profile-page__msg profile-page__msg--success'>$success</p>"; ?>
 
-                <label for="old_password">Old Password</label>
-                <input type="password" id="old_password" name="old_password">
+            <form class="profile-page__form" method="POST">
+                <label for="FullName" class="profile-page__label">Full Name</label>
+                <input type="text" id="FullName" name="FullName" class="profile-page__input" value="<?php echo htmlspecialchars($user['FullName']); ?>" required>
 
-                <label for="new_password">New Password</label>
-                <input type="password" id="new_password" name="new_password">
+                <label for="email" class="profile-page__label">Email</label>
+                <input type="email" id="email" name="email" class="profile-page__input" value="<?php echo htmlspecialchars($user['Email']); ?>" required>
 
-                <label for="confirm_password">Confirm Password</label>
-                <input type="password" id="confirm_password" name="confirm_password">
-
-                <button type="submit" class="btn btn--register">Save</button>
+                <button type="submit" class="profile-page__btn profile-page__btn--save">Save</button>
             </form>
+        </div>
+
+        <div class="profile-page__section">
+            <h3 class="profile-page__section-title">Password Settings</h3>
+            <form class="profile-page__form" method="POST">
+                <label for="old_password" class="profile-page__label">Old Password</label>
+                <input type="password" id="old_password" name="old_password" class="profile-page__input">
+
+                <label for="new_password" class="profile-page__label">New Password</label>
+                <input type="password" id="new_password" name="new_password" class="profile-page__input">
+
+                <label for="confirm_password" class="profile-page__label">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" class="profile-page__input">
+
+                <button type="submit" class="profile-page__btn profile-page__btn--save">Update Password</button>
+            </form>
+        </div>
+
+        <div class="profile-page__section">
+            <h3 class="profile-page__section-title">Saved Products</h3>
+            <div class="profile-page__product-list">
+                <div class="profile-page__product-item">
+                    <p><strong>Sample Product 1</strong></p>
+                    <p>Price: $100</p>
+                </div>
+                <div class="profile-page__product-item">
+                    <p><strong>Sample Product 2</strong></p>
+                    <p>Price: $150</p>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
 
-<footer class="footer">
-    <p class="footer__text">
-        <a href="/about.html">About</a> | <a href="/privacy.html">Privacy Policy</a> |
-        <a href="/terms.html">Terms of Use</a> | <a href="/contact.html">Contact Us</a>
-    </p>
-</footer>
+    <footer class="footer">
+        <p class="footer__text">
+            <a href="/about.html">About</a> | <a href="/privacy.html">Privacy Policy</a> |
+            <a href="/terms.html">Terms of Use</a> | <a href="/contact.html">Contact Us</a>
+        </p>
+    </footer>
 
 </body>
 </html>
