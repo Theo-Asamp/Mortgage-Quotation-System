@@ -1,9 +1,8 @@
-/* Global Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: white
+    background-color: white;
 }
 
 .navbar {
@@ -19,26 +18,19 @@ body {
     margin: 0;
     font-size: 24px;
     font-weight: bold;
+    text-decoration: none;
 }
-
-.navbar__title {
-    margin: 0;
-    font-size: 24px;
-    font-weight: bold;
-}
-
 
 .navbar__buttons {
     display: flex;
     gap: 10px;
 }
 
-.dropbox
-
 .btn a {
     text-decoration: none;
 }
 
+/* Button Styles */
 .btn1 {
     background-color: black;
     color: #01A7F0;
@@ -58,6 +50,7 @@ body {
     cursor: pointer;
 }
 
+/* Intro Section */
 .intro-section {
     display: flex;
     justify-content: center;
@@ -96,7 +89,7 @@ body {
     width: 300px;
     height: auto;
     border-radius: 12px;
-    background-color: #0056c3;
+    background-color: #01A7F0;
     padding: 25px;
     display: block;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -113,7 +106,7 @@ body {
 }
 
 .mortgage-options__title {
-    color: #0056c3;
+    color: #077aab;
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 5px;
@@ -173,6 +166,7 @@ body {
 .card__link:hover {
     text-decoration: underline;
 }
+
 .container {
     display: flex;
     height: 100vh;
@@ -222,9 +216,8 @@ body {
     width: 100%;
 }
 
-
 .btn--login {
-    background-color: #0056c3;
+    background-color: #01A7F0;
     color: black;
     font-weight: bold;
     border-color: black;
@@ -256,14 +249,165 @@ body {
     height: auto;
 }
 
+.contact-section {
+    background-color: #f9f9f9;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.contact-section__content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-section__title {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #3978e6;
+}
+
+.contact-section__text {
+    font-size: 1rem;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: left;
+}
+
+.profile-section {
+    background-color: #f9f9f9;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #e63946;
+}
+
+.profile-info {
+    text-align: left;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.profile-settings {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.profile-settings h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.profile-page__container {
+    max-width: 700px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-page__section {
+    margin-bottom: 40px;
+    text-align: left;
+}
+
+.profile-page__section-title {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.profile-page__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.profile-page__label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.profile-page__input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.profile-page__btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.profile-page__btn--save {
+    background-color: #01A7F0;
+    color: black;
+    font-weight: bold;
+}
+
+
+.profile-page__msg {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.profile-page__msg--error {
+    color: red;
+}
+
+.profile-page__msg--success {
+    color: green;
+}
+
+
+.profile-page__product-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.profile-page__product-item {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* Footer Styles */
 .footer {
-    position: fixed;
     background-color: #01A7F0;
     color: white;
     text-align: center;
     padding: 15px;
     margin-top: 40px;
-    width: 100%;
 }
 
 .footer__text a {
@@ -277,10 +421,39 @@ body {
     text-decoration: underline;
 }
 
+.duration-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
 
-/* Responsive Design */
+.duration-select {
+    width: 150px;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.duration-select:hover, .duration-select:focus {
+    border-color: #01A7F0;
+    box-shadow: 0 0 8px rgba(1, 167, 240, 0.3);
+    outline: none;
+}
+
+.duration-label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+
 @media (max-width: 768px) {
-    /* Stack intro section vertically on small screens */
     .intro-section {
         flex-direction: column;
         text-align: center;
@@ -296,7 +469,6 @@ body {
         margin-top: 20px;
     }
 
-    /* Stack cards vertically on smaller screens */
     .options-container {
         flex-direction: column;
         gap: 20px;
@@ -319,4 +491,26 @@ body {
     .btn {
         padding: 10px;
     }
+    .profile-page__container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .profile-page__product-list {
+        flex-direction: column;
+    }
+    .duration-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .duration-select {
+        width: 100%;
+    }
 }
+
+
+
+
+
+
