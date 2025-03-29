@@ -21,25 +21,52 @@ if (!isset($_SESSION['user_id'])) {
 
 
 <body>
-
-
-  <header class="navbar">
-        <h1 class="navbar__title">ROSE BROKERS</h1>
-        <div class="navbar__buttons">
-            <a href="settings.php"><button class="btn btn--register">Account Settings</button></a>
-            <a href="logout.php"><button class="btn btn--register">Logout</button></a>
-        </div>
-    </header>
-
-
-
-
+   <header class="navbar">
+    <h1 class="navbar__title">ROSE BROKERS</h1>
+    <div class="navbar__buttons">
+        <a href="settings.php"><button class="btn btn--register">Profile</button></a>
+        
+    </div>
+</header>
 
     <section class="intro-section">
         <div class="intro-section__content">
-            <h1>Welcome, <?php echo $_SESSION['fullname']; ?>!</h1>
-            <h2 class="intro-section__title">My profile</h2>
-            <p class="intro-section__text">settings/defaults-</p>
+        <h1>Welcome, <?php echo $_SESSION['fullname']; ?>!</h1>
+            <h2 class="intro-section__title">Mortgages from Rose Brokers</h2>
+            <p class="intro-section__text">Whether you're a first-time buyer or looking for a better deal, we can help you find a
+                mortgage that's right for you.</p>
+            <p class="intro-section__text">If you already have a mortgage with us, log in to your account, find out how to switch
+                deals or get help here.</p>
+        </div>
+        <div class="intro-section__image">
+            <img src="images/LogoPicBlue.png" alt="Rose Brokers Logo">
+        </div>
+    </section>
+
+    <hr class="divider">
+
+
+    <section class="mortgage-options">
+        <h2 class="mortgage-options__title">Find a mortgage that's right for you</h2>
+        <p class="mortgage-options__subtitle">Our range of mortgages covers different borrowing needs.</p>
+
+        <div class="options-container">
+
+            <div class="card card--mortgage">
+                <img src="images/Calculator.png" alt="Calculator Logo">
+                <h4 class="card__title">Mortgage Calculator</h4>
+                <p class="card__description">Find out how much we can lend you, compare our available deals, and see
+                    what your payments might be.</p>
+                <a class="card__link" href="affordability.html">Mortgage Calculator</a>
+            </div>
+
+            <div class="card card--repayments">
+                <img src="images/Home mortgage.png" alt="Calculator Logo">
+                <h4 class="card__title">Repayments Calculator</h4>
+                <p class="card__description">Find out how much we can lend you, compare our available deals, and see
+                    what your payments might be.</p>
+                <a class="card__link" href="/affordibility.html">Calculate your Repayment</a>
+            </div>
         </div>
     </section>
 
