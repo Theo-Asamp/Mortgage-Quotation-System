@@ -26,6 +26,8 @@ body {
     gap: 10px;
 }
 
+.dropbox
+
 .btn a {
     text-decoration: none;
 }
@@ -248,11 +250,13 @@ body {
 }
 
 .footer {
+    position: fixed;
     background-color: #01A7F0;
     color: white;
     text-align: center;
     padding: 15px;
     margin-top: 40px;
+    width: 100%;
 }
 
 .footer__text a {

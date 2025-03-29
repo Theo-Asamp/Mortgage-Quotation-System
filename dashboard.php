@@ -25,6 +25,9 @@ if (!isset($_SESSION['user_id'])) {
 
     <header class="navbar">
         <h1 class="navbar__title">ROSE BROKERS</h1>
+        <ul>
+            <li><class="dropbox">
+        </ul>
         <div class="navbar__buttons">
             <a href="logout.php"><button class="btn btn--register">Logout</button></a>
         </div>
