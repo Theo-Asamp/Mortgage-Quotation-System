@@ -42,29 +42,29 @@
 
             <p class="box-titles"> Your base income before tax and National insurance </p>
             <p class="description">Your yearly basic income before tax and National income deductions. </p>
-            <input type="text" id="income" name="income" class="input-field" placeholder="£">
+            <input type="number" id="income" name="income" class="input-field" placeholder="£" required>
 
             <p class="box-titles"> Your bonus </p>
             <p class="description"> A rough total of all the bonuses you were paid in the last year. </p>
-            <input type="text" id="bonus" name= "bonus" class="input-field" placeholder="£">
+            <input type="number" id="bonus" name= "bonus" class="input-field" placeholder="£" required>
 
             <p class="box-titles"> Your overtime and commission </p>
             <p class="description"> A rough total of all overtime and commission you were paid in the last year </p>
-            <input type="text" id="overtime" name="overtime" class="input-field" placeholder="£">
+            <input type="number" id="overtime" name="overtime" class="input-field" placeholder="£" required>
 
             <p class="box-titles"> Your outgoings </p>
             <p class="description">Your yearly basic outgoings </p>
-            <input type="text" id="outcome" name="outcome" class="input-field" placeholder="£">
+            <input type="number" id="outcome" name="outcome" class="input-field" placeholder="£" required>
 
             <hr/>
 
             <p class="box-titles"> Estimated property value  </p>
             <p class="description">Value of the property</p>
-            <input type="text" id="property" name="property" class="input-field" placeholder="£">
+            <input type="number" id="property" name="property" class="input-field" placeholder="£" required>
 
             <p class="box-titles"> I want to borrow </p>
             <p class="description">Enter how much you would like to borrow</p>
-            <input type="text" id="borrow" name="borrow" class="input-field" placeholder="£">
+            <input type="number" id="borrow" name="borrow" class="input-field" placeholder="£" required>
 
             <br>
 
@@ -127,9 +127,10 @@
                 <option value="9 months">9 months</option>
                 <option value="10 months">10 months</option>
                 <option value="11 months">11 months</option>
+                <option value="12 months">12 months</option>
             </select>
 
-            <button type="submit" class="btn btn--login">Submit</button>
+            <button type="button" class="btn btn--login">Submit</button>
 
             
             </form>
