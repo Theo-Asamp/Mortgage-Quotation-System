@@ -35,25 +35,6 @@ body {
     text-decoration: none;
 }
 
-/* Button Styles */
-.btn1 {
-    background-color: black;
-    color: #01A7F0;
-    border: none;
-    padding: 10px 30px;
-    border-radius: 7px;
-    cursor: pointer;
-}
-
-.btn2 {
-    background-color: #01A7F0;
-    color: black;
-    border: black;
-    border-style: double;
-    padding: 10px 30px;
-    border-radius: 7px;
-    cursor: pointer;
-}
 
 /* Intro Section */
 .intro-section {
@@ -226,13 +207,13 @@ body {
     color: black;
     font-weight: bold;
     border-color: black;
-    border-width: 3px;
+    border-width: 4px;
 }
 
 .btn--register {
     background-color: black;
     color: #01A7F0;
-    border: 1px solid #01A7F0;
+    border: 1px solid #000000;
 }
 
 .or-text {
