@@ -1,24 +1,41 @@
 <?php
-session_start();
 include 'db.php';
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
+
+    $stmt = $conn->prepare("SELECT * FROM Broker WHERE Email = ?");
+    $stmt->execute([$email]);
+    $broker = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($broker && password_verify($password, $broker['Password'])) {
+        $_SESSION['user_type'] = 'broker';
+        $_SESSION['user_id'] = $broker['BrokerId'];
+        $_SESSION['email'] = $broker['Email'];
+        $_SESSION['fullname'] = $broker['FullName'];
+        header("Location: broker-dashboard.php");
+        exit();
+    }
+
     $stmt = $conn->prepare("SELECT * FROM Users WHERE Email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user && password_verify($password, $user['Password'])) {
+        $_SESSION['user_type'] = 'user';
         $_SESSION['user_id'] = $user['UserId'];
+        $_SESSION['email'] = $user['Email'];
         $_SESSION['fullname'] = $user['FullName'];
         header("Location: dashboard.php");
         exit();
-    } else {
-        $error = "Invalid email or password.";
     }
+
+    $error = "Invalid email or password.";
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 
   <header class="navbar">
-        <h1 class="navbar__title">ROSE BROKERS</h1>
+  <a href="index.html" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
         <div class="navbar__buttons">
         </div>
     </header>

@@ -21,6 +21,11 @@ body {
     text-decoration: none;
 }
 
+.navbar__title-link {
+    text-decoration: none;
+    color: inherit;
+}
+
 .navbar__buttons {
     display: flex;
     gap: 10px;

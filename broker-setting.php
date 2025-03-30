@@ -1,16 +1,27 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_type']) || !in_array($_SESSION['user_type'], ['user', 'broker'])) {
+
+if (!isset($_SESSION['user_type'])) {
+    header("Location: login.php");
+    exit();
+}
+
+if ($_SESSION['user_type'] === 'user') {
+    header("Location: dashboard.php");
+    exit();
+}
+
+if ($_SESSION['user_type'] !== 'broker') {
     header("Location: login.php");
     exit();
 }
 
 include 'db.php';
 
-$user_id = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT FullName, Email FROM Users WHERE UserId = ?");
-$stmt->execute([$user_id]);
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
+$brokerId = $_SESSION['user_id'];
+$stmt = $conn->prepare("SELECT FullName, Email, CompanyName FROM Broker WHERE BrokerId = ?");
+$stmt->execute([$brokerId]);
+$broker = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $action = $_POST['action'] ?? '';
@@ -18,10 +29,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($action === 'update_profile') {
         $fullname = $_POST['FullName'];
         $email = $_POST['email'];
+        $company = $_POST['CompanyName'];
 
         try {
-            $stmt = $conn->prepare("UPDATE Users SET FullName = ?, Email = ? WHERE UserId = ?");
-            $stmt->execute([$fullname, $email, $user_id]);
+            $stmt = $conn->prepare("UPDATE Broker SET FullName = ?, Email = ?, CompanyName = ? WHERE BrokerId = ?");
+            $stmt->execute([$fullname, $email, $company, $brokerId]);
             $_SESSION['fullname'] = $fullname;
             $success = "Profile updated successfully!";
         } catch (PDOException $e) {
@@ -33,16 +45,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $new_password = $_POST['new_password'];
         $confirm_password = $_POST['confirm_password'];
 
-        $stmt = $conn->prepare("SELECT Password FROM Users WHERE UserId = ?");
-        $stmt->execute([$user_id]);
-        $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = $conn->prepare("SELECT Password FROM Broker WHERE BrokerId = ?");
+        $stmt->execute([$brokerId]);
+        $broker_data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (password_verify($old_password, $user_data['Password'])) {
+        if (password_verify($old_password, $broker_data['Password'])) {
             if ($new_password === $confirm_password) {
                 $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
                 try {
-                    $stmt = $conn->prepare("UPDATE Users SET Password = ? WHERE UserId = ?");
-                    $stmt->execute([$hashed_password, $user_id]);
+                    $stmt = $conn->prepare("UPDATE Broker SET Password = ? WHERE BrokerId = ?");
+                    $stmt->execute([$hashed_password, $brokerId]);
                     $success = "Password updated successfully!";
                 } catch (PDOException $e) {
                     $error = "Error updating password: " . $e->getMessage();
@@ -64,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/global.css" />
-    <title>Rose Mortgages - Profile</title>
+    <title>Rose Brokers - Broker Settings</title>
 </head>
 
 <body>
@@ -72,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <header class="navbar">
 <a href="index.html" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
     <div class="navbar__buttons">
-        <a href="dashboard.php"><button class="btn btn--register">Dashboard</button></a>
+        <a href="broker-dashboard.php"><button class="btn btn--register">Dashboard</button></a>
         <a href="logout.php"><button class="btn btn--login">Log Out</button></a>
     </div>
 </header>
@@ -92,10 +104,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <input type="hidden" name="action" value="update_profile">
 
                 <label for="FullName" class="profile-page__label">Full Name</label>
-                <input type="text" id="FullName" name="FullName" class="profile-page__input" value="<?php echo htmlspecialchars($user['FullName']); ?>" required>
+                <input type="text" id="FullName" name="FullName" class="profile-page__input" value="<?php echo htmlspecialchars($broker['FullName']); ?>" required>
 
                 <label for="email" class="profile-page__label">Email</label>
-                <input type="email" id="email" name="email" class="profile-page__input" value="<?php echo htmlspecialchars($user['Email']); ?>" required>
+                <input type="email" id="email" name="email" class="profile-page__input" value="<?php echo htmlspecialchars($broker['Email']); ?>" required>
+
+                <label for="CompanyName" class="profile-page__label">Company Name <span style="font-weight: normal; color: #888;">(optional)</span></label>
+                <input type="text" id="CompanyName" name="CompanyName" class="profile-page__input" value="<?php echo htmlspecialchars($broker['CompanyName']); ?>">
 
                 <button type="submit" class="profile-page__btn profile-page__btn--save">Save</button>
             </form>
@@ -118,20 +133,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 <button type="submit" class="profile-page__btn profile-page__btn--save">Update Password</button>
             </form>
-        </div>
-
-        <div class="profile-page__section">
-            <h3 class="profile-page__section-title">Saved Products</h3>
-            <div class="profile-page__product-list">
-                <div class="profile-page__product-item">
-                    <p><strong>Sample Product 1</strong></p>
-                    <p>Price: $100</p>
-                </div>
-                <div class="profile-page__product-item">
-                    <p><strong>Sample Product 2</strong></p>
-                    <p>Price: $150</p>
-                </div>
-            </div>
         </div>
 
     </div>

@@ -1,10 +1,11 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'user') {
     header("Location: login.php");
     exit();
 }
 ?>
+
 
 <!--Add stuff here-->
 
@@ -22,9 +23,10 @@ if (!isset($_SESSION['user_id'])) {
 
 <body>
    <header class="navbar">
-    <h1 class="navbar__title">ROSE BROKERS</h1>
+   <a href="index.html" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
     <div class="navbar__buttons">
         <a href="settings.php"><button class="btn btn--register">Profile</button></a>
+        <a href="logout.php"><button class="btn btn--login">Log Out</button></a>
         
     </div>
 </header>
