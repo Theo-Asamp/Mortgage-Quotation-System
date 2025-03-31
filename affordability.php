@@ -1,123 +1,96 @@
+
 <?php
 session_start();
-$isLoggedIn = isset($_SESSION['user_id']) && $_SESSION['user_type'] === 'user';
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'user') {
+    header("Location: login.php");
+    exit();
+}
+require 'db.php';
+
+$matches = [];
+$borrowing_capacity = null;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $income = floatval($_POST['income']);
+    $outgoings = floatval($_POST['outgoings']);
+    $employment = $_POST['employment_type'];
+    $credit_score = intval($_POST['credit_score']);
+    
+    // Convert annual income to estimated net monthly income (roughly 75%)
+    $monthly_net = ($income / 12) * 0.75;
+
+    // Apply affordability formula
+    $borrowing_capacity = ($monthly_net - $outgoings) * 4.5;
+
+    // Get matching products
+    $stmt = $conn->prepare("SELECT * FROM Product WHERE MinIncome <= ? AND MaxOutgoings >= ? AND MinCreditScore <= ? AND (EmploymentType = ? OR EmploymentType = 'any')");
+    $stmt->execute([$income, $outgoings, $credit_score, $employment]);
+    $matches = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rose Mortgage Calculator</title>
-    <link rel="stylesheet" href="/css/global.css" />
-    <link rel="icon" href="/src/images/Favicon.jpg">
-    <script src="/js/script.js"></script>
+    <title>Mortgage Affordability</title>
+    <script>
+        function limitSelection(checkbox) {
+            const selected = document.querySelectorAll('input[name="ids[]"]:checked');
+            if (selected.length > 3) {
+                alert("You can only compare up to 3 products.");
+                checkbox.checked = false;
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
-
 <body>
-    <header class="navbar">
-        <a href="index.html" class="navbar__title-link">
-            <h1 class="navbar__title">ROSE BROKERS</h1>
-        </a>
-        <div class="navbar__buttons">
-      <?php if (!$isLoggedIn): ?>
-        <a href="register.php"><button class="btn btn--register">Register</button></a>
-        <a href="login.php"><button class="btn btn--login">Log In</button></a>
-      <?php else: ?>
-        <a href="settings.php"><button class="btn btn--register">Profile</button></a>
-        <a href="logout.php"><button class="btn btn--login">Log Out</button></a>
-      <?php endif; ?>
-        </div>
-    </header>
+<h2>Mortgage Affordability Check</h2>
+<form method="post">
+    <label>Annual Income (£):</label><br>
+    <input type="number" name="income" required><br><br>
 
-    <section class="intro-section">
-        <div class="intro-section__content">
-            <form id="mortgageForm" method="POST">
-                <h4 class="card__title">How Much Can I Borrow?</h4>
-                <p>
-                    Use our mortgage calculator to get a rough idea of what you could borrow -
-                    in just minutes. To fill it in, you'll need to know:
-                </p>
+    <label>Monthly Outgoings (£):</label><br>
+    <input type="number" name="outgoings" required><br><br>
 
-                <p class="card__title">Your main income details</p>
-                <p class="bullet-point">A rough idea of the property value</p>
-                <p class="bullet-point">Your deposit or loan amount</p>
+    <label>Employment Type:</label><br>
+    <select name="employment_type" required>
+        <option value="full-time">Full-Time</option>
+        <option value="part-time">Part-Time</option>
+        <option value="self-employed">Self-Employed</option>
+        <option value="any">Other</option>
+    </select><br><br>
 
-                <hr />
+    <label>Credit Score:</label><br>
+    <input type="number" name="credit_score" min="0" max="999" required><br><br>
 
-                <h4 class="card__title">Your details</h4>
+    <input type="submit" value="Check Affordability">
+</form>
 
-                <h3 class="card__title">Your base income before tax</h3>
-                <input type="text" id="income" name="income" class="input-field" placeholder="£">
+<?php if ($borrowing_capacity !== null): ?>
+    <h3>Your Estimated Borrowing Capacity: £<?= number_format($borrowing_capacity, 2) ?></h3>
+<?php endif; ?>
 
-                <h3 class="card__title">Your bonus</h3>
-                <p class="description">A rough total of all the bonuses you were paid in the last year.</p>
-                <input type="text" id="bonus" name="bonus" class="input-field" placeholder="£">
+<?php if (!empty($matches)): ?>
+    <h3>Matching Mortgage Products</h3>
+    <form method="get" action="compare.php">
+        <?php foreach ($matches as $match): ?>
+            <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+                <input type="checkbox" name="ids[]" value="<?= $match['ProductId'] ?>" onclick="return limitSelection(this)">
+                <strong><?= htmlspecialchars($match['Lender']) ?></strong><br>
+                Rate: <?= $match['InterestRate'] ?>%<br>
+                Term: <?= $match['MortgageTerm'] ?> years<br>
+                Monthly: £<?= number_format($match['MonthlyRepayment'], 2) ?><br>
+                Total: £<?= number_format($match['AmountPaidBack'], 2) ?>
+            </div>
+        <?php endforeach; ?>
+        <button type="submit">Compare Selected</button>
+    </form>
+<?php elseif ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
+    <p>No matching mortgage products found based on your criteria.</p>
+<?php endif; ?>
 
-                <h3 class="card__title">Your overtime and commission</h3>
-                <p class="description">A rough total of all overtime and commission you were paid in the last year.</p>
-                <input type="text" id="overtime" name="overtime" class="input-field" placeholder="£">
-
-                <h3 class="card__title">Your outgoings</h3>
-                <p class="description">Your yearly basic outgoings</p>
-                <input type="text" id="outcome" name="outcome" class="input-field" placeholder="£">
-
-                <hr />
-
-                <h3 class="card__title">Estimated property value</h3>
-                <p class="description">Value of the property</p>
-                <input type="text" id="property" name="property" class="input-field" placeholder="£">
-
-                <h3 class="card__title">I want to borrow</h3>
-                <p class="description">Enter how much you would like to borrow</p>
-                <input type="text" id="borrow" name="borrow" class="input-field" placeholder="£">
-
-                <br>
-
-                <h3 class="card__title">Pay back mortgage over</h3>
-                <div class="duration-container">
-                    <div>
-                        <label for="years" class="duration-label">Years</label>
-                        <select name="years" id="years" class="duration-select">
-                            <option value="">Years</option>
-                            <option value="40">40 years</option>
-                            <option value="35">35 years</option>
-                            <option value="30">30 years</option>
-                            <option value="25">25 years</option>
-                            <option value="20">20 years</option>
-                            <option value="15">15 years</option>
-                            <option value="10">10 years</option>
-                            <option value="5">5 years</option>
-                            <option value="1">1 year</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="months" class="duration-label">Months</label>
-                        <select name="months" id="months" class="duration-select">
-                            <option value="0" selected="selected">0 months</option>
-                            <option value="6">6 months</option>
-                            <option value="12">12 months</option>
-                        </select>
-                    </div>
-                </div>
-
-                <button type="button" id="calculateBtn" class="btn btn--login">Submit</button>
-            </form>
-
-            <div id="results"></div>
-                <?php if ($isLoggedIn): ?>
-                    <button type="button" id="saveQuoteBtn" class="btn btn--register" style="display: none;">Save Quote</button>
-                <?php endif; ?>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <p class="footer__text">
-            <a href="/about.html">About</a> | <a href="/privacy.html">Privacy Policy</a> |
-            <a href="/terms.html">Terms of Use</a> | <a href="/contact.html">Contact Us</a>
-        </p>
-    </footer>
+<p><a href="dashboard.php">Back to Dashboard</a></p>
 </body>
-
 </html>

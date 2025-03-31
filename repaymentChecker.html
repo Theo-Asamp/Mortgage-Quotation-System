@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Repayment Calculator</title>
+    <link rel="stylesheet" href="/css/global.css" />
+    <link rel="icon" href="/src/images/Favicon.jpg" />
+    <script src="/js/script.js"></script>
+  </head>
+
+  <body>
+    <header class="navbar">
+      <a href="index.html" class="navbar__title-link">
+        <h1 class="navbar__title">ROSE BROKERS</h1>
+      </a>
+      <div class="navbar__buttons">
+        <a href="register.php"
+          ><button class="btn btn--register">Register</button></a
+        >
+        <a href="login.php"><button class="btn btn--login">Log In</button></a>
+      </div>
+    </header>
+
+    <section class="intro-section">
+      <div class="intro-section__content">
+        <form id="mortgageForm" method="POST">
+          <h4 class="card__title">How much will I repay?</h4>
+          <p>
+            Use our repayment calculator to get an idea of how much money you
+            will pay back based on the terms of your mortgage provider. To fill
+            in this form you will need to know:
+          </p>
+
+          <p class="bullet point">The amount of money you have borrowed.</p>
+          <p class="bullet-point">The mortage interest rate.</p>
+          <p class="bullet-point">The mortgage length.</p>
+          <p class="bullet-point">The mortgage deposite amount.</p>
+
+          <hr />
+
+          <h4 class="card__title">Your details</h4>
+
+          <h3 class="card__title">How much have you borrowed</h3>
+          <input
+            type="text"
+            id="loanAmount"
+            name="loanAmount"
+            class="input-field"
+            placeholder="£"
+          />
+
+          <h3 class="card__title">The interest rate.</h3>
+          <p class="description">
+            How much interest does the mortgage charge annually.
+          </p>
+          <input
+            type="text"
+            id="interestRate"
+            name="interestRate"
+            class="input-field"
+            placeholder="£"
+          />
+
+          <h3 class="card__title">The mortgage length</h3>
+          <p class="description">
+            How long is the mortgage (how long will you pay it back for).
+          </p>
+          <input
+            type="text"
+            id="mortgageTerm"
+            name="mortgageTerm"
+            class="input-field"
+            placeholder="£"
+          />
+
+          <h3 class="card__title">The deposit</h3>
+          <p class="description">How much was the initial deposit.</p>
+          <input
+            type="text"
+            id="depositAmount"
+            name="depositAmount"
+            class="input-field"
+            placeholder="£"
+          />
+
+          <br />
+
+          <button type="button" id="calculateBtn" class="btn btn--login">
+            Submit
+          </button>
+        </form>
+
+        <div id="results"></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p class="footer__text">
+        <a href="/about.html">About</a> |
+        <a href="/privacy.html">Privacy Policy</a> |
+        <a href="/terms.html">Terms of Use</a> |
+        <a href="/contact.html">Contact Us</a>
+      </p>
+    </footer>
+  </body>
+</html>
