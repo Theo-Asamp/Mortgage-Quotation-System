@@ -1,39 +1,23 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get POST values from form
-    $income = floatval($_POST['income']);
-    $bonus = floatval($_POST['bonus']);
-    $overtime = floatval($_POST['overtime']);
-    $outcome = floatval($_POST['outcome']);
-    $propertyValue = floatval($_POST['property']);
-    $borrowAmount = floatval($_POST['borrow']);
-    $years = intval($_POST['years']);
-    $months = intval($_POST['months']);
-
-    // Validate inputs
-    if ($income <= 0 || $borrowAmount <= 0 || $propertyValue <= 0 || ($years === 0 && $months === 0)) {
-        echo json_encode(['error' => 'Please fill out all required fields correctly.']);
-        exit;
-    }
-
-    // Total income calculation
-    $totalIncome = $income + $bonus + $overtime;
-
-    // Loan duration in months
-    $loanDuration = ($years * 12) + $months;
-
-    // Basic mortgage formula (3% fixed interest)
-    $interestRate = 0.03 / 12;
-    $monthlyPayment = ($borrowAmount * $interestRate) / (1 - pow(1 + $interestRate, -$loanDuration));
-
-    // Return result
-    $result = [
-        'total_income' => $totalIncome,
-        'loan_duration' => "{$years} years and {$months} months",
-        'monthly_payment' => number_format($monthlyPayment, 2),
-    ];
-
-    echo json_encode($result);
-    exit;
+require 'db.php';
+$income = $_POST['income'];
+$outgoings = $_POST['outgoings'];
+$creditScore = $_POST['credit_score'];
+$employment = $_POST['employment_type'];
+$sql = "SELECT * FROM Product WHERE 
+    MinIncome <= ? AND 
+    MaxOutgoings >= ? AND 
+    MinCreditScore <= ? AND 
+    (EmploymentType = ? OR EmploymentType = 'any')";
+$stmt = $conn->prepare($sql);
+$stmt->execute([$income, $outgoings, $creditScore, $employment]);
+$matches = $stmt->fetchAll(PDO::FETCH_ASSOC);
+foreach ($matches as $match) {
+    echo '<div>';
+    echo '<strong>Lender:</strong> ' . htmlspecialchars($match['Lender']) . '<br>';
+    echo '<strong>Rate:</strong> ' . $match['InterestRate'] . '%<br>';
+    echo '<strong>Term:</strong> ' . $match['MortgageTerm'] . ' years<br>';
+    echo '<strong>Repayment:</strong> £' . $match['MonthlyRepayment'];
+    echo '</div><hr>';
 }
 ?>
