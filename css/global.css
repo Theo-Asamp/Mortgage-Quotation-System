@@ -211,9 +211,9 @@ body {
 }
 
 .btn--register {
-    background-color: black;
+    background-color: #302c2c;
     color: #01A7F0;
-    border: 1px solid #000000;
+    border: 1px solid #302c2c;
 }
 
 .or-text {
