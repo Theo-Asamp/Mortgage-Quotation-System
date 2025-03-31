@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Kick out users who try to access this page
 if (!isset($_SESSION['user_type'])) {
     header("Location: login.php");
     exit();
