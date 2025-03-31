@@ -59,7 +59,7 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'user') {
                 <h4 class="card__title">Mortgage Calculator</h4>
                 <p class="card__description">Find out how much we can lend you, compare our available deals, and see
                     what your payments might be.</p>
-                <a class="card__link" href="affordability.html">Mortgage Calculator</a>
+                <a class="card__link" href="affordability.php">Mortgage Calculator</a>
             </div>
 
             <div class="card card--repayments">

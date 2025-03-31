@@ -1,40 +1,65 @@
 document.addEventListener('DOMContentLoaded', function () {
-    console.log("JavaScript loaded successfully! ✅");
+  const calculateBtn = document.getElementById('calculateBtn');
+  const saveBtn = document.getElementById('saveQuoteBtn');
+  const resultsDiv = document.getElementById('results');
 
-    const calculateBtn = document.getElementById('calculateBtn');
+  if (saveBtn) saveBtn.style.display = 'none';
 
-    if (calculateBtn) {
-        calculateBtn.addEventListener('click', function () {
-            const income = parseFloat(document.getElementById('income').value) || 0;
-            const bonus = parseFloat(document.getElementById('bonus').value) || 0;
-            const overtime = parseFloat(document.getElementById('overtime').value) || 0;
-            const outcome = parseFloat(document.getElementById('outcome').value) || 0;
-            const propertyValue = parseFloat(document.getElementById('property').value) || 0;
-            const borrowAmount = parseFloat(document.getElementById('borrow').value) || 0;
+  function getFormValues() {
+    return {
+      income: parseFloat(document.getElementById('income').value) || 0,
+      bonus: parseFloat(document.getElementById('bonus').value) || 0,
+      overtime: parseFloat(document.getElementById('overtime').value) || 0,
+      outcome: parseFloat(document.getElementById('outcome').value) || 0,
+      property: parseFloat(document.getElementById('property').value) || 0,
+      borrow: parseFloat(document.getElementById('borrow').value) || 0,
+      years: parseInt(document.getElementById('years').value) || 0,
+      months: parseInt(document.getElementById('months').value) || 0
+    };
+  }
 
-            const years = parseInt(document.getElementById('years').value) || 0;
-            const months = parseInt(document.getElementById('months').value) || 0;
+  function calculateAndDisplay() {
+    const v = getFormValues();
+    const totalIncome = v.income + v.bonus + v.overtime;
+    const maxBorrow = totalIncome * 4 - v.outcome;
+    const totalMonths = v.years * 12 + v.months;
+    const monthlyRepayment = totalMonths > 0 ? v.borrow / totalMonths : 0;
 
-            if (income === 0 || propertyValue === 0 || borrowAmount === 0) {
-                alert("Please fill out all required fields!");
-                return;
-            }
+    resultsDiv.innerHTML = `
+      <h3>Results:</h3>
+      <p><strong>Max Borrowing Capacity:</strong> £${maxBorrow.toFixed(2)}</p>
+      <p><strong>Monthly Repayment:</strong> £${monthlyRepayment.toFixed(2)}</p>
+      <p><strong>Repayment Period:</strong> ${v.years} years and ${v.months} months</p>
+    `;
 
-            const totalIncome = income + bonus + overtime;
-            const maxBorrow = totalIncome * 4 - outcome;
+    if (saveBtn) saveBtn.style.display = 'inline-block';
+  }
 
-            const totalMonths = years * 12 + months;
-            const monthlyRepayment = borrowAmount / totalMonths;
-
-            const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = `
-                <h3>Results:</h3>
-                <p><strong>Max Borrowing Capacity:</strong> £${maxBorrow.toFixed(2)}</p>
-                <p><strong>Monthly Repayment:</strong> £${monthlyRepayment.toFixed(2)}</p>
-                <p><strong>Repayment Period:</strong> ${years} years and ${months} months</p>
-            `;
-        });
-    } else {
-        console.error("Submit button not found! ❌");
+  function saveQuote() {
+    const v = getFormValues();
+    const formData = new FormData();
+    for (const key in v) {
+      formData.append(key, v[key]);
     }
+
+    fetch('save_user_quote.php', {
+      method: 'POST',
+      body: formData
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert(data.message);
+        } else {
+          alert(data.error || 'Save failed.');
+        }
+      })
+      .catch(error => {
+        console.error('Save Error:', error);
+        alert('An error occurred while saving.');
+      });
+  }
+
+  if (calculateBtn) calculateBtn.addEventListener('click', calculateAndDisplay);
+  if (saveBtn) saveBtn.addEventListener('click', saveQuote);
 });
