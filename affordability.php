@@ -12,14 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $monthly_net = ($income - $outgoings) ;
     $borrowing_capacity = ($monthly_net) * 4.5;
-
-
-
-
-    //
-    //$stmt = $conn->prepare("SELECT * FROM Product WHERE MinIncome <= ? AND MaxOutgoings >= ? AND MinCreditScore <= ? AND (EmploymentType = ? OR EmploymentType = 'any')");
-    //$stmt->execute([$income, $outgoings]);
-    //$matches = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>
 <!DOCTYPE html>
@@ -121,19 +113,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <a href="/contact.html">Contact Us</a>
       </p>
     </footer>
-
-    <script>
-      function limitSelection(checkbox) {
-        const selected = document.querySelectorAll('input[name="ids[]"]:checked');
-        if (selected.length > 3) {
-          alert("You can only compare up to 3 products.");
-          checkbox.checked = false;
-          return false;
-        }
-        return true;
-      }
-
-      income = gethtl
-    </script>
   </body>
 </html>
