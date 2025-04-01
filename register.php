@@ -60,9 +60,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <label for="EmploymentType">Type of employment<span style="color: red;">*</span></label>
                 <select type="EmploymentType" id="EmploymentType" name="EmploymentType" required>
-                    <option value="Self employed" selected="selected">Self employed</option>
-                    <option value="Part Time">Part time</option>
-                    <option value="Full Time">Full time</option>
+                    <option value="Self-Employed" selected="selected">Self-Employed</option>
+                    <option value="Part-Time Employed">Part-time Employed</option>
+                    <option value="Full-Time Employed">Full-time Employed</option>
                     <option value="Unemployed">Unemployed</option>
                 </select> 
 

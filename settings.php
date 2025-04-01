@@ -116,9 +116,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     Employment type: <?php echo htmlspecialchars($user['EmploymentType'] ?? '', ENT_QUOTES, 'UTF-8'); ?>
                 </label>
                 <select type="EmploymentType" id="EmploymentType" name="EmploymentType" >
-                    <option value="Self employed" selected="selected">Self employed</option>
-                    <option value="Part Time">Part time</option>
-                    <option value="Full time">Full time</option>
+                    <option value="Self-Employed" selected="selected">Self-Employed</option>
+                    <option value="Part-Time Employed">Part-time Employed</option>
+                    <option value="Full-Time Employed">Full-time Employed</option>
                     <option value="Unemployed">Unemployed</option>
                 </select> 
 
@@ -144,21 +144,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <button type="submit" class="profile-page__btn profile-page__btn--save">Update Password</button>
             </form>
         </div>
-
-        <div class="profile-page__section">
-            <h3 class="profile-page__section-title">Saved Products</h3>
-            <div class="profile-page__product-list">
-                <div class="profile-page__product-item">
-                    <p><strong>Sample Product 1</strong></p>
-                    <p>Price: $100</p>
-                </div>
-                <div class="profile-page__product-item">
-                    <p><strong>Sample Product 2</strong></p>
-                    <p>Price: $150</p>
-                </div>
-            </div>
-        </div>
-
     </div>
 </section>
 
