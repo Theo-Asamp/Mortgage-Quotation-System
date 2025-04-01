@@ -103,7 +103,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <input type="number" name="outgoings" required placeholder="£40,000"/><br /><br />
 
           <label class="card__title">Term of loan:</label><br />
-          <input type="number" name="outgoings" required placeholder="£40,000"/><br /><br />
+          <select type="Years" id="Years" name="Years" >
+                    <option value="1" selected="selected">1 Year</option>
+                    <option value="2">2 Years</option>
+                    <option value="3">3 Years</option>
+                    <option value="4">4 Years</option>
+                    <option value="5">5 Years</option>
+                    <option value="6">6 Years</option>
+                    <option value="7">7 Years</option>
+                    <option value="8">8 Years</option>
+                    <option value="9">9 Years</option>
+                    <option value="10">10 Years</option>
+                    <option value="11">11 Years</option>
+                    <option value="12">12 Years</option>
+                    <option value="13">13 Years</option>
+                    <option value="14">14 Years</option>
+                    <option value="15">15 Years</option>
+                    <option value="16">16 Years</option>
+                </select> 
 
           
 
