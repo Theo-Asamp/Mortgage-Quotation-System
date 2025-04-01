@@ -105,6 +105,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <label class="card__title">Term of loan:</label><br />
           <input type="number" name="outgoings" required placeholder="£40,000"/><br /><br />
 
+          
+
           <button type="submit" class="btn btn--login">Calculate</button>
 
           </div>

@@ -1,12 +1,7 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'user') {
-    header("Location: login.php");
-    exit();
-}
+
 require 'db.php';
 
-$matches = [];
 $borrowing_capacity = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -72,6 +67,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <section class="intro-section">
       <div class="intro-section__content">
         <h4 class="intro-section__title">Affordability Calculator</h4>
+
+
+        <h4 class="card__title">What am I eligible for?</h4>
+          <p>
+            Use our Affordability calculator to get a rough idea of your borrowing capacity in just seconds. To fill it in, you'll need to know:
+          </p>
         <form id="mortgageForm" method="POST">
           <div>
 

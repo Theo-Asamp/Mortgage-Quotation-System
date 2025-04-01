@@ -59,7 +59,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="DOB" id="DOB" name="DOB" required placeholder="1-1-1970">
 
                 <label for="EmploymentType">Type of employment<span style="color: red;">*</span></label>
-                <input type="EmploymentType" id="EmploymentType" name="EmploymentType" required>
+                <select type="EmploymentType" id="EmploymentType" name="EmploymentType" required>
+                    <option value="Self employed" selected="selected">Self employed</option>
+                    <option value="Part Time">Part time</option>
+                    <option value="Full Time">Full time</option>
+                    <option value="Unemployed">Unemployed</option>
+                </select> 
+
+
 
             
                 <label for="CreditScore">Credit Score<span style="color: red;">*</span></label>

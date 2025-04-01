@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_type']) || !in_array($_SESSION['user_type'], ['user',
 include 'db.php';
 
 $user_id = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT FullName, Email, CreditScore, AnnualIncome, AnnualOutcome FROM Users WHERE UserId = ?");
+$stmt = $conn->prepare("SELECT FullName, Email, CreditScore, AnnualIncome, AnnualOutcome, EmploymentType FROM Users WHERE UserId = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -21,11 +21,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $CreditScore = $_POST ['CreditScore'];
         $AnnualIncome = $_POST ['AnnualIncome'];
         $AnnualOutcome = $_POST ['AnnualOutcome'];
+        $EmploymentType = $_POST ['EmploymentType'];
 
 
         try {
-            $stmt = $conn->prepare("UPDATE Users SET FullName = ?, Email = ? , CreditScore = ? , AnnualIncome = ? , AnnualOutcome = ? WHERE UserId = ?");
-            $stmt->execute([$fullname, $email, $CreditScore, $AnnualIncome, $AnnualOutcome, $user_id]);
+            $stmt = $conn->prepare("UPDATE Users SET FullName = ?, Email = ? , CreditScore = ? , AnnualIncome = ? , AnnualOutcome = ? , EmploymentType = ? WHERE UserId = ?");
+            $stmt->execute([$fullname, $email, $CreditScore, $AnnualIncome, $AnnualOutcome, $EmploymentType, $user_id]);
             $_SESSION['fullname'] = $fullname;
             $success = "Profile updated successfully!";
             header("Location: Settings.php");
@@ -110,6 +111,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 <label for="AnnualOutcome" class="profile-page__label">Annual Outcome</label>
                 <input type="AnnualOutcome" id="AnnualOutcome" name="AnnualOutcome" class="profile-page__input" value="<?php echo htmlspecialchars($user['AnnualOutcome']); ?>">
+
+                <label for="EmploymentType" class="profile-page__label">Employment type: <?php echo htmlspecialchars($user['EmploymentType']); ?> </label>
+                <select type="EmploymentType" id="EmploymentType" name="EmploymentType" >
+                    <option value="Self employed" selected="selected">Self employed</option>
+                    <option value="Part Time">Part time</option>
+                    <option value="Full time">Full time</option>
+                    <option value="Unemployed">Unemployed</option>
+                </select> 
 
                 <button type="submit" class="profile-page__btn profile-page__btn--save">Save</button>
             </form>
