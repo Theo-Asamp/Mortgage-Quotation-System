@@ -42,11 +42,15 @@ if (!$product) die("Product not found.");
 ?>
 
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html>
+=======
+>>>>>>> 3f3ed77529acef46068826aeb1d93f83f5b84670
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/global.css" />
+<<<<<<< HEAD
     <title>Edit Mortgage Product</title></head>
 <body>
 <header class="navbar">
@@ -88,5 +92,42 @@ if (!$product) die("Product not found.");
     <input type="submit" value="Update Product">
 </form>
 <p><a href="product_list.php">⬅ Back to Product List</a></p>
+=======
+    <title>Add products</title>
+</head>
+<body>
+    <header class="navbar">
+    <a href="/broker-dashboard.php" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
+        <div class="navbar__buttons">
+            <a href="broker-setting.php"><button class="btn btn--register">Profile</button></a>
+            <a href="logout.php"><button class="btn btn--login">Log Out</button></a>
+        </div>
+    </header>
+    <div class="container">
+        <div class="add-section">
+            <h2>Edit Product #<?= $product['ProductId'] ?></h2>
+            <form method="POST" class="add-form">
+                <label>Lender:</label><input type="text" name="lender" value="<?= $product['Lender'] ?>" required><br><br>
+                <label>Interest Rate (%):</labe><input type="number" step="0.01" name="rate" value="<?= $product['InterestRate'] ?>" required><br><br>
+                <label>Mortgage Term (Years):</label><input type="number" name="term" value="<?= $product['MortgageTerm'] ?>" required><br><br>
+                <label>Min Income (£):</labe><input type="number" name="min_income" value="<?= $product['MinIncome'] ?>" required><br><br>
+                <label>Min Credit Score:</label><input type="number" name="credit_score" value="<?= $product['MinCreditScore'] ?>" required><br><br>
+                <label>Employment Type:</label>
+                <select name="employment_type" required>
+                    <option value="full-time" <?= $product['EmploymentType'] == 'full-time' ? 'selected' : '' ?>>Full-Time</option>
+                    <option value="part-time" <?= $product['EmploymentType'] == 'part-time' ? 'selected' : '' ?>>Part-Time</option>
+                    <option value="self-employed" <?= $product['EmploymentType'] == 'self-employed' ? 'selected' : '' ?>>Self-Employed</option>
+                    <option value="any" <?= $product['EmploymentType'] == 'any' ? 'selected' : '' ?>>Any</option>
+                </select><br><br>
+                <label>Monthly Repayment (£):</label><input type="number" step="0.01" name="repayment" value="<?= $product['MonthlyRepayment'] ?>" required><br><br>
+                <label>Total Paid Back (£):</label><input type="number" step="0.01" name="paidback" value="<?= $product['AmountPaidBack'] ?>" required><br><br>
+                <input type="submit" value="Update Product">
+            </form>
+            <div class="text-center mt-3">
+                <a href="broker-dashboard.php" class="btn btn-custom">🏠 Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+>>>>>>> 3f3ed77529acef46068826aeb1d93f83f5b84670
 </body>
 </html>
