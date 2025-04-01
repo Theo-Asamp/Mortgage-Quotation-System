@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute([$income, $outgoings, $credit_score, $employment]);
     $matches = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -40,8 +40,8 @@ if ($_SESSION['user_type'] !== 'broker') {
         <div class="intro-section__content">
             <h1>Welcome, <?php echo htmlspecialchars($_SESSION['fullname']); ?>!</h1>
             <h2 class="intro-section__title">Broker Portal – Rose Mortgages</h2>
-            <p><a href="add_product.php" style="font-size:16px; color:blue;">➕ Add New Mortgage Product</a></p>
-            <p><a href="product_list.php" style="font-size:16px; color:blue;">➕ Managing List of Product</a></p>
+            <p><a href="add_product.php" style="font-size:16px; color:blue;"> Add New Mortgage Product</a></p>
+            <p><a href="product_list.php" style="font-size:16px; color:blue;"> Managing List of Product</a></p>
         
             <h1>Welcome, <?php echo htmlspecialchars($_SESSION['fullname']); ?>!</h1>
             <h2 class="intro-section__title">Broker Portal – Rose Mortgages</h2>
