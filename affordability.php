@@ -38,6 +38,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         align-items: center;
         text-align: center;
       }
+      .intro-section__content input,
+      .intro-section__content select {
+        width: 300px;
+        margin-top: 5px;
+      }
+      #results {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
       #results .card--mortgage {
         margin: 10px;
       }
@@ -77,24 +88,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <button type="submit" class="btn btn--login">Compare</button>
         </form>
 
-        <div id="results">
+        <div id="results" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
         <?php if ($borrowing_capacity !== null): ?>
             <h3>Your Estimated Borrowing Capacity: £<?= number_format($borrowing_capacity, 2) ?></h3>
         <?php endif; ?>
 
         <?php if (!empty($matches)): ?>
             <form method="get" action="compare.php">
-                <?php foreach ($matches as $match): ?>
-                    <div class="card card--mortgage">
-                        <input type="checkbox" name="ids[]" value="<?= $match['ProductId'] ?>" onclick="return limitSelection(this)">
-                        <strong><?= htmlspecialchars($match['Lender']) ?></strong><br>
-                        Rate: <?= $match['InterestRate'] ?>%<br>
-                        Term: <?= $match['MortgageTerm'] ?> years<br>
-                        Monthly: £<?= number_format($match['MonthlyRepayment'], 2) ?><br>
-                        Total: £<?= number_format($match['AmountPaidBack'], 2) ?>
-                    </div>
-                <?php endforeach; ?>
-                <button type="submit" class="btn btn--login">Compare Selected</button>
+              <?php foreach ($matches as $match): ?>
+                <div class="card card--mortgage" style="display: flex; align-items: flex-start; gap: 10px;">
+                  <input type="checkbox" name="ids[]" value="<?= $match['ProductId'] ?>" onclick="return limitSelection(this)" style="width: 16px; height: 16px; margin-top: 4px;">
+                  <div>
+                    <strong><?= htmlspecialchars($match['Lender']) ?></strong><br>
+                    Rate: <?= $match['InterestRate'] ?>%<br>
+                    Term: <?= $match['MortgageTerm'] ?> years<br>
+                    Monthly: £<?= number_format($match['MonthlyRepayment'], 2) ?><br>
+                    Total: £<?= number_format($match['AmountPaidBack'], 2) ?>
+                  </div>
+                </div>
+              <?php endforeach; ?>
+              <button type="submit" class="btn btn--login" style="margin-top: 15px;">Compare Selected</button>
+            </form>
             </form>
         <?php elseif ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
             <p>No matching mortgage products found based on your criteria.</p>
