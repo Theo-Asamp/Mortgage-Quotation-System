@@ -10,9 +10,9 @@ $id = $_GET['id'] ?? null;
 if (!$id) die("No product ID.");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $stmt = $conn->prepare("UPDATE Product SET Lender=?, InterestRate=?, MortgageTerm=?, MinIncome=?, MaxOutgoings=?, MinCreditScore=?, EmploymentType=?, MonthlyRepayment=?, AmountPaidBack=? WHERE ProductId=?");
+    $stmt = $conn->prepare("UPDATE Product SET Lender=?, InterestRate=?, MortgageTerm=?, MinIncome=?, MinCreditScore=?, EmploymentType=?, MonthlyRepayment=?, AmountPaidBack=? WHERE ProductId=?");
     $stmt->execute([
-        $_POST['lender'], $_POST['rate'], $_POST['term'], $_POST['min_income'], $_POST['max_outgoings'], $_POST['credit_score'],
+        $_POST['lender'], $_POST['rate'], $_POST['term'], $_POST['min_income'], $_POST['credit_score'],
         $_POST['employment_type'], $_POST['repayment'], $_POST['paidback'], $id
     ]);
     header("Location: product_list.php");
@@ -34,7 +34,6 @@ if (!$product) die("Product not found.");
     <label>Interest Rate (%):</label><input type="number" step="0.01" name="rate" value="<?= $product['InterestRate'] ?>" required><br><br>
     <label>Mortgage Term (Years):</label><input type="number" name="term" value="<?= $product['MortgageTerm'] ?>" required><br><br>
     <label>Min Income (£):</label><input type="number" name="min_income" value="<?= $product['MinIncome'] ?>" required><br><br>
-    <label>Max Outgoings (£):</label><input type="number" name="max_outgoings" value="<?= $product['MaxOutgoings'] ?>" required><br><br>
     <label>Min Credit Score:</label><input type="number" name="credit_score" value="<?= $product['MinCreditScore'] ?>" required><br><br>
     <label>Employment Type:</label>
     <select name="employment_type" required>
