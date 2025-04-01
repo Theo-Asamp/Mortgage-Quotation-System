@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_ids'])) {
 
 
     <header class="navbar">
-        <a href="index.html" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
+        <a href="/dashboard.php" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
         <div class="navbar__buttons">
             <a href="register.php"><button class="btn btn--register">Register</button></a>
             <a href="login.php"><button class="btn btn--login">Log In</button></a>

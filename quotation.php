@@ -12,16 +12,12 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'user') {
 
 
 
-
-
-
-
 require 'db.php';
 
 
 
 $user_id = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT  AnnualIncome, AnnualOutcome FROM Users WHERE UserId = ?");
+$stmt = $conn->prepare("SELECT  AnnualIncome, AnnualOutcome, CreditScore, EmploymentType FROM Users WHERE UserId = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -29,21 +25,21 @@ $matches = [];
 $borrowing_capacity = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $income = floatval($_POST['income']);
-    $outgoings = floatval($_POST['outgoings']);
+    $Annualincome = floatval($_POST['AnnualIncome']);
+    $AnnualOutcome = floatval($_POST['AnnualOutcome']);
 
 
 
-    $monthly_net = ($income - $outgoings) ;
+    $monthly_net = ($Annualincome - $Annualincome) ;
     $borrowing_capacity = ($monthly_net) * 4.5;
 
 
 
 
-    //
-    //$stmt = $conn->prepare("SELECT * FROM Product WHERE MinIncome <= ? AND MaxOutgoings >= ? AND MinCreditScore <= ? AND (EmploymentType = ? OR EmploymentType = 'any')");
-    //$stmt->execute([$income, $outgoings]);
-    //$matches = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    $stmt = $conn->prepare("SELECT * FROM Product WHERE MinIncome <= ? AND MaxOutgoings >= ? AND MinCreditScore <= ? AND (EmploymentType = ? OR EmploymentType = 'any')");
+    $stmt->execute([$Annualincome, $Annualincome]);
+    $matches = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>
 <!DOCTYPE html>
@@ -79,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </head>
   <body>
     <header class="navbar">
-      <a href="index.html" class="navbar__title-link">
+      <a href="/dashboard.php" class="navbar__title-link">
         <h1 class="navbar__title">ROSE BROKERS</h1>
       </a>
       <div class="navbar__buttons">
@@ -126,10 +122,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         </div>
 
-        <div id="results" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-        <?php if ($borrowing_capacity !== null): ?>
-            <h3>Your Estimated Borrowing Capacity: £<?= number_format($borrowing_capacity, 2) ?></h3>
+        <?php if (!empty($matches)): ?>
+            <form method="get" action="compare.php">
+              <?php foreach ($matches as $match): ?>
+                <div class="card card--mortgage" style="display: flex; align-items: flex-start; gap: 10px;">
+                  <input type="checkbox" name="ids[]" value="<?= $match['ProductId'] ?>" onclick="return limitSelection(this)" style="width: 16px; height: 16px; margin-top: 4px;">
+                  <div>
+                    <strong><?= htmlspecialchars($match['Lender']) ?></strong><br>
+                    Rate: <?= $match['InterestRate'] ?>%<br>
+                    Term: <?= $match['MortgageTerm'] ?> years<br>
+                    Monthly: £<?= number_format($match['MonthlyRepayment'], 2) ?><br>
+                    Total: £<?= number_format($match['AmountPaidBack'], 2) ?>
+                  </div>
+                </div>
+              <?php endforeach; ?>
+              <button type="submit" class="btn btn--login" style="margin-top: 15px;">Compare Selected</button>
+            </form>
+            </form>
+        <?php elseif ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
+            <p>No matching mortgage products found based on your criteria.</p>
         <?php endif; ?>
+
 
 
 

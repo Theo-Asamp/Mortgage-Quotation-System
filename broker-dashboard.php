@@ -29,7 +29,7 @@ if ($_SESSION['user_type'] !== 'broker') {
 
 <body>
     <header class="navbar">
-    <a href="index.html" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
+    <a href="/broker-dashboard.php" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
         <div class="navbar__buttons">
             <a href="broker-setting.php"><button class="btn btn--register">Profile</button></a>
             <a href="logout.php"><button class="btn btn--login">Log Out</button></a>

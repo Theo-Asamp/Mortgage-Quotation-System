@@ -73,8 +73,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <button type="submit" class="btn btn--register">Register</button>
             </form>
+            <a href="/register-broker.php">Register as a broker</button></a>
 
-            <div class="or-text">Or</div>
+
             <a href="login.php"><button class="btn btn--login">Log In</button></a>
         </div>
     </div>
