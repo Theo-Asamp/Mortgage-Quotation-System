@@ -81,6 +81,24 @@ body {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+.saved-section{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 10%;
+}
+
+.saved-section__content{
+    background-color: #fff;
+    text-align: center;
+    border-radius: 12px;
+    padding: 25px 40px;
+    max-width: 450px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-right: -50px;
+    z-index: 2;
+}
+
 .divider {
     border: 1px solid #ddd;
     margin: 50px 10%;
@@ -149,9 +167,18 @@ body {
     font-weight: bold;
 }
 
+.broker_dashbutton{
+    background-color: black;
+    color: #01A7F0;
+    border-radius: 5px;
+    padding: 20px 10px;
+    display: grid;
+    margin-bottom: 10px;
+}
 .card__link:hover {
     text-decoration: underline;
 }
+
 
 .container {
     display: flex;
@@ -207,7 +234,7 @@ body {
     color: black;
     font-weight: bold;
     border-color: black;
-    border-width: 4px;
+    border-width: 5px;
 }
 
 .btn--register {
@@ -443,6 +470,91 @@ body {
     margin-top: 40px;
 
 }
+.add-section{
+    justify-content: center;
+    align-items: center;
+    padding: 50px 10%;
+    margin-top: 200px;
+    position: relative;
+}
+
+.add-section h2 {
+    font-size: 28px;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.add-section p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.add-form label {
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.add-form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.table-container {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table th {
+    background-color:#01A7F0;
+    color: white;
+    padding: 12px;
+    text-align: center;
+}
+
+.table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #d9ebff;
+}
+
+.btn-custom {
+    background-color: #008CFF;
+    color: white;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.btn-custom:hover {
+    background-color: #006FCC;
+    color: white;
+}
+
 
 
 @media (max-width: 768px) {

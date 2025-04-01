@@ -79,14 +79,12 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     <hr class="divider" />
 
-    <h2 class="intro-section__title">Your saved Quotations: </h2>
-
     <!-- needs properly styling -->
-
-    <section class="intro-section">
-      <div class="intro-section__content">
-        <p class="intro-section__text">
-
+    <section class="saved-section">
+    <h2 class="saved-option__title">Your saved Quotations: </h2>
+      <div class="saved-section__content">
+        <p class="saved-section__text">
+          saved content here
         <!--This holds the users saved quotes? -->
 
         </p>
@@ -99,9 +97,9 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
     <section class="mortgage-options">
-
-
-    <div class="card card--repayments">
+      <h2 class="mortgage-options_title">Mortgage options</h2>
+      <div class="options-container">
+        <div class="card card--mortgage">
           <img src="images/Home mortgage.png" alt="Calculator Logo" />
           <h4 class="card__title">Affordability</h4>
           <p class="card__description">
@@ -122,7 +120,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
             >Quotes</a
           >
         </div>
-      
+      </div>
   
   
   

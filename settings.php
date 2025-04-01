@@ -112,7 +112,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <label for="AnnualOutcome" class="profile-page__label">Annual Outcome</label>
                 <input type="AnnualOutcome" id="AnnualOutcome" name="AnnualOutcome" class="profile-page__input" value="<?php echo htmlspecialchars($user['AnnualOutcome']); ?>">
 
-                <label for="EmploymentType" class="profile-page__label">Employment type: <?php echo htmlspecialchars($user['EmploymentType']); ?> </label>
+                <label for="EmploymentType" class="profile-page__label">
+                    Employment type: <?php echo htmlspecialchars($user['EmploymentType'] ?? '', ENT_QUOTES, 'UTF-8'); ?>
+                </label>
                 <select type="EmploymentType" id="EmploymentType" name="EmploymentType" >
                     <option value="Self employed" selected="selected">Self employed</option>
                     <option value="Part Time">Part time</option>
