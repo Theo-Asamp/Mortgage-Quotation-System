@@ -16,13 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $employment = $_POST['employment_type'];
     $credit_score = intval($_POST['credit_score']);
     
-    // Convert annual income to estimated net monthly income (roughly 75%)
     $monthly_net = ($income / 12) * 0.75;
 
-    // Apply affordability formula
     $borrowing_capacity = ($monthly_net - $outgoings) * 4.5;
 
-    // Get matching products
     $stmt = $conn->prepare("SELECT * FROM Product WHERE MinIncome <= ? AND MaxOutgoings >= ? AND MinCreditScore <= ? AND (EmploymentType = ? OR EmploymentType = 'any')");
     $stmt->execute([$income, $outgoings, $credit_score, $employment]);
     $matches = $stmt->fetchAll(PDO::FETCH_ASSOC);
