@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_type']) || !in_array($_SESSION['user_type'], ['user',
 include 'db.php';
 
 $user_id = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT FullName, Email FROM Users WHERE UserId = ?");
+$stmt = $conn->prepare("SELECT FullName, Email, CreditScore, AnnualIncome, AnnualOutcome FROM Users WHERE UserId = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -18,12 +18,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($action === 'update_profile') {
         $fullname = $_POST['FullName'];
         $email = $_POST['email'];
+        $CreditScore = $_POST ['CreditScore'];
+        $AnnualIncome = $_POST ['AnnualIncome'];
+        $AnnualOutcome = $_POST ['AnnualOutcome'];
+
 
         try {
-            $stmt = $conn->prepare("UPDATE Users SET FullName = ?, Email = ? WHERE UserId = ?");
-            $stmt->execute([$fullname, $email, $user_id]);
+            $stmt = $conn->prepare("UPDATE Users SET FullName = ?, Email = ? , CreditScore = ? , AnnualIncome = ? , AnnualOutcome = ? WHERE UserId = ?");
+            $stmt->execute([$fullname, $email, $CreditScore, $AnnualIncome, $AnnualOutcome, $user_id]);
             $_SESSION['fullname'] = $fullname;
             $success = "Profile updated successfully!";
+            header("Location: Settings.php");
         } catch (PDOException $e) {
             $error = "Error updating profile: " . $e->getMessage();
         }
@@ -92,10 +97,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <input type="hidden" name="action" value="update_profile">
 
                 <label for="FullName" class="profile-page__label">Full Name</label>
-                <input type="text" id="FullName" name="FullName" class="profile-page__input" value="<?php echo htmlspecialchars($user['FullName']); ?>" required>
+                <input type="text" id="FullName" name="FullName" class="profile-page__input" value="<?php echo htmlspecialchars($user['FullName']); ?>">
 
                 <label for="email" class="profile-page__label">Email</label>
-                <input type="email" id="email" name="email" class="profile-page__input" value="<?php echo htmlspecialchars($user['Email']); ?>" required>
+                <input type="email" id="email" name="email" class="profile-page__input" value="<?php echo htmlspecialchars($user['Email']); ?>">
+
+                <label for="CreditScore" class="profile-page__label">Credit Score</label>
+                <input type="CreditScore" id="CreditScore" name="CreditScore" class="profile-page__input" value="<?php echo htmlspecialchars($user['CreditScore']); ?>">
+
+                <label for="AnnualIncome" class="profile-page__label">Annual Income</label>
+                <input type="AnnualIncome" id="AnnualIncome" name="AnnualIncome" class="profile-page__input" value="<?php echo htmlspecialchars($user['AnnualIncome']); ?>">
+
+                <label for="AnnualOutcome" class="profile-page__label">Annual Outcome</label>
+                <input type="AnnualOutcome" id="AnnualOutcome" name="AnnualOutcome" class="profile-page__input" value="<?php echo htmlspecialchars($user['AnnualOutcome']); ?>">
 
                 <button type="submit" class="profile-page__btn profile-page__btn--save">Save</button>
             </form>

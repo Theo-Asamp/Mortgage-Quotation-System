@@ -22,6 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_ids'])) {
     $message = "✅ Selected quotes have been saved.";
 }
 ?>
+
+
 <!DOCTYPE html>
 <html>
 <head>

@@ -1,10 +1,29 @@
 <?php
+
+
+
+
+
 session_start();
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'user') {
     header("Location: login.php");
     exit();
 }
+
+
+
+
+
+
+
 require 'db.php';
+
+
+
+$user_id = $_SESSION['user_id'];
+$stmt = $conn->prepare("SELECT  AnnualIncome, AnnualOutcome FROM Users WHERE UserId = ?");
+$stmt->execute([$user_id]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $matches = [];
 $borrowing_capacity = null;
@@ -71,14 +90,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <section class="intro-section">
       <div class="intro-section__content">
-        <h4 class="intro-section__title">Affordability Calculator</h4>
+        <h4 class="intro-section__title">Morgage Quotation</h4>
         <form id="mortgageForm" method="POST">
           <div>
 
           <label class="card__title">Annual Income (£):</label><br />
-          <input type="number" name="income" required placeholder="£100,000"/><br /><br />
+          <input type="AnnualIncome" id="AnnualIncome" name="AnnualIncome" class="profile-page__input" value="<?php echo htmlspecialchars($user['AnnualIncome']); ?>">
 
           <label class="card__title">Annual Outgoings (£):</label><br />
+          <input type="AnnualOutcome" id="AnnualOutcome" name="AnnualOutcome" class="profile-page__input" value="<?php echo htmlspecialchars($user['AnnualOutcome']); ?>">
+
+          <label class="card__title">Property value</label><br />
+          <input type="number" name="outgoings" required placeholder="£40,000"/><br /><br />
+
+          <label class="card__title">deposit:</label><br />
+          <input type="number" name="outgoings" required placeholder="£40,000"/><br /><br />
+
+          <label class="card__title">Term of loan:</label><br />
           <input type="number" name="outgoings" required placeholder="£40,000"/><br /><br />
 
           <button type="submit" class="btn btn--login">Calculate</button>

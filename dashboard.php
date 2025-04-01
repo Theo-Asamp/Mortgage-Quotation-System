@@ -61,10 +61,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1 class="navbar__title">ROSE BROKERS</h1>
       </a>
       <div class="navbar__buttons">
+        <a href="settings.php"><button class="btn btn--register">Settings</button></a>
         <a href="dashboard.php"><button class="btn btn--register">Dashboard</button></a>
         <a href="logout.php"><button class="btn btn--login">Log Out</button></a>
       </div>
     </header>
+
+
+
+
+
+
+    <div class="card card--repayments">
+          <img src="images/Home mortgage.png" alt="Calculator Logo" />
+          <h4 class="card__title">Repayments Calculator</h4>
+          <p class="card__description">
+            Find out how much money you'll pay back based on the terms set by
+            your lender.
+          </p>
+          <a class="card__link" href="/quotation.php"
+            >Calculate your Repayment</a
+          >
+        </div>
 
     <section class="intro-section">
       <div class="intro-section__content">

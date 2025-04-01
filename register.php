@@ -5,11 +5,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fullname = $_POST['FullName'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $DOB= $_POST['DOB'];
+    $CreditScore = $_POST['CreditScore'];
+    $Employmenttype = $_POST['EmploymentType'];
+    $AnnualIncome = $_POST['AnnualIncome'];
+    $AnnualOutcome = $_POST['AnnualOutcome'];
+
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     try {
-        $stmt = $conn->prepare("INSERT INTO Users (FullName, Email, Password) VALUES (?, ?, ?)");
-        $stmt->execute([$fullname, $email, $hashed_password]);
+        $stmt = $conn->prepare("INSERT INTO Users (FullName, Email, Password, DOB, EmploymentType, AnnualIncome, AnnualOutcome, CreditScore) VALUES (?, ?, ?,?,?,?,?,?)");
+        $stmt->execute([$fullname, $email, $hashed_password, $DOB, $Employmenttype, $AnnualIncome, $AnnualOutcome , $CreditScore]);
         header("Location: login.php");
         exit();
     } catch (PDOException $e) {
@@ -39,14 +45,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h2>Register</h2>
 
             <form class="login-form" method="POST">
-                <label for="FullName">Full Name<span style="color: red;">*</span></label>
-                <input type="text" id="FullName" name="FullName" required>
+                <label for="FullName" >Full Name<span style="color: red;">*</span></label>
+                <input type="text" id="FullName" name="FullName" required placeholder="John Doe">
 
-                <label for="email">Email<span style="color: red;">*</span></label>
-                <input type="email" id="email" name="email" required>
+                <label for="email" >Email<span style="color: red;">*</span></label>
+                <input type="email" id="email" name="email" required placeholder="Test@test.com">
 
-                <label for="password">Password<span style="color: red;">*</span></label>
-                <input type="password" id="password" name="password" required>
+                <label for="password" >Password<span style="color: red;">*</span></label>
+                <input type="password" id="password" name="password" required placeholder="*******">
+
+
+                <label for="DOB">Date of birth <span style="color: red;">*</span></label>
+                <input type="DOB" id="DOB" name="DOB" required placeholder="1-1-1970">
+
+                <label for="EmploymentType">Type of employment<span style="color: red;">*</span></label>
+                <input type="EmploymentType" id="EmploymentType" name="EmploymentType" required>
+
+            
+                <label for="CreditScore">Credit Score<span style="color: red;">*</span></label>
+                <input type="CreditScore" id="CreditScore" name="CreditScore" required>
+
+                <label for="AnnualIncome">Annual income<span style="color: red;">*</span></label>
+                <input type="AnnualIncome" id="AnnualIncome" name="AnnualIncome" required>
+
+                <label for="AnnualOutcome">Annual outgoings<span style="color: red;">*</span></label>
+                <input type="AnnualOutcome" id="AnnualOutcome" name="AnnualOutcome" required>
 
                 <button type="submit" class="btn btn--register">Register</button>
             </form>
