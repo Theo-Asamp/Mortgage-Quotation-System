@@ -71,7 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
         <div class="text-center mt-3">
             <a href="broker-dashboard.php" class="btn btn-custom">🏠 Back to Dashboard</a>
-        </div>    </div>
+        </div>    
+    </div>
     </div>
 </body>
 </html>
