@@ -34,23 +34,22 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th><th>Lender</th><th>Rate</th><th>Term</th>
-                        <th>Income</th><th>Outgoings</th><th>Score</th><th>Type</th>
+                        <th>Income</th><th>Score</th><th>Type</th>
                         <th>Monthly</th><th>Total</th><th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($products as $p): ?>
                     <tr>
-                        <td><?= $p['ProductId'] ?></td>
-                        <td><?= htmlspecialchars($p['Lender']) ?></td>
-                        <td><?= $p['InterestRate'] ?>%</td>
-                        <td><?= $p['MortgageTerm'] ?>y</td>
-                        <td>£<?= number_format($p['MinIncome'], 2) ?></td>
-                        <td>£<?= number_format($p['MaxOutgoings'], 2) ?></td>
-                        <td><?= $p['MinCreditScore'] ?></td>
-                        <td><?= $p['EmploymentType'] ?></td>
-                        <td>£<?= number_format($p['MonthlyRepayment'], 2) ?></td>
-                        <td>£<?= number_format($p['AmountPaidBack'], 2) ?></td>
+                    <td><?= $p['ProductId'] ?></td>
+                    <td><?= htmlspecialchars($p['Lender']) ?></td>
+                    <td><?= $p['InterestRate'] ?>%</td>
+                    <td><?= $p['MortgageTerm'] ?>y</td>
+                    <td>£<?= $p['MinIncome'] ?></td>
+                    <td><?= $p['MinCreditScore'] ?></td>
+                    <td><?= $p['EmploymentType'] ?></td>
+                    <td>£<?= $p['MonthlyRepayment'] ?></td>
+                    <td>£<?= $p['AmountPaidBack'] ?></td>
                         <td>
                             <a href="edit_product.php?id=<?= $p['ProductId'] ?>" class="btn btn-warning btn-sm">Edit</a>
                             <a href="delete_product.php?id=<?= $p['ProductId'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Delete this product?')">Delete</a>
