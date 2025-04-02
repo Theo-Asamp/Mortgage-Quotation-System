@@ -1,5 +1,5 @@
 <?php
-session_start(); // Required for session-based login
+session_start();
 
 $borrowing_capacity = null;
 
@@ -42,18 +42,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
-  <!-- Dynamic Navbar -->
+
   <header class="navbar">
     <a href="/index.php" class="navbar__title-link">
       <h1 class="navbar__title">ROSE BROKERS</h1>
     </a>
     <div class="navbar__buttons">
       <?php if (isset($_SESSION['user_id'])): ?>
-        <!-- Logged-in user view -->
+
         <a href="/dashboard.php"><button class="btn btn--register">Dashboard</button></a>
         <a href="/logout.php"><button class="btn btn--login">Log Out</button></a>
       <?php else: ?>
-        <!-- Guest view -->
+
         <a href="/login.php"><button class="btn btn--register">Sign In</button></a>
         <a href="/register.php"><button class="btn btn--login">Register</button></a>
       <?php endif; ?>
