@@ -37,18 +37,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
 
-<<<<<<< HEAD
     
 <?php render_navbar() ?>
-=======
-    <header class="navbar" id="navbar-register">
-        <a href="index.php" class="navbar__title-link">
-            <h1 class="navbar__title">ROSE BROKERS</h1>
-        </a>
-        <div class="navbar__buttons">
-        </div>
-    </header>
->>>>>>> 6125f49859fce1d21059e123f3c383aa0b1866ca
+
 
     <div class="container">
         <div id="register-input-div">
