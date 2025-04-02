@@ -1,30 +1,8 @@
 <?php
 session_start();
 
-function render_navbar() {
-  $navbar = '<header class="navbar">
-      <a href="index.php" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
-      <div class="navbar__buttons">';
+include 'headerFooter.php';
 
-  if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'user') {
-    $navbar .= '
-        <a href="dashboard.php"><button class="btn btn--register">Dashboard</button></a>
-        <a href="settings.php"><button class="btn btn--register">Profile Settings</button></a>
-        <a href="logout.php"><button class="btn btn--login">Log Out</button></a>';
-  } elseif (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'broker') {
-    $navbar .= '
-        <a href="broker-dashboard.php"><button class="btn btn--register">Dashboard</button></a>
-        <a href="broker-setting.php"><button class="btn btn--register">Profile Settings</button></a>
-        <a href="logout.php"><button class="btn btn--login">Log Out</button></a>';
-  } else {
-    $navbar .= '
-        <a href="register.php"><button class="btn btn--register">Register</button></a>
-        <a href="login.php"><button class="btn btn--login">Log In</button></a>';
-  }
-
-  $navbar .= '</div></header>';
-  echo $navbar;
-}
 ?>
 
 <!DOCTYPE html>
@@ -37,17 +15,16 @@ function render_navbar() {
   </head>
 
   <body>
-  <?php render_navbar(); ?>
+  <?php render_navbar() ?>
     <section class="intro-section">
       <div class="intro-section__content">
-        <h2 class="intro-section__title">Mortgages from Rose Brokers</h2>
+        <h2 class="intro-section__title">Affordability Calculator from Rose Brokers</h2>
         <p class="intro-section__text">
           Whether you're a first-time buyer or looking for a better deal, we can
-          help you find a mortgage that's right for you.
+          help you find a mortgage quote that's right for you.
         </p>
         <p class="intro-section__text">
-          If you already have a mortgage with us, log in to your account, find
-          out how to switch deals or get help here.
+          If you already have a mortgage quote with us, log in to your account. If you want to discover how much you may be elegible to borrow, please use our affordability calculator below.
         </p>
       </div>
       <div class="intro-section__image">
@@ -59,10 +36,10 @@ function render_navbar() {
 
     <section class="mortgage-options">
       <h2 class="mortgage-options__title">
-        Find a mortgage that's right for you
+        Find a mortgage quote that's right for you
       </h2>
       <p class="mortgage-options__subtitle">
-        Our range of mortgages covers different borrowing needs.
+        Our range of mortgage quotes covers different demographics, use our affordabiility calculator to find how much you may be elegible to borrow.
       </p>
 
       <div class="options-container">
@@ -80,13 +57,6 @@ function render_navbar() {
       </div>
     </section>
 
-    <footer class="footer">
-      <p class="footer__text">© Rose Brokers 2025</p>
-        <a href="/about.php">About</a> |
-        <a href="/privacy.php">Privacy Policy</a> |
-        <a href="/terms.php">Terms of Use</a> |
-        <a href="/contact.php">Contact Us</a>
-      </p>
-    </footer>
+    <?php render_Footer() ?>
   </body>
 </html>

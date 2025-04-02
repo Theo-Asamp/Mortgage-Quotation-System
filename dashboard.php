@@ -6,6 +6,7 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'user') {
 }
 
 require 'db.php';
+require 'headerFooter.php';
 
 $user_id = $_SESSION['user_id'];
 $stmt = $conn->prepare("SELECT FullName FROM Users WHERE UserId = ?");
@@ -16,6 +17,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_quote_id'])) {
     $deleteStmt = $conn->prepare("DELETE FROM SavedQuotes WHERE QuoteId = ? AND UserId = ?");
     $deleteStmt->execute([$_POST['delete_quote_id'], $user_id]);
 }
+
+$savedStmt = $conn->prepare("
+  SELECT 
+    SQ.QuoteId,
+    P.Lender, 
+    SQ.InterestAnnually,
+    SQ.MortgageLength,
+    SQ.MonthlyRepayment,
+    SQ.AmountPaidBack
+  FROM SavedQuotes SQ
+  JOIN Product P ON SQ.ProductId = P.ProductId
+  WHERE SQ.UserId = ?
+");
+
+$savedStmt->execute([$user_id]);
+$savedQuotes = $savedStmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+
+
+
+
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,22 +77,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_quote_id'])) {
   </style>
 </head>
 <body>
-  <header class="navbar">
-      <a href="index.php" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
-      <div class="navbar__buttons">
-      <a href="dashboard.php"><button class="btn btn--register">Dashboard</button></a>
-        <a href="settings.php"><button class="btn btn--register">Profile Settings</button></a>
-        <a href="logout.php"><button class="btn btn--login">Log Out</button></a>
-      </div>
-  </header>
+  <?php render_navbar() ?>
 
   <section class="intro-section">
     <div class="intro-section__content">
-      <h2 class="intro-section__title">Welcome back, <?= htmlspecialchars($user['FullName']) ?></h2>
+      <h2 class="intro-section__title">Dashboard for <?= htmlspecialchars($user['FullName']) ?></h2>
       <p class="intro-section__text">
-        Whether you're a first-time buyer or looking for a better deal, we can
-        help you find a mortgage that's right for you.
+Welcome back <?= htmlspecialchars($user['FullName']) ?>, are you ready to explore and find a quote thats right for you? looking to view your saved quotes? you're at the right place.
       </p>
+      <p>Scroll down to explore your dashboard </p>
     </div>
     <div class="intro-section__image">
       <img src="images/LogoPicBlue.png" alt="Rose Brokers Logo" />
@@ -76,23 +97,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_quote_id'])) {
   <section class="saved-section">
     <h2 class="saved-option__title">Your Saved Quotations:</h2>
     <div class="saved-section__content">
-      <?php
-      $savedStmt = $conn->prepare("
-        SELECT 
-          SQ.QuoteId,
-          P.Lender, 
-          SQ.InterestAnnually,
-          SQ.MortgageLength,
-          SQ.MonthlyRepayment,
-          SQ.AmountPaidBack
-        FROM SavedQuotes SQ
-        JOIN Product P ON SQ.ProductId = P.ProductId
-        WHERE SQ.UserId = ?
-      ");
-      $savedStmt->execute([$user_id]);
-      $savedQuotes = $savedStmt->fetchAll(PDO::FETCH_ASSOC);
-      ?>
-
       <?php if (count($savedQuotes) > 0): ?>
         <?php foreach ($savedQuotes as $quote): ?>
           <div class="card card--mortgage">
@@ -110,37 +114,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_quote_id'])) {
           </div>
         <?php endforeach; ?>
       <?php else: ?>
-        <p class="saved-section__text">You haven’t saved any quotes yet.</p>
+        <p class="saved-section__text">You haven't saved any quotes yet.</p>
       <?php endif; ?>
     </div>
   </section>
 
   <hr class="divider" />
 
-  <section class="mortgage-options">
-    <h2 class="mortgage-options_title">Mortgage options</h2>
-    <div class="options-container">
-      <div class="card card--mortgage">
-        <img src="images/Home mortgage.png" alt="Calculator Logo" />
-        <h4 class="card__title">Affordability Calculator</h4>
-        <a class="card__link" href="/affordability.php">Calculate how much you can borrow</a>
-      </div>
 
+  
+
+  <section class="mortgage-options">
+      <h2 class="mortgage-options__title">
+        Find a mortgage quote that's right for you
+      </h2>
+      <p class="mortgage-options__subtitle">
+        Our range of mortgage quotes covers different demographics, use our affordabiility calculator to find how much you may be elegible to borrow.
+      </p>
+
+      <div class="options-container">
+        <div class="card card--mortgage">
+          <img src="images/Calculator.png" alt="Calculator Logo" />
+          <h4 class="card__title">Affordability Calculator</h4>
+          <p class="card__description">
+            Input some personal details and see what lenders you might be
+            eligible for.
+          </p>
+          <a class="card__link" href="/affordability.php"
+            >Affordability Calculator</a
+          >
+        </div>
+
+        
       <div class="card card--repayments">
         <img src="images/Home mortgage.png" alt="Calculator Logo" />
         <h4 class="card__title">Mortgage Quotation</h4>
+        <p class="card__description">
+          Search and recieve a quote based on your personal details.
+          </p>
         <a class="card__link" href="/quotation.php">Check available products</a>
       </div>
+
+
+
+
+
+      </div>
+
     </div>
   </section>
 
-  <footer class="footer">
-      <p class="footer__text">© Rose Brokers 2025</p>
-        <a href="/about.php">About</a> |
-        <a href="/privacy.php">Privacy Policy</a> |
-        <a href="/terms.php">Terms of Use</a> |
-        <a href="/contact.php">Contact Us</a>
-      </p>
-    </footer>
+  <?php render_footer() ?>
+  
 </body>
 </html>
+

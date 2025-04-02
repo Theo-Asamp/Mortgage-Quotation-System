@@ -17,6 +17,7 @@ if ($_SESSION['user_type'] !== 'broker') {
 }
 
 include 'db.php';
+require 'headerFooter.php';
 
 $brokerId = $_SESSION['user_id'];
 $stmt = $conn->prepare("SELECT FullName, Email, CompanyName FROM Broker WHERE BrokerId = ?");
@@ -81,14 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <body>
 
-        <header class="navbar">
-                <a href="index.php" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
-                    <div class="navbar__buttons">
-                        <a href="broker-dashboard.php"><button class="btn btn--register">Dashboard</button></a>
-                        <a href="broker-setting.php"><button class="btn btn--register">Profile Settings</button></a>
-                        <a href="logout.php"><button class="btn btn--login">Log Out</button></a>
-                    </div>
-        </header>
+    <?php render_navbar() ?>
 
         <section class="profile-page__container">
             <div class="profile-page__content">
@@ -139,13 +133,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
         </section>
 
-        <footer class="footer">
-      <p class="footer__text">© Rose Brokers 2025</p>
-        <a href="/about.php">About</a> |
-        <a href="/privacy.php">Privacy Policy</a> |
-        <a href="/terms.php">Terms of Use</a> |
-        <a href="/contact.php">Contact Us</a>
-      </p>
-    </footer>
+        <?php render_footer() ?>
     </body>
 </html>

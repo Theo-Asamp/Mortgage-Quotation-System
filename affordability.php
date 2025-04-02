@@ -9,6 +9,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $monthly_net = $income - $outgoings;
     $borrowing_capacity = $monthly_net * 4.5;
 }
+
+
+require 'headerFooter.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,47 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <title>Rose Mortgage Calculator</title>
   <link rel="stylesheet" href="/css/global.css" />
   <link rel="icon" href="/src/images/Favicon.jpg" />
-  <style>
-    .intro-section__content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-    .intro-section__content input {
-      width: 300px;
-      margin-top: 5px;
-    }
-    #results {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    #results .card--mortgage {
-      margin: 10px;
-    }
-  </style>
 </head>
 <body>
-
-
-  <header class="navbar">
-    <a href="index.php" class="navbar__title-link">
-      <h1 class="navbar__title">ROSE BROKERS</h1>
-    </a>
-    <div class="navbar__buttons">
-      <?php if (isset($_SESSION['user_id'])): ?>
-
-        <a href="/dashboard.php"><button class="btn btn--register">Dashboard</button></a>
-        <a href="/logout.php"><button class="btn btn--login">Log Out</button></a>
-      <?php else: ?>
-
-        <a href="/login.php"><button class="btn btn--register">Sign In</button></a>
-        <a href="/register.php"><button class="btn btn--login">Register</button></a>
-      <?php endif; ?>
-    </div>
-  </header>
+  <?php render_navbar() ?>
 
   <section class="intro-section">
     <div class="intro-section__content">
@@ -70,30 +36,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       <form id="mortgageForm" method="POST">
         <label class="card__title">Annual Income (£):</label><br />
+        <p>This is how much you earn yearly in pounds and pence.</p>
         <input type="number" name="income" required placeholder="£100,000"/><br /><br />
 
         <label class="card__title">Annual Outgoings (£):</label><br />
+        <p>This is, on average, how much you spend yearly in pounds and pence.
+        </p>
         <input type="number" name="outgoings" required placeholder="£40,000"/><br /><br />
 
-        <button type="submit" class="btn btn--login">Calculate</button>
+        <button type="submit" class="btn btn--login">Calculate my borrowing capacity</button>
       </form>
 
       <div id="results">
         <?php if ($borrowing_capacity !== null): ?>
           <h3>Your Estimated Borrowing Capacity: £<?= number_format($borrowing_capacity, 2) ?></h3>
-        <?php endif; ?>
+          <?php endif?>
       </div>
     </div>
   </section>
 
-  <footer class="footer">
-      <p class="footer__text">© Rose Brokers 2025</p>
-        <a href="/about.php">About</a> |
-        <a href="/privacy.php">Privacy Policy</a> |
-        <a href="/terms.php">Terms of Use</a> |
-        <a href="/contact.php">Contact Us</a>
-      </p>
-    </footer>
+  <?php render_footer() ?>
 
 </body>
 </html>

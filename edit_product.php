@@ -4,7 +4,9 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'broker') {
     header("Location: login.php");
     exit();
 }
+
 require 'db.php';
+require 'headerFooter.php';
 
 $id = $_GET['id'] ?? null;
 if (!$id) die("No product ID.");
@@ -50,14 +52,7 @@ if (!$product) die("Product not found.");
         <title>Edit Mortgage Product</title>
     </head>
     <body>
-    <header class="navbar">
-        <a href="index.php" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
-            <div class="navbar__buttons">
-                <a href="broker-dashboard.php"><button class="btn btn--register">Dashboard</button></a>
-                <a href="broker-setting.php"><button class="btn btn--register">Profile Settings</button></a>
-                <a href="logout.php"><button class="btn btn--login">Log Out</button></a>
-            </div>
-    </header>
+    <?php render_navbar() ?>
     <div class="container">
     <div class="add-section">
         <h2>Edit Product #<?= $product['ProductId'] ?></h2>
@@ -94,5 +89,7 @@ if (!$product) die("Product not found.");
     </form>
     </div>
     </div>
+
+    <?php render_footer() ?>
     </body>
 </html>

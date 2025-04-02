@@ -1,5 +1,6 @@
 <?php
 include 'db.php';
+require 'headerfooter.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fullname = $_POST['FullName'];
@@ -29,11 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 
-    <header class="navbar">
-    <a href="index.php" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
-        <div class="navbar__buttons">
-        </div>
-    </header>
+
+<?php render_navbar() ?>
 
     <div class="container">
         <div class="register-section">
@@ -59,14 +57,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="login.php"><button class="btn btn--login">Log In</button></a>
         </div>
     </div>
-    <footer class="footer">
-      <p class="footer__text">© Rose Brokers 2025</p>
-        <a href="/about.php">About</a> |
-        <a href="/privacy.php">Privacy Policy</a> |
-        <a href="/terms.php">Terms of Use</a> |
-        <a href="/contact.php">Contact Us</a>
-      </p>
-    </footer>
+
+    <?php render_footer() ?>
 
 </body>
 </html>

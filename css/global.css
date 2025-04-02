@@ -414,6 +414,32 @@ body {
     border-radius: 8px;
 }
 
+/* Styles for quotes */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px 20px;
+    align-items: center;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .form-grid input,
+  .form-grid select {
+    width: 100%;
+  }
+  .warning {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+  }
+  .quote-results {
+    margin-top: 30px;
+    text-align: center;
+  }
+
+
 /* Footer Styles */
 .footer {
     background-color: #01A7F0;

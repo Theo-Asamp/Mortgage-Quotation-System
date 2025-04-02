@@ -5,6 +5,7 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'broker') {
     exit();
 }
 require 'db.php';
+require 'headerFooter.php';
 
 $products = $conn->query("SELECT * FROM Product")->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -18,14 +19,7 @@ $products = $conn->query("SELECT * FROM Product")->fetchAll(PDO::FETCH_ASSOC);
     <title>Product List</title>
 </head>
 <body>
-<header class="navbar">
-    <a href="index.php" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
-        <div class="navbar__buttons">
-            <a href="broker-dashboard.php"><button class="btn btn--register">Dashboard</button></a>
-            <a href="broker-setting.php"><button class="btn btn--register">Profile Settings</button></a>
-            <a href="logout.php"><button class="btn btn--login">Log Out</button></a>
-        </div>
-</header>
+<?php render_navbar() ?>
 <div class="container mt-4">
     <div class="table-container">
         <h2>Mortgage Products</h2>
@@ -62,5 +56,8 @@ $products = $conn->query("SELECT * FROM Product")->fetchAll(PDO::FETCH_ASSOC);
         </table>
     </div>
 </div>
+
+
+<?php render_footer() ?>
 </body>
 </html>

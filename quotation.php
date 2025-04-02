@@ -6,6 +6,7 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'user') {
 }
 
 require 'db.php';
+require 'headerFooter.php';
 
 $user_id = $_SESSION['user_id'];
 $formSubmitted = false;
@@ -81,42 +82,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$tooManyQuotes &&
   <title>Rose Mortgage Calculator</title>
   <link rel="stylesheet" href="css/global.css" />
   <link rel="icon" href="/src/images/Favicon.jpg" />
-  <style>
-    .form-grid {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 10px 20px;
-      align-items: center;
-      max-width: 500px;
-      margin: 0 auto;
-    }
-    .form-grid input,
-    .form-grid select {
-      width: 100%;
-    }
-    .warning {
-      color: red;
-      text-align: center;
-      font-weight: bold;
-      padding: 10px;
-    }
-    .quote-results {
-      margin-top: 30px;
-      text-align: center;
-    }
-  </style>
 </head>
+
 <body>
-  <header class="navbar">
-    <a href="index.php" class="navbar__title-link">
-      <h1 class="navbar__title">ROSE BROKERS</h1>
-    </a>
-    <div class="navbar__buttons">
-      <a href="dashboard.php"><button class="btn btn--register">Dashboard</button></a>
-      <a href="settings.php"><button class="btn btn--register">Profile Settings</button></a>
-      <a href="logout.php"><button class="btn btn--login">Log Out</button></a>
-    </div>
-  </header>
+  
+<?php render_navbar() ?>
 
   <section class="intro-section">
     <div class="intro-section__content">
@@ -181,13 +151,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$tooManyQuotes &&
     </div>
   </section>
 
-  <footer class="footer">
-    <p class="footer__text">© Rose Brokers 2025</p>
-    <a href="/about.php">About</a> |
-    <a href="/privacy.php">Privacy Policy</a> |
-    <a href="/terms.php">Terms of Use</a> |
-    <a href="/contact.php">Contact Us</a>
-  </footer>
+  
+<?php render_footer() ?>
 
   <script>
     function limitSelection(checkbox) {
