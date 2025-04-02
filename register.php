@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 
      <header class="navbar">
-     <a href="index.html" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
+     <a href="index.php" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
         <div class="navbar__buttons">
         </div>
     </header>
@@ -80,9 +80,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <button type="submit" class="btn btn--register">Register</button>
             </form>
-            <a href="/register-broker.php">Register as a broker</button></a>
-
-
             <a href="login.php"><button class="btn btn--login">Log In</button></a>
         </div>
     </div>

@@ -6,7 +6,6 @@ $ids = isset($_GET['ids']) ? array_slice($_GET['ids'], 0, 3) : [];
 $loanAmount = floatval($_GET['loan_amount'] ?? 0);
 $loanTerm = intval($_GET['loan_term'] ?? 0);
 
-// Fetch user DOB and calculate age
 $stmt = $conn->prepare("SELECT DOB FROM Users WHERE UserId = ?");
 $stmt->execute([$_SESSION['user_id']]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -103,10 +102,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_ids'])) {
 <body>
 
 <header class="navbar">
-    <a href="dashboard.php" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
+    <a href="index.php" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
     <div class="navbar__buttons">
     <a href="dashboard.php"><button class="btn btn--register">Dashboard</button></a>
-      <a href="settings.php"><button class="btn btn--register">Settings</button></a>
+      <a href="settings.php"><button class="btn btn--register">Profile Settings</button></a>
       <a href="logout.php"><button class="btn btn--login">Log Out</button></a>
     </div>
 </header>

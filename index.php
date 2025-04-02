@@ -9,7 +9,7 @@
 
   <body>
     <header class="navbar">
-      <a href="index.html" class="navbar__title-link"
+      <a href="index.php" class="navbar__title-link"
         ><h1 class="navbar__title">ROSE BROKERS</h1></a
       >
       <div class="navbar__buttons">
@@ -50,25 +50,13 @@
       <div class="options-container">
         <div class="card card--mortgage">
           <img src="images/Calculator.png" alt="Calculator Logo" />
-          <h4 class="card__title">Mortgage Calculator</h4>
+          <h4 class="card__title">Affordability Calculator</h4>
           <p class="card__description">
             Input some personal details and see what lenders you might be
             eligible for.
           </p>
           <a class="card__link" href="/affordability.php"
-            >Mortgage Calculator</a
-          >
-        </div>
-
-        <div class="card card--repayments">
-          <img src="images/Home mortgage.png" alt="Calculator Logo" />
-          <h4 class="card__title">Repayments Calculator</h4>
-          <p class="card__description">
-            Find out how much money you'll pay back based on the terms set by
-            your lender.
-          </p>
-          <a class="card__link" href="/repaymentChecker.html"
-            >Calculate your Repayment</a
+            >Affordability Calculator</a
           >
         </div>
       </div>

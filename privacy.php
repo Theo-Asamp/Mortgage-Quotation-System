@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/global.css" />
-    <title>Rose Mortgages terms</title>
+    <title>Rose Mortgages privacy</title>
 </head>
 
 
@@ -16,7 +16,7 @@
 
 
   <header class="navbar">
-    <a href="index.html" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
+    <a href="index.php" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
         <div class="navbar__buttons">
             <a href="register.html"><button class="btn btn--register">Register</button></a>
             <a href="login.html"><button class="btn btn--login">Log In</button></a>
@@ -24,15 +24,10 @@
     </header>
 
 
-
-
-
-
-
     <section class="intro-section">
         <div class="intro-section__content">
-            <h2 class="intro-section__title"> Rose brokers terms</h2>
-            <p class="intro-section__text">our terms - </p>
+            <h2 class="intro-section__title"> Rose brokers privacy Policy</h2>
+            <p class="intro-section__text">Policy here.. </p>
         </div>
     </section>
 

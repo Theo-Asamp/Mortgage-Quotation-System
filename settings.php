@@ -76,9 +76,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
 
 <header class="navbar">
-<a href="dashboard.php" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
+<a href="index.php" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
     <div class="navbar__buttons">
         <a href="dashboard.php"><button class="btn btn--register">Dashboard</button></a>
+        <a href="settings.php"><button class="btn btn--register">Ptofile Settings</button></a>
         <a href="logout.php"><button class="btn btn--login">Log Out</button></a>
     </div>
 </header>
