@@ -81,14 +81,14 @@ body {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.saved-section{
+.saved-section {
     text-align: center;
     justify-content: center;
     align-items: center;
     padding: 20px 10%;
 }
 
-.saved-section__content{
+.saved-section__content {
     background-color: #fff;
     text-align: center;
     border-radius: 12px;
@@ -167,7 +167,7 @@ body {
     font-weight: bold;
 }
 
-.broker_dashbutton{
+.broker_dashbutton {
     background-color: black;
     color: #01A7F0;
     border-radius: 5px;
@@ -175,6 +175,7 @@ body {
     display: grid;
     margin-bottom: 10px;
 }
+
 .card__link:hover {
     text-decoration: underline;
 }
@@ -334,6 +335,7 @@ body {
     flex-direction: column;
     gap: 15px;
 }
+
 .profile-page__container {
     max-width: 700px;
     margin: 50px auto;
@@ -452,7 +454,8 @@ body {
     transition: all 0.3s ease-in-out;
 }
 
-.duration-select:hover, .duration-select:focus {
+.duration-select:hover,
+.duration-select:focus {
     border-color: #01A7F0;
     box-shadow: 0 0 8px rgba(1, 167, 240, 0.3);
     outline: none;
@@ -470,7 +473,8 @@ body {
     margin-top: 40px;
 
 }
-.add-section{
+
+.add-section {
     justify-content: center;
     align-items: center;
     padding: 50px 10%;
@@ -521,7 +525,7 @@ body {
 }
 
 .table th {
-    background-color:#01A7F0;
+    background-color: #01A7F0;
     color: white;
     padding: 12px;
     text-align: center;
@@ -554,6 +558,23 @@ body {
     background-color: #006FCC;
     color: white;
 }
+
+#navbar-register {
+    margin-bottom: 5%;
+}
+
+#footer-register {
+    margin-top: 5%
+}
+
+#dob-input-div {
+    padding-bottom: 30px;
+}
+
+#employmentType-input-div {
+    padding-bottom: 30px;
+}
+
 
 
 
@@ -595,6 +616,7 @@ body {
     .btn {
         padding: 10px;
     }
+
     .profile-page__container {
         width: 90%;
         padding: 20px;
@@ -603,6 +625,7 @@ body {
     .profile-page__product-list {
         flex-direction: column;
     }
+
     .duration-container {
         flex-direction: column;
         gap: 10px;
@@ -612,9 +635,3 @@ body {
         width: 100%;
     }
 }
-
-
-
-
-
-
