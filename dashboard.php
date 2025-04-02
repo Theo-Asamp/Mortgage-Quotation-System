@@ -13,7 +13,6 @@ $stmt = $conn->prepare("SELECT FullName FROM Users WHERE UserId = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Handle delete request
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_quote_id'])) {
     $deleteStmt = $conn->prepare("DELETE FROM SavedQuotes WHERE QuoteId = ? AND UserId = ?");
     $deleteStmt->execute([$_POST['delete_quote_id'], $user_id]);
