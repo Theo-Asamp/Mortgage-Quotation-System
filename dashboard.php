@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'user') {
@@ -99,10 +98,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_quote_id'])) {
           <div class="card card--mortgage">
             <div>
               <strong><?= htmlspecialchars($quote['Lender']) ?></strong><br>
-              Interest Rate: <?= $quote['InterestAnnually'] * 100 ?>%<br>
-              Term: <?= $quote['MortgageLength'] ?> years<br>
+              Interest Rate: <?= rtrim(rtrim(number_format($quote['InterestAnnually'], 2, '.', ''), '0'), '.') ?>%<br>
+              Yearly Term: <?= $quote['MortgageLength'] ?> years<br>
               Monthly Repayment: £<?= number_format($quote['MonthlyRepayment'], 2) ?><br>
-              Total Paid Back: £<?= number_format($quote['AmountPaidBack'], 2) ?><br>
+              Total Repayment: £<?= number_format($quote['AmountPaidBack'], 2) ?><br>
               <form method="POST" action="dashboard.php" onsubmit="return confirm('Are you sure you want to delete this quote?');">
                 <input type="hidden" name="delete_quote_id" value="<?= $quote['QuoteId'] ?>">
                 <button type="submit" class="btn btn--login">Delete</button>

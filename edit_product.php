@@ -66,7 +66,9 @@ if (!$product) die("Product not found.");
             <input type="text" name="lender" value="<?= $product['Lender'] ?>" required><br><br>
 
             <label>Interest Rate (%):</label>
-            <input type="number" step="0.01" name="rate" value="<?= $product['InterestRate'] ?>" required><br><br>
+            <small style="color: gray;">Enter as a percentage, e.g. 3.75 for 3.75%</small>
+            <input type="number" step="0.01" min="0" max="100" name="rate" value="<?= $product['InterestRate'] ?>" required>
+
 
             <label>Mortgage Term (Years):</label>
             <input type="number" name="term" value="<?= $product['MortgageTerm'] ?>" required><br><br>

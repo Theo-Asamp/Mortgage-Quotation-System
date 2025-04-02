@@ -47,7 +47,7 @@ $products = $conn->query("SELECT * FROM Product")->fetchAll(PDO::FETCH_ASSOC);
             <tr>
                 <td><?= $p['ProductId'] ?></td>
                 <td><?= htmlspecialchars($p['Lender']) ?></td>
-                <td><?= $p['InterestRate'] * 100 ?>%</td>
+                <td><?= rtrim(rtrim(number_format($p['InterestRate'], 2, '.', ''), '0'), '.') ?>%</td>
                 <td><?= $p['MortgageTerm'] ?> yrs</td>
                 <td>£<?= number_format($p['MinIncome'], 2) ?></td>
                 <td><?= $p['MinCreditScore'] ?></td>

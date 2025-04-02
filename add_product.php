@@ -52,7 +52,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if ($message) echo $message; ?>
         <form method="POST" class="add-form">
             <label>Lender:</label><input type="text" name="lender" required><br><br>
-            <label>Interest Rate (%):</label><input type="number" step="0.01" name="rate" required><br><br>
+            <label>Interest Rate (%):</label>
+            <small style="color: gray;">Enter as a percentage, e.g. 3.75 for 3.75%</small><br>
+            <input type="number" step="0.01" min="0" max="100" name="rate" required>
             <label>Mortgage Term (Years):</label><input type="number" name="term" required><br><br>
             <label>Min Income (£):</label><input type="number" name="min_income" required><br><br>
             <label>Min Credit Score:</label><input type="number" name="credit_score" required><br><br>

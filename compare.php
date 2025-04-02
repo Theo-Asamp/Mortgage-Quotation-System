@@ -43,8 +43,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_ids'])) {
         $monthly = floatval($_POST['monthly'][$pid]);
         $total = floatval($_POST['total'][$pid]);
 
-                $insert = $conn->prepare("INSERT INTO SavedQuotes (UserId, ProductId, InterestAnnually, MortgageLength, MonthlyRepayment, AmountPaidBack) VALUES (?, ?, ?, ?, ?, ?);");
-        $insert->execute([$_SESSION['user_id'], $pid, $q['InterestRate'], $loanTerm, $monthly, $total]);
+        // Find the matching quote to get the interest rate
+        $rate = null;
+        foreach ($quotes as $q) {
+            if ($q['ProductId'] == $pid) {
+                $rate = $q['InterestRate'];
+                break;
+            }
+        }
+
+        if ($rate !== null) {
+            $insert = $conn->prepare("INSERT INTO SavedQuotes (
+                UserId, ProductId, InterestAnnually, MortgageLength, MonthlyRepayment, AmountPaidBack
+            ) VALUES (?, ?, ?, ?, ?, ?)");
+
+            $insert->execute([
+                $_SESSION['user_id'],
+                $pid,
+                $rate,
+                $loanTerm,
+                $monthly,
+                $total
+            ]);
+        }
     }
     $message = "✅ Selected quotes saved and updated.";
 }
@@ -109,9 +130,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_ids'])) {
 <header class="navbar">
     <a href="index.php" class="navbar__title-link"><h1 class="navbar__title">ROSE BROKERS</h1></a>
     <div class="navbar__buttons">
-    <a href="dashboard.php"><button class="btn btn--register">Dashboard</button></a>
-      <a href="settings.php"><button class="btn btn--register">Profile Settings</button></a>
-      <a href="logout.php"><button class="btn btn--login">Log Out</button></a>
+        <a href="dashboard.php"><button class="btn btn--register">Dashboard</button></a>
+        <a href="settings.php"><button class="btn btn--register">Profile Settings</button></a>
+        <a href="logout.php"><button class="btn btn--login">Log Out</button></a>
     </div>
 </header>
 
@@ -136,11 +157,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_ids'])) {
                 <tr>
                     <td>Interest Rate</td>
                     <?php foreach ($quotes as $q): ?>
-                        <td><?= $q['InterestRate'] * 100 ?>%</td>
+                        <td><?= rtrim(rtrim(number_format($q['InterestRate'], 2, '.', ''), '0'), '.') ?>%</td>
                     <?php endforeach; ?>
                 </tr>
                 <tr>
-                    <td>Term</td>
+                    <td>Yearly Term</td>
                     <?php foreach ($quotes as $q): ?>
                         <td><?= $loanTerm ?> years</td>
                     <?php endforeach; ?>
@@ -149,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_ids'])) {
                     <td>Monthly Repayment</td>
                     <?php foreach ($quotes as $q): ?>
                         <?php
-                        $monthlyRate = $q['InterestRate'] / 12;
+                        $monthlyRate = ($q['InterestRate'] / 100) / 12;
                         $months = $loanTerm * 12;
                         $monthly = ($monthlyRate > 0)
                             ? $loanAmount * ($monthlyRate * pow(1 + $monthlyRate, $months)) / (pow(1 + $monthlyRate, $months) - 1)
@@ -162,10 +183,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_ids'])) {
                     <?php endforeach; ?>
                 </tr>
                 <tr>
-                    <td>Total Paid Back</td>
+                    <td>Total Repayment</td>
                     <?php foreach ($quotes as $q): ?>
                         <?php
-                        $monthlyRate = $q['InterestRate'] / 12;
+                        $monthlyRate = ($q['InterestRate'] / 100) / 12;
                         $months = $loanTerm * 12;
                         $monthly = ($monthlyRate > 0)
                             ? $loanAmount * ($monthlyRate * pow(1 + $monthlyRate, $months)) / (pow(1 + $monthlyRate, $months) - 1)
@@ -192,13 +213,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_ids'])) {
 </section>
 
 <footer class="footer">
-      <p class="footer__text">© Rose Brokers 2025</p>
-        <a href="/about.php">About</a> |
-        <a href="/privacy.php">Privacy Policy</a> |
-        <a href="/terms.php">Terms of Use</a> |
-        <a href="/contact.php">Contact Us</a>
-      </p>
-    </footer>
+    <p class="footer__text">© Rose Brokers 2025</p>
+    <a href="/about.php">About</a> |
+    <a href="/privacy.php">Privacy Policy</a> |
+    <a href="/terms.php">Terms of Use</a> |
+    <a href="/contact.php">Contact Us</a>
+</footer>
 </body>
 </html>
-

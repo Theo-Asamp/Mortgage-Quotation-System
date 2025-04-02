@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'user') {
@@ -54,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$tooManyQuotes &&
         }
 
         $rate = floatval($product['InterestRate']);
-        $monthlyRate = $rate / 12;
+        $monthlyRate = ($rate / 100) / 12;
 
         if ($loanAmount <= 0 || $loanTerm <= 0) continue;
 
@@ -113,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$tooManyQuotes &&
       <h1 class="navbar__title">ROSE BROKERS</h1>
     </a>
     <div class="navbar__buttons">
-    <a href="dashboard.php"><button class="btn btn--register">Dashboard</button></a>
+      <a href="dashboard.php"><button class="btn btn--register">Dashboard</button></a>
       <a href="settings.php"><button class="btn btn--register">Profile Settings</button></a>
       <a href="logout.php"><button class="btn btn--login">Log Out</button></a>
     </div>
@@ -122,6 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$tooManyQuotes &&
   <section class="intro-section">
     <div class="intro-section__content">
       <h4 class="intro-section__title">Mortgage Quotation</h4>
+      <p><strong>Your Age:</strong> <?= $userAge ?> years</p>
       <?php if ($tooManyQuotes): ?>
         <p class="warning">⚠️ You have already saved 3 mortgage quotes. Please delete one on your dashboard to request more quotes.</p>
       <?php else: ?>
@@ -159,14 +159,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$tooManyQuotes &&
             <p>Select up to 3 products to compare:</p>
             <div id="results">
               <?php foreach ($matches as $product): ?>
-                <div class="card card--mortgage" style="display: flex; align-items: flex-start; gap: 10px;">
+                <div class="card card--mortgage" style="display: flex; align-items: flex-start; gap: 10px; margin: 30px">
                   <input type="checkbox" name="ids[]" value="<?= $product['ProductId'] ?>" onclick="return limitSelection(this)" style="width: 16px; height: 16px; margin-top: 4px;">
                   <div>
                     <strong><?= htmlspecialchars($product['Lender']) ?></strong><br>
-                    Rate: <?= $product['InterestRate'] * 100 ?>%<br>
-                    Term: <?= $loanTerm ?> years<br>
-                    Monthly: £<?= number_format($calcResults[$product['ProductId']]['monthly'], 2) ?><br>
-                    Total: £<?= number_format($calcResults[$product['ProductId']]['total'], 2) ?>
+                    Minimum Age: <?= isset($product['MinAge']) ? $product['MinAge'] . ' years' : 'N/A' ?><br>
+                    Interest Rate: <?= rtrim(rtrim(number_format($product['InterestRate'], 2, '.', ''), '0'), '.') ?>%<br>
+                    Yearly Term: <?= $loanTerm ?> years<br>
+                    Monthly Payment: £<?= number_format($calcResults[$product['ProductId']]['monthly'], 2) ?><br>
+                    Total Repayment: £<?= number_format($calcResults[$product['ProductId']]['total'], 2) ?>
                   </div>
                 </div>
               <?php endforeach; ?>
@@ -181,13 +182,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$tooManyQuotes &&
   </section>
 
   <footer class="footer">
-      <p class="footer__text">© Rose Brokers 2025</p>
-        <a href="/about.php">About</a> |
-        <a href="/privacy.php">Privacy Policy</a> |
-        <a href="/terms.php">Terms of Use</a> |
-        <a href="/contact.php">Contact Us</a>
-      </p>
-    </footer>
+    <p class="footer__text">© Rose Brokers 2025</p>
+    <a href="/about.php">About</a> |
+    <a href="/privacy.php">Privacy Policy</a> |
+    <a href="/terms.php">Terms of Use</a> |
+    <a href="/contact.php">Contact Us</a>
+  </footer>
 
   <script>
     function limitSelection(checkbox) {
