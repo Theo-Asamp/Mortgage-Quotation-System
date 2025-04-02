@@ -5,7 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fullname = $_POST['FullName'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $DOB= $_POST['DOB'];
+    $DOB = $_POST['dob_year'] . '-' . $_POST['dob_month'] . '-' . $_POST['dob_day'];
     $CreditScore = $_POST['CreditScore'];
     $Employmenttype = $_POST['EmploymentType'];
     $AnnualIncome = $_POST['AnnualIncome'];
@@ -53,10 +53,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <label for="password" >Password<span style="color: red;">*</span></label>
                 <input type="password" id="password" name="password" required placeholder="*******">
+                
+                <label for="dob_day">Date of Birth:<span style="color: red;">*</span></label>
+                <div class="dob-selects">
+                <select id="dob_day" name="dob_day" required>
+                    <option value="">Day</option>
+                    <?php for ($d = 1; $d <= 31; $d++): ?>
+                    <option value="<?= str_pad($d, 2, '0', STR_PAD_LEFT) ?>">
+                        <?= str_pad($d, 2, '0', STR_PAD_LEFT) ?>
+                    </option>
+                    <?php endfor; ?>
+                </select>
+
+                <select id="dob_month" name="dob_month" required>
+                    <option value="">Month</option>
+                    <?php 
+                    $months = [
+                        1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April',
+                        5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August',
+                        9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'
+                    ];
+                    foreach ($months as $num => $name): ?>
+                        <option value="<?= str_pad($num, 2, '0', STR_PAD_LEFT) ?>">
+                        <?= $name ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+
+                <select id="dob_year" name="dob_year" required>
+                    <option value="">Year</option>
+                    <?php 
+                    $currentYear = date('Y');
+                    for ($y = $currentYear - 100; $y <= $currentYear; $y++): ?>
+                        <option value="<?= $y ?>"><?= $y ?></option>
+                    <?php endfor; ?>
+                </select>
+                </div>
 
 
-                <label for="DOB">Date of birth <span style="color: red;">*</span></label>
-                <input type="DOB" id="DOB" name="DOB" required placeholder="1-1-1970">
 
                 <label for="EmploymentType">Type of employment<span style="color: red;">*</span></label>
                 <select type="EmploymentType" id="EmploymentType" name="EmploymentType" required>
@@ -80,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <button type="submit" class="btn btn--register">Register</button>
             </form>
-            <a href="login.php"><button class="btn btn--login">Log In</button></a>
+            <a href="login.php"><button class="btn btn--login" style="margin-top: 20px";>Log In</button></a>
         </div>
     </div>
 

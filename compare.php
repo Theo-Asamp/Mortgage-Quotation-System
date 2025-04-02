@@ -1,5 +1,10 @@
 <?php
 session_start();
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'user') {
+    header("Location: login.php");
+    exit();
+}
+
 require 'db.php';
 
 $ids = isset($_GET['ids']) ? array_slice($_GET['ids'], 0, 3) : [];
