@@ -138,19 +138,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 
-<<<<<<< HEAD
 
     <?php render_footer() ?>
-=======
-    <footer class="footer" id="footer-register">
-        <p class="footer__text">© Rose Brokers 2025</p>
-        <a href="/about.php">About</a> |
-        <a href="/privacy.php">Privacy Policy</a> |
-        <a href="/terms.php">Terms of Use</a> |
-        <a href="/contact.php">Contact Us</a>
-        </p>
-    </footer>
->>>>>>> 6125f49859fce1d21059e123f3c383aa0b1866ca
 
 </body>
 
