@@ -60,12 +60,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
     <footer class="footer">
-        <p class="footer__text">
-            © Rose Brokers 2025</p>
-
-            <a href="/about.html">About</a> | <a href="/privacy.html">Privacy Policy</a> |
-            <a href="/terms.html">Terms of Use</a> | <a href="/contact.html">Contact Us</a>
-        </p>
+      <p class="footer__text">© Rose Brokers 2025</p>
+        <a href="/about.php">About</a> |
+        <a href="/privacy.php">Privacy Policy</a> |
+        <a href="/terms.php">Terms of Use</a> |
+        <a href="/contact.php">Contact Us</a>
+      </p>
     </footer>
 
 </body>
