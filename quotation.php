@@ -11,18 +11,15 @@ require 'db.php';
 $user_id = $_SESSION['user_id'];
 $formSubmitted = false;
 
-// Check how many quotes user already has saved
 $checkSaved = $conn->prepare("SELECT COUNT(*) FROM SavedQuotes WHERE UserId = ?");
 $checkSaved->execute([$user_id]);
 $savedCount = $checkSaved->fetchColumn();
 $tooManyQuotes = ($savedCount >= 3);
 
-// Fetch user info including DOB
 $stmt = $conn->prepare("SELECT AnnualIncome, AnnualOutcome, CreditScore, EmploymentType, DOB FROM Users WHERE UserId = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Calculate user age
 $dob = new DateTime($user['DOB']);
 $today = new DateTime();
 $userAge = $today->diff($dob)->y;
