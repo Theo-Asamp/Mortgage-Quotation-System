@@ -41,7 +41,9 @@ require 'headerFooter.php';
         <div class="intro-section__content">
             <h1>Welcome, <?php echo htmlspecialchars($_SESSION['fullname']); ?>!</h1>
             <h2 class="intro-section__title">Broker Portal</h2>
+            <p>Here you can add a new mortgage product, click the button below to get started</p>
             <a href="add_product.php" style="text-decoration: none;" ><button class="broker_dashbutton">+ Add New Mortgage Product</button></a>
+            <p>Here you can edit, delete and view the current products you have made. Just click the button below to get started</p>
             <a href="product_list.php" style="text-decoration: none;" ><button class="broker_dashbutton">Managing List of Product</button></p></a>
         </div>
         <div class="intro-section__image">
