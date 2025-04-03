@@ -610,7 +610,6 @@ body {
     padding-bottom: 30px;
 }
 
-#password {}
 
 #password-flex {
     display: flex;
@@ -623,6 +622,13 @@ body {
 
 #no-underline {
     text-decoration: none;
+}
+
+#btn-calculate {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    
 }
 
 

@@ -44,7 +44,23 @@ $products = $conn->query("SELECT * FROM Product")->fetchAll(PDO::FETCH_ASSOC);
                         <td><?= $p['ProductId'] ?></td>
                         <td><?= htmlspecialchars($p['Lender']) ?></td>
                         <td><?= rtrim(rtrim(number_format($p['InterestRate'], 2, '.', ''), '0'), '.') ?>%</td>
-                        <td><?= $p['MortgageTerm'] ?> yrs</td>
+                        <td>
+                            <?php
+                                $months = (int) $p['MortgageTerm'];
+                                $years = intdiv($months, 12);
+                                $remainingMonths = $months % 12;
+
+                                if ($years > 0 && $remainingMonths > 0) {
+                                    echo "{$years} year" . ($years > 1 ? 's' : '') . " and {$remainingMonths} month" . ($remainingMonths > 1 ? 's' : '');
+                                } elseif ($years > 0) {
+                                    echo "{$years} year" . ($years > 1 ? 's' : '');
+                                } elseif ($remainingMonths > 0) {
+                                    echo "{$remainingMonths} month" . ($remainingMonths > 1 ? 's' : '');
+                                } else {
+                                    echo "N/A";
+                                }
+                            ?>
+                        </td>
                         <td>£<?= number_format($p['MinIncome'], 2) ?></td>
                         <td><?= $p['MinCreditScore'] ?></td>
                         <td><?= $p['EmploymentType'] ?></td>

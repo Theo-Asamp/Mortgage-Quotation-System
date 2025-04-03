@@ -10,18 +10,32 @@ require 'headerFooter.php';
 $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
+        $lender = $_POST['lender'];
+        $rate = floatval($_POST['rate']);
+        $years = intval($_POST['term_years']);
+        $months = intval($_POST['term_months']);
+        $termInMonths = ($years * 12) + $months;
+        $minIncome = floatval($_POST['min_income']);
+        $minScore = intval($_POST['credit_score']);
+        $employment = $_POST['employment_type'];
+        $minAge = intval($_POST['minage']);
+
+        if ($termInMonths <= 0) {
+            throw new Exception('Mortgage term must be greater than 0.');
+        }
+
         $stmt = $conn->prepare("INSERT INTO Product 
             (Lender, InterestRate, MortgageTerm, MinIncome, MinCreditScore, EmploymentType, MinAge)
             VALUES (?, ?, ?, ?, ?, ?, ?)");
 
         $stmt->execute([
-            $_POST['lender'],
-            $_POST['rate'],
-            $_POST['term'],
-            $_POST['min_income'],
-            $_POST['credit_score'],
-            $_POST['employment_type'],
-            $_POST['minage'],
+            $lender,
+            $rate,
+            $termInMonths,
+            $minIncome,
+            $minScore,
+            $employment,
+            $minAge,
         ]);
 
         $message = "<h3>✅ Product added successfully.</h3>";
@@ -48,12 +62,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php if ($message) echo $message; ?>
             <form method="POST" class="add-form">
                 <label>Lender:</label><input type="text" name="lender" required><br><br>
+
                 <label>Interest Rate (%):</label>
                 <small style="color: gray;">Enter as a percentage, e.g. 3.75 for 3.75%</small><br>
-                <input type="number" step="0.01" min="0" max="100" name="rate" required>
-                <label>Mortgage Term (Years):</label><input type="number" name="term" required><br><br>
+                <input type="number" step="0.01" min="0" max="100" name="rate" required><br><br>
+
+                <label>Mortgage Term:</label><br>
+                Years: <input type="number" name="term_years" min="0" required>
+                Months: <input type="number" name="term_months" min="0" max="11" required><br><br>
+
                 <label>Min Income (£):</label><input type="number" name="min_income" required><br><br>
                 <label>Min Credit Score:</label><input type="number" name="credit_score" required><br><br>
+
                 <label>Employment Type:</label>
                 <select name="employment_type" required>
                     <option value="Full-Time Employed">Full-Time Employed</option>
@@ -61,11 +81,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <option value="Self-Employed">Self-Employed</option>
                     <option value="any">Any</option>
                 </select><br><br>
-                <label>Min Age:</label><input type="number" step="0.01" name="minage" required><br><br>
+
+                <label>Min Age:</label><input type="number" name="minage" required><br><br>
+
                 <input type="submit" value="Add Product">
             </form>
             <div class="text-center mt-3">
-                <a href="broker-dashboard.php" class="btn btn-custom" id="broker-dashboard-back">🏠 Back to Dashboard</a>
+                <a href="product_list.php" class="btn btn-custom" id="broker-dashboard-back">📄 Go to Manage Product List</a>
             </div>
         </div>
     </div>
