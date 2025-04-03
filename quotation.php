@@ -101,6 +101,8 @@ if ($formSubmitted) {
     $matches[] = $product;
   }
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -119,7 +121,7 @@ if ($formSubmitted) {
   <?php render_navbar() ?>
 
   <section class="intro-section">
-    <div class="intro-section__content">
+    <div class="intro-section__content" id="quotation-div">
       <h4 class="intro-section__title">Mortgage Quotation</h4>
       <?php if ($tooManyQuotes): ?>
         <p class="warning">⚠️ You have already saved 3 mortgage quotes. Please delete one on your dashboard to request more quotes.</p>
