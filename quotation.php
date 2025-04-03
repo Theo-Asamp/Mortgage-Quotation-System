@@ -86,6 +86,7 @@ if (
   <link rel="icon" href="/src/images/Favicon.jpg" />
 </head>
 
+
 <body>
 
   <?php render_navbar() ?>
@@ -93,30 +94,27 @@ if (
   <section class="intro-section">
     <div class="intro-section__content">
       <h4 class="intro-section__title">Mortgage Quotation</h4>
-      <p><strong>Your Age:</strong> <?= $userAge ?> years</p>
       <?php if ($tooManyQuotes): ?>
         <p class="warning">⚠️ You have already saved 3 mortgage quotes. Please delete one on your dashboard to request more quotes.</p>
       <?php else: ?>
         <form id="mortgageForm" method="POST" class="form-grid">
-          <label for="income">Annual Income (£):</label>
-          <input type="text" readonly class="profile-page__input" id="income" value="<?= htmlspecialchars($user['AnnualIncome']) ?>">
-
-          <label for="outgoings">Annual Outgoings (£):</label>
-          <input type="text" readonly class="profile-page__input" id="outgoings" value="<?= htmlspecialchars($user['AnnualOutcome']) ?>">
-
-          <label for="property">Property Value (£):</label>
-          <input type="number" name="property_value" class="profile-page__input" id="property" required placeholder="£200,000" />
-
+          <label for="property">Product Value (£):</label>
+          <input type="number" name="property_value" class="profile-page__input" id="property" required placeholder="£" <?php $propertyValue ?> />
           <label for="deposit">Deposit (£):</label>
-          <input type="number" name="deposit" class="profile-page__input" id="deposit" required placeholder="£50,000" />
-
+          <input type="number" name="deposit" class="profile-page__input" id="deposit" required placeholder="£" <?php $deposit ?> />
           <label for="loan_term">Term of loan:</label>
+
           <select name="loan_term" class="profile-page__input" id="loan_term" required>
-            <?php for ($i = 1; $i <= 15; $i++): ?>
+            <?php for ($i = 1; $i <= 40; $i++): ?>
               <option value="<?= $i ?>"><?= $i ?> Year<?= $i > 1 ? 's' : '' ?></option>
             <?php endfor; ?>
           </select>
-
+          <label for="loan_term">Months:</label>
+          <select name="loan_termM" class="profile-page__input" id="loan_termM" required>
+            <?php for ($i = 1; $i <= 12; $i++): ?>
+              <option value="<?= $i ?>"><?= $i ?> Month<?= $i > 1 ? 's' : '' ?></option>
+            <?php endfor; ?>
+          </select>
           <div></div>
           <button type="submit" class="btn btn--login">Calculate</button>
         </form>
