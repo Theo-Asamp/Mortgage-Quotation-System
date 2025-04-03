@@ -7,7 +7,7 @@ body {
 
 .navbar {
     background-color: #01A7F0;
-    color: black;
+    color: #333;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -168,17 +168,22 @@ body {
 }
 
 .broker_dashbutton {
-    background-color: black;
-    color: #01A7F0;
-    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+    border-color: #fff;
+    border-radius: 10px;
     padding: 20px 10px;
     display: grid;
     margin-bottom: 10px;
-
+    transition: transform 0.3s ease-in-out;
 }
 
 :hover .broker_dashbutton {
     cursor: pointer;
+}
+
+.broker_dashbutton:hover {
+    transform: scale(1.05);
 }
 
 .card__link:hover {
@@ -605,9 +610,7 @@ body {
     padding-bottom: 30px;
 }
 
-#password {
-    width: 85%;
-}
+#password {}
 
 #password-flex {
     display: flex;
@@ -621,6 +624,8 @@ body {
 #no-underline {
     text-decoration: none;
 }
+
+
 
 
 @media (max-width: 768px) {

@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'user') {
-    header("Location: login.php");
-    exit();
+  header("Location: login.php");
+  exit();
 }
 
 require 'db.php';
@@ -29,53 +29,55 @@ $calcResults = [];
 $loanAmount = 0;
 $loanTerm = 0;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$tooManyQuotes &&
-    isset($_POST['property_value'], $_POST['deposit'], $_POST['loan_term'])) {
+if (
+  $_SERVER['REQUEST_METHOD'] === 'POST' && !$tooManyQuotes &&
+  isset($_POST['property_value'], $_POST['deposit'], $_POST['loan_term'])
+) {
 
-    $formSubmitted = true;
+  $formSubmitted = true;
 
-    $propertyValue = floatval($_POST['property_value']);
-    $deposit = floatval($_POST['deposit']);
-    $loanTerm = intval($_POST['loan_term']);
-    $loanAmount = $propertyValue - $deposit;
-    $totalMonths = $loanTerm * 12;
+  $propertyValue = floatval($_POST['property_value']);
+  $deposit = floatval($_POST['deposit']);
+  $loanTerm = intval($_POST['loan_term']);
+  $loanAmount = $propertyValue - $deposit;
+  $totalMonths = $loanTerm * 12;
 
-    $netIncome = $user['AnnualIncome'] - $user['AnnualOutcome'];
-    $borrowingCapacity = $netIncome * 4.5;
-    $affordableMonthly = $netIncome / 12;
+  $netIncome = $user['AnnualIncome'] - $user['AnnualOutcome'];
+  $borrowingCapacity = $netIncome * 4.5;
+  $affordableMonthly = $netIncome / 12;
 
-    $stmt = $conn->prepare("SELECT * FROM Product WHERE MinIncome <= ? AND MinCreditScore <= ? AND (EmploymentType = ? OR EmploymentType = 'any')");
-    $stmt->execute([$user['AnnualIncome'], $user['CreditScore'], $user['EmploymentType']]);
-    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $stmt = $conn->prepare("SELECT * FROM Product WHERE MinIncome <= ? AND MinCreditScore <= ? AND (EmploymentType = ? OR EmploymentType = 'any')");
+  $stmt->execute([$user['AnnualIncome'], $user['CreditScore'], $user['EmploymentType']]);
+  $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach ($products as $product) {
-        if (isset($product['MinAge']) && $userAge < intval($product['MinAge'])) {
-            continue;
-        }
-
-        $rate = floatval($product['InterestRate']);
-        $monthlyRate = ($rate / 100) / 12;
-
-        if ($loanAmount <= 0 || $loanTerm <= 0) continue;
-
-        $monthlyPayment = ($monthlyRate > 0) ?
-            ($loanAmount * ($monthlyRate * pow(1 + $monthlyRate, $totalMonths)) / (pow(1 + $monthlyRate, $totalMonths) - 1)) :
-            ($loanAmount / $totalMonths);
-
-        $totalPayment = $monthlyPayment * $totalMonths;
-
-        if ($monthlyPayment > $affordableMonthly || $loanAmount > $borrowingCapacity) continue;
-
-        $calcResults[$product['ProductId']] = [
-            'monthly' => round($monthlyPayment, 2),
-            'total' => round($totalPayment, 2)
-        ];
-        $matches[] = $product;
+  foreach ($products as $product) {
+    if (isset($product['MinAge']) && $userAge < intval($product['MinAge'])) {
+      continue;
     }
+
+    $rate = floatval($product['InterestRate']);
+    $monthlyRate = ($rate / 100) / 12;
+
+    if ($loanAmount <= 0 || $loanTerm <= 0) continue;
+
+    $monthlyPayment = ($monthlyRate > 0) ?
+      ($loanAmount * ($monthlyRate * pow(1 + $monthlyRate, $totalMonths)) / (pow(1 + $monthlyRate, $totalMonths) - 1)) : ($loanAmount / $totalMonths);
+
+    $totalPayment = $monthlyPayment * $totalMonths;
+
+    if ($monthlyPayment > $affordableMonthly || $loanAmount > $borrowingCapacity) continue;
+
+    $calcResults[$product['ProductId']] = [
+      'monthly' => round($monthlyPayment, 2),
+      'total' => round($totalPayment, 2)
+    ];
+    $matches[] = $product;
+  }
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -85,8 +87,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$tooManyQuotes &&
 </head>
 
 <body>
-  
-<?php render_navbar() ?>
+
+  <?php render_navbar() ?>
 
   <section class="intro-section">
     <div class="intro-section__content">
@@ -151,8 +153,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$tooManyQuotes &&
     </div>
   </section>
 
-  
-<?php render_footer() ?>
+
+  <?php render_footer() ?>
 
   <script>
     function limitSelection(checkbox) {
@@ -166,4 +168,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$tooManyQuotes &&
     }
   </script>
 </body>
+
 </html>

@@ -44,12 +44,14 @@ require 'headerFooter.php';
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/global.css" />
     <title>Rose Brokers Login</title>
 </head>
+
 <body>
 
     <?php render_navbar() ?>
@@ -57,10 +59,12 @@ require 'headerFooter.php';
 
     <div class="container">
         <div class="login-section">
-            <h2>Welcome Guest</h2>
+            <h2>Welcome!</h2>
             <p>Enter your email and password to continue...</p>
 
-            <?php if (isset($error)) { echo "<p style='color: red;'>$error</p>"; } ?>
+            <?php if (isset($error)) {
+                echo "<p style='color: red;'>$error</p>";
+            } ?>
 
             <form class="login-form" method="POST">
                 <label for="email">Email<span style="color: red;">*</span></label>
@@ -81,7 +85,8 @@ require 'headerFooter.php';
         </div>
     </div>
 
-<?php render_footer() ?>
+    <?php render_footer() ?>
 
 </body>
+
 </html>
