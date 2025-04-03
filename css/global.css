@@ -625,8 +625,30 @@ body {
     text-decoration: none;
 }
 
+#btn-calculate {
+    margin-left: 110%;
+}
 
+#btn-calculate button {
+    width: 214px;
+}
 
+#property,
+#deposit {
+    width: 190px;
+}
+
+#results {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+
+}
+
+#quatation-div {
+    padding-top: 40px;
+}
 
 @media (max-width: 768px) {
     .intro-section {

@@ -74,6 +74,8 @@ if (
     $matches[] = $product;
   }
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,32 +94,47 @@ if (
   <?php render_navbar() ?>
 
   <section class="intro-section">
-    <div class="intro-section__content">
+    <div class="intro-section__content" id="quotation-div">
       <h4 class="intro-section__title">Mortgage Quotation</h4>
       <?php if ($tooManyQuotes): ?>
         <p class="warning">⚠️ You have already saved 3 mortgage quotes. Please delete one on your dashboard to request more quotes.</p>
       <?php else: ?>
-        <form id="mortgageForm" method="POST" class="form-grid">
-          <label for="property">Product Value (£):</label>
-          <input type="number" name="property_value" class="profile-page__input" id="property" required placeholder="£" <?php $propertyValue ?> />
-          <label for="deposit">Deposit (£):</label>
-          <input type="number" name="deposit" class="profile-page__input" id="deposit" required placeholder="£" <?php $deposit ?> />
-          <label for="loan_term">Term of loan:</label>
 
+        <form id="mortgageForm" method="POST" class="form-grid">
+
+          <label for="property">Property Value (£):</label>
+          <input type="number" name="property_value" class="profile-page__input" id="property"
+            required placeholder="£"
+            value="<?php echo isset($_POST['property_value']) ? htmlspecialchars($_POST['property_value']) : ''; ?>" />
+
+          <label for="deposit">Deposit (£):</label>
+          <input type="number" name="deposit" class="profile-page__input" id="deposit"
+            required placeholder="£"
+            value="<?php echo isset($_POST['deposit']) ? htmlspecialchars($_POST['deposit']) : ''; ?>" />
+
+          <label for="loan_term">Term of Loan (Years):</label>
           <select name="loan_term" class="profile-page__input" id="loan_term" required>
             <?php for ($i = 1; $i <= 40; $i++): ?>
-              <option value="<?= $i ?>"><?= $i ?> Year<?= $i > 1 ? 's' : '' ?></option>
+              <option value="<?= $i ?>" <?= (isset($_POST['loan_term']) && $_POST['loan_term'] == $i) ? 'selected' : '' ?>>
+                <?= $i ?> Year<?= $i > 1 ? 's' : '' ?>
+              </option>
             <?php endfor; ?>
           </select>
-          <label for="loan_term">Months:</label>
+
+          <label for="loan_termM">Term of Loan (Months):</label>
           <select name="loan_termM" class="profile-page__input" id="loan_termM" required>
             <?php for ($i = 1; $i <= 12; $i++): ?>
-              <option value="<?= $i ?>"><?= $i ?> Month<?= $i > 1 ? 's' : '' ?></option>
+              <option value="<?= $i ?>" <?= (isset($_POST['loan_termM']) && $_POST['loan_termM'] == $i) ? 'selected' : '' ?>>
+                <?= $i ?> Month<?= $i > 1 ? 's' : '' ?>
+              </option>
             <?php endfor; ?>
           </select>
-          <div></div>
-          <button type="submit" class="btn btn--login">Calculate</button>
+          <div id="btn-calculate">
+            <button type="submit" class="btn btn--login">Calculate</button>
+          </div>
+
         </form>
+
       <?php endif; ?>
 
       <div class="quote-results">
@@ -129,7 +146,7 @@ if (
             <p>Select up to 3 products to compare:</p>
             <div id="results">
               <?php foreach ($matches as $product): ?>
-                <div class="card card--mortgage" style="display: flex; align-items: flex-start; gap: 10px; margin: 30px">
+                <div class="card--mortgage" style="display: flex; align-items: flex-start; gap: 10px; margin-right: auto; margin-left: auto;">
                   <input type="checkbox" name="ids[]" value="<?= $product['ProductId'] ?>" onclick="return limitSelection(this)" style="width: 16px; height: 16px; margin-top: 4px;">
                   <div>
                     <strong><?= htmlspecialchars($product['Lender']) ?></strong><br>
