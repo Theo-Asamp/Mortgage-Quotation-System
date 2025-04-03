@@ -6,12 +6,16 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'user') {
 }
 
 require 'db.php';
-
 require 'headerFooter.php';
 
 $ids = isset($_GET['ids']) ? array_slice($_GET['ids'], 0, 3) : [];
 $loanAmount = floatval($_GET['loan_amount'] ?? 0);
-$loanTerm = intval($_GET['loan_term'] ?? 0);
+$loanTerm = isset($_GET['loan_term']) ? intval($_GET['loan_term']) : 0;
+$loanTermMonths = isset($_GET['loan_term_months']) ? intval($_GET['loan_term_months']) : 0;
+$totalMonths = ($loanTerm * 12) + $loanTermMonths;
+
+$monthlyValues = $_GET['monthly'] ?? [];
+$totalValues = $_GET['total'] ?? [];
 
 $stmt = $conn->prepare("SELECT DOB FROM Users WHERE UserId = ?");
 $stmt->execute([$_SESSION['user_id']]);
@@ -25,7 +29,6 @@ function calculateAge($dob) {
 
 $userAge = calculateAge($user['DOB']);
 
-// Fetch products
 $quotes = [];
 if (!empty($ids)) {
     $placeholders = implode(',', array_fill(0, count($ids), '?'));
@@ -42,11 +45,14 @@ if (!empty($ids)) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_ids'])) {
+    $loanTerm = isset($_GET['loan_term']) ? intval($_GET['loan_term']) : 0;
+    $loanTermMonths = isset($_GET['loan_term_months']) ? intval($_GET['loan_term_months']) : 0;
+    $totalMonths = ($loanTerm * 12) + $loanTermMonths;
+
     foreach ($_POST['save_ids'] as $pid) {
         $monthly = floatval($_POST['monthly'][$pid]);
         $total = floatval($_POST['total'][$pid]);
 
-        // Find the matching quote to get the interest rate
         $rate = null;
         foreach ($quotes as $q) {
             if ($q['ProductId'] == $pid) {
@@ -64,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_ids'])) {
                 $_SESSION['user_id'],
                 $pid,
                 $rate,
-                $loanTerm,
+                $totalMonths,
                 $monthly,
                 $total
             ]);
@@ -72,8 +78,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_ids'])) {
     }
     $message = "✅ Selected quotes saved and updated.";
 }
-?>
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,40 +95,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_ids'])) {
             padding: 20px;
             box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
-
         th, td {
             border: 1px solid #ccc;
             text-align: center;
             padding: 15px;
         }
-
         th {
             background-color: #009fe3;
             color: #fff;
         }
-
         .actions {
             margin-top: 20px;
             text-align: center;
         }
-
         .btn {
             padding: 10px 15px;
             cursor: pointer;
         }
-
         .footer {
             margin-top: 40px;
             text-align: center;
             font-size: 0.9em;
         }
-
         .footer__text a {
             margin: 0 10px;
         }
@@ -141,6 +140,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_ids'])) {
 
     <?php if (!empty($quotes)): ?>
         <form method="post">
+        <?php foreach ($quotes as $q): ?>
+            <input type="hidden" name="monthly[<?= $q['ProductId'] ?>]" value="<?= $monthlyValues[$q['ProductId']] ?? 0 ?>">
+            <input type="hidden" name="total[<?= $q['ProductId'] ?>]" value="<?= $totalValues[$q['ProductId']] ?? 0 ?>">
+            <?php endforeach; ?>
             <table>
                 <tr>
                     <th>Feature</th>
@@ -157,42 +160,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_ids'])) {
                     <?php endforeach; ?>
                 </tr>
                 <tr>
-                    <td>Yearly Term</td>
+                    <td>Term of Loans</td>
+                    <?php
+                      $years = intdiv($totalMonths, 12);
+                      $months = $totalMonths % 12;
+                      if ($years > 0 && $months > 0) {
+                          $termDisplay = "{$years} year" . ($years > 1 ? 's' : '') . " and {$months} month" . ($months > 1 ? 's' : '');
+                      } elseif ($years > 0) {
+                          $termDisplay = "{$years} year" . ($years > 1 ? 's' : '');
+                      } elseif ($months > 0) {
+                          $termDisplay = "{$months} month" . ($months > 1 ? 's' : '');
+                      } else {
+                          $termDisplay = "N/A";
+                      }
+                    ?>
                     <?php foreach ($quotes as $q): ?>
-                        <td><?= $loanTerm ?> years</td>
+                        <td><?= $termDisplay ?></td>
                     <?php endforeach; ?>
                 </tr>
                 <tr>
                     <td>Monthly Repayment</td>
                     <?php foreach ($quotes as $q): ?>
-                        <?php
-                        $monthlyRate = ($q['InterestRate'] / 100) / 12;
-                        $months = $loanTerm * 12;
-                        $monthly = ($monthlyRate > 0)
-                            ? $loanAmount * ($monthlyRate * pow(1 + $monthlyRate, $months)) / (pow(1 + $monthlyRate, $months) - 1)
-                            : $loanAmount / $months;
-                        ?>
-                        <td>
-                            £<?= number_format($monthly, 2) ?>
-                            <input type="hidden" name="monthly[<?= $q['ProductId'] ?>]" value="<?= round($monthly, 2) ?>">
-                        </td>
+                        <td>£<?= number_format($monthlyValues[$q['ProductId']] ?? 0, 2) ?></td>
                     <?php endforeach; ?>
                 </tr>
                 <tr>
                     <td>Total Repayment</td>
                     <?php foreach ($quotes as $q): ?>
-                        <?php
-                        $monthlyRate = ($q['InterestRate'] / 100) / 12;
-                        $months = $loanTerm * 12;
-                        $monthly = ($monthlyRate > 0)
-                            ? $loanAmount * ($monthlyRate * pow(1 + $monthlyRate, $months)) / (pow(1 + $monthlyRate, $months) - 1)
-                            : $loanAmount / $months;
-                        $total = $monthly * $months;
-                        ?>
-                        <td>
-                            £<?= number_format($total, 2) ?>
-                            <input type="hidden" name="total[<?= $q['ProductId'] ?>]" value="<?= round($total, 2) ?>">
-                        </td>
+                        <td>£<?= number_format($totalValues[$q['ProductId']] ?? 0, 2) ?></td>
                     <?php endforeach; ?>
                 </tr>
             </table>

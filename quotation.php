@@ -15,6 +15,9 @@ $checkSaved = $conn->prepare("SELECT COUNT(*) FROM SavedQuotes WHERE UserId = ?"
 $checkSaved->execute([$user_id]);
 $savedCount = $checkSaved->fetchColumn();
 $tooManyQuotes = ($savedCount >= 3);
+$savedIdsStmt = $conn->prepare("SELECT ProductId FROM SavedQuotes WHERE UserId = ?");
+$savedIdsStmt->execute([$user_id]);
+$savedProductIds = $savedIdsStmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
 $stmt = $conn->prepare("SELECT AnnualIncome, AnnualOutcome, CreditScore, EmploymentType, DOB FROM Users WHERE UserId = ?");
 $stmt->execute([$user_id]);
@@ -35,12 +38,33 @@ if (
 ) {
 
   $formSubmitted = true;
+  $_SESSION['form_data'] = [
+    'property_value' => $_POST['property_value'],
+    'deposit' => $_POST['deposit'],
+    'loan_term' => $_POST['loan_term'],
+    'loan_term_months' => $_POST['loan_term_months']
+  ];
 
   $propertyValue = floatval($_POST['property_value']);
   $deposit = floatval($_POST['deposit']);
-  $loanTerm = intval($_POST['loan_term']);
+  $loanTermYears = intval($_POST['loan_term']);
+  $loanTerm = $loanTermYears;
+  $loanTermMonths = isset($_POST['loan_term_months']) ? intval($_POST['loan_term_months']) : 0;
   $loanAmount = $propertyValue - $deposit;
-  $totalMonths = $loanTerm * 12;
+  $totalMonths = ($loanTermYears * 12) + $loanTermMonths;
+$termDisplay = '';
+if ($formSubmitted) {
+  $years = intdiv($totalMonths, 12);
+  $months = $totalMonths % 12;
+
+  if ($years > 0 && $months > 0) {
+    $termDisplay = "Term of Loans: {$years} year" . ($years > 1 ? 's' : '') . " and {$months} month" . ($months > 1 ? 's' : '');
+  } elseif ($years > 0) {
+    $termDisplay = "Term of Loans: {$years} year" . ($years > 1 ? 's' : '');
+  } elseif ($months > 0) {
+    $termDisplay = "Term of Loans: {$months} month" . ($months > 1 ? 's' : '');
+  }
+}
 
   $netIncome = $user['AnnualIncome'] - $user['AnnualOutcome'];
   $borrowingCapacity = $netIncome * 4.5;
@@ -51,6 +75,9 @@ if (
   $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   foreach ($products as $product) {
+    if ($totalMonths > ($product['MortgageTerm'] * 12)) {
+        continue;
+    }
     if (isset($product['MinAge']) && $userAge < intval($product['MinAge'])) {
       continue;
     }
@@ -58,7 +85,7 @@ if (
     $rate = floatval($product['InterestRate']);
     $monthlyRate = ($rate / 100) / 12;
 
-    if ($loanAmount <= 0 || $loanTerm <= 0) continue;
+    if ($loanAmount <= 0 || $totalMonths <= 0) continue;
 
     $monthlyPayment = ($monthlyRate > 0) ?
       ($loanAmount * ($monthlyRate * pow(1 + $monthlyRate, $totalMonths)) / (pow(1 + $monthlyRate, $totalMonths) - 1)) : ($loanAmount / $totalMonths);
@@ -97,27 +124,36 @@ if (
       <?php if ($tooManyQuotes): ?>
         <p class="warning">⚠️ You have already saved 3 mortgage quotes. Please delete one on your dashboard to request more quotes.</p>
       <?php else: ?>
-        <form id="mortgageForm" method="POST" class="form-grid">
-          <label for="property">Product Value (£):</label>
-          <input type="number" name="property_value" class="profile-page__input" id="property" required placeholder="£" <?php $propertyValue ?> />
-          <label for="deposit">Deposit (£):</label>
-          <input type="number" name="deposit" class="profile-page__input" id="deposit" required placeholder="£" <?php $deposit ?> />
-          <label for="loan_term">Term of loan:</label>
+      <form id="mortgageForm" method="POST" class="form-grid">
+        <label for="property">Property Value (£):</label>
+        <input type="number" name="property_value" class="profile-page__input" id="property"
+          required placeholder="£"
+          value="<?php echo isset($_POST['property_value']) ? htmlspecialchars($_POST['property_value']) : ''; ?>" />
 
-          <select name="loan_term" class="profile-page__input" id="loan_term" required>
-            <?php for ($i = 1; $i <= 40; $i++): ?>
-              <option value="<?= $i ?>"><?= $i ?> Year<?= $i > 1 ? 's' : '' ?></option>
-            <?php endfor; ?>
-          </select>
-          <label for="loan_term">Months:</label>
-          <select name="loan_termM" class="profile-page__input" id="loan_termM" required>
-            <?php for ($i = 1; $i <= 12; $i++): ?>
-              <option value="<?= $i ?>"><?= $i ?> Month<?= $i > 1 ? 's' : '' ?></option>
-            <?php endfor; ?>
-          </select>
-          <div></div>
-          <button type="submit" class="btn btn--login">Calculate</button>
-        </form>
+        <label for="deposit">Deposit (£):</label>
+        <input type="number" name="deposit" class="profile-page__input" id="deposit" required placeholder="£" value="<?php echo isset($_POST['deposit']) ? htmlspecialchars($_POST['deposit']) : ''; ?>" />
+        <label for="loan_term">Term of Loan (Years):</label>
+        <select name="loan_term" class="profile-page__input" id="loan_term" required>
+        <?php for ($i = 0; $i <= 40; $i++): ?>
+        <option value="<?= $i ?>" <?= (isset($_POST['loan_term']) && $_POST['loan_term'] == $i) ? 'selected' : '' ?>>
+        <?= $i ?> Year<?= $i !== 1 ? 's' : '' ?>
+        </option>
+        <?php endfor; ?>
+        </select>
+        <label for="loan_term_months">Term of Loan (Months):</label>
+        <select name="loan_term_months" class="profile-page__input" id="loan_term_months" required>
+        <?php for ($i = 0; $i <= 12; $i++): ?>
+        <option value="<?= $i ?>" <?= (isset($_POST['loan_term_months']) && $_POST['loan_term_months'] == $i) ? 'selected' : '' ?>>
+        <?= $i ?> Month<?= $i !== 1 ? 's' : '' ?>
+        </option>
+        <?php endfor; ?>
+        </select>
+      </form>
+      <div id="btn-calculate">
+        <button type="submit" class="btn btn--login" form="mortgageForm">Submit</button>
+      </div>
+
+
       <?php endif; ?>
 
       <div class="quote-results">
@@ -125,17 +161,36 @@ if (
           <form method="GET" action="compare.php">
             <input type="hidden" name="loan_amount" value="<?= $loanAmount ?>">
             <input type="hidden" name="loan_term" value="<?= $loanTerm ?>">
+            <input type="hidden" name="loan_term_months" value="<?= $loanTermMonths ?>">
+            <?php foreach ($matches as $product): ?>
+              <input type="hidden" name="monthly[<?= $product['ProductId'] ?>]" value="<?= $calcResults[$product['ProductId']]['monthly'] ?>">
+              <input type="hidden" name="total[<?= $product['ProductId'] ?>]" value="<?= $calcResults[$product['ProductId']]['total'] ?>">
+            <?php endforeach; ?>
+            <input type="hidden" name="loan_term_months" value="<?= $loanTermMonths ?>">
+            <?php foreach ($matches as $product): ?>
+              <input type="hidden" name="monthly[<?= $product['ProductId'] ?>]" value="<?= round($calcResults[$product['ProductId']]['monthly'], 2) ?>">
+              <input type="hidden" name="total[<?= $product['ProductId'] ?>]" value="<?= round($calcResults[$product['ProductId']]['total'], 2) ?>">
+            <?php endforeach; ?>
             <h3>Available Products</h3>
             <p>Select up to 3 products to compare:</p>
             <div id="results">
               <?php foreach ($matches as $product): ?>
                 <div class="card card--mortgage" style="display: flex; align-items: flex-start; gap: 10px; margin: 30px">
-                  <input type="checkbox" name="ids[]" value="<?= $product['ProductId'] ?>" onclick="return limitSelection(this)" style="width: 16px; height: 16px; margin-top: 4px;">
+                <?php $alreadySaved = in_array($product['ProductId'], $savedProductIds); ?>
+                <input type="checkbox"
+                      name="ids[]"
+                      value="<?= $product['ProductId'] ?>"
+                      <?= $alreadySaved ? 'disabled' : 'onclick="return limitSelection(this)"' ?>
+                      style="width: 16px; height: 16px; margin-top: 4px;">
+                <?php if ($alreadySaved): ?>
+                  <span style="color: red; font-size: 0.9em;">(Already Saved)</span>
+                <?php endif; ?>
+
                   <div>
                     <strong><?= htmlspecialchars($product['Lender']) ?></strong><br>
                     Minimum Age: <?= isset($product['MinAge']) ? $product['MinAge'] . ' years' : 'N/A' ?><br>
                     Interest Rate: <?= rtrim(rtrim(number_format($product['InterestRate'], 2, '.', ''), '0'), '.') ?>%<br>
-                    Yearly Term: <?= $loanTerm ?> years<br>
+                    <?= $termDisplay ?><br>
                     Monthly Payment: £<?= number_format($calcResults[$product['ProductId']]['monthly'], 2) ?><br>
                     Total Repayment: £<?= number_format($calcResults[$product['ProductId']]['total'], 2) ?>
                   </div>

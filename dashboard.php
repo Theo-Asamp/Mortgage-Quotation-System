@@ -35,15 +35,6 @@ $savedStmt->execute([$user_id]);
 $savedQuotes = $savedStmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-
-
-
-
-
-
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -100,11 +91,6 @@ $savedQuotes = $savedStmt->fetchAll(PDO::FETCH_ASSOC);
     max-width: 200px;
 }
 
-
-
-
-
-
   </style>
 </head>
 <body>
@@ -134,7 +120,20 @@ Welcome back <?= htmlspecialchars($user['FullName']) ?>, are you ready to explor
             <div>
               <strong><?= htmlspecialchars($quote['Lender']) ?></strong><br>
               Interest Rate: <?= rtrim(rtrim(number_format($quote['InterestAnnually'], 2, '.', ''), '0'), '.') ?>%<br>
-              Yearly Term: <?= $quote['MortgageLength'] ?> years<br>
+                <?php
+                $years = intdiv($quote['MortgageLength'], 12);
+                $months = $quote['MortgageLength'] % 12;
+                if ($years > 0 && $months > 0) {
+                    $termDisplay = "{$years} year" . ($years > 1 ? 's' : '') . " and {$months} month" . ($months > 1 ? 's' : '');
+                } elseif ($years > 0) {
+                    $termDisplay = "{$years} year" . ($years > 1 ? 's' : '');
+                } elseif ($months > 0) {
+                    $termDisplay = "{$months} month" . ($months > 1 ? 's' : '');
+                } else {
+                    $termDisplay = "N/A";
+                }
+              ?>
+              Term of Loans: <?= $termDisplay ?><br>
               Monthly Repayment: £<?= number_format($quote['MonthlyRepayment'], 2) ?><br>
               Total Repayment: £<?= number_format($quote['AmountPaidBack'], 2) ?><br>
               <form method="POST" action="dashboard.php" onsubmit="return confirm('Are you sure you want to delete this quote?');">
@@ -185,10 +184,6 @@ Welcome back <?= htmlspecialchars($user['FullName']) ?>, are you ready to explor
           </p>
         <a class="card__link" href="/quotation.php">Check available products</a>
       </div>
-
-
-
-
 
       </div>
 
