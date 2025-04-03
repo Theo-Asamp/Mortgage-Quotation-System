@@ -600,6 +600,18 @@ body {
     padding-bottom: 30px;
 }
 
+#password {
+    width: 85%;
+}
+
+#password-flex {
+    display: flex;
+}
+
+#button-view-password {
+    height: 42px;
+    width: 42px;
+}
 
 
 @media (max-width: 768px) {

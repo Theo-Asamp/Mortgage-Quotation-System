@@ -63,3 +63,20 @@ document.addEventListener('DOMContentLoaded', function () {
   if (calculateBtn) calculateBtn.addEventListener('click', calculateAndDisplay);
   if (saveBtn) saveBtn.addEventListener('click', saveQuote);
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const passwordInput = document.getElementById("password");
+  const viewButton = document.getElementById("button-view-password");
+
+  viewButton.addEventListener("click", function (event) {
+    event.preventDefault();
+
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+      viewButton.textContent = "Hide";
+    } else {
+      passwordInput.type = "password";
+      viewButton.textContent = "View";
+    }
+  });
+});
