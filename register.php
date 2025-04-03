@@ -32,13 +32,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/global.css" />
+    <script src="/js/script.js"></script>
     <title>Rose Brokers Register</title>
 </head>
 
 <body>
 
-    
-<?php render_navbar() ?>
+
+    <?php render_navbar() ?>
 
 
     <div class="container">
@@ -59,7 +60,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <div id="password-input-div">
                     <label for="password">Password<span style="color: red;">*</span></label>
-                    <input type="password" id="password" name="password" required placeholder="*******">
+                    <div id="password-flex">
+                        <input type="password" id="password" name="password" required placeholder="*******">
+                        <button id="button-view-password">View</button>
+                    </div>
                 </div>
 
                 <div id="dob-input-div">
