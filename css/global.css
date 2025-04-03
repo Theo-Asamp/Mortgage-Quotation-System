@@ -186,6 +186,8 @@ body {
     height: 100vh;
     justify-content: center;
     align-items: center;
+    padding-top: 80px;
+    padding-bottom: 80px;
 }
 
 .login-section {
@@ -425,21 +427,24 @@ body {
     align-items: center;
     max-width: 500px;
     margin: 0 auto;
-  }
-  .form-grid input,
-  .form-grid select {
+}
+
+.form-grid input,
+.form-grid select {
     width: 100%;
-  }
-  .warning {
+}
+
+.warning {
     color: red;
     text-align: center;
     font-weight: bold;
     padding: 10px;
-  }
-  .quote-results {
+}
+
+.quote-results {
     margin-top: 30px;
     text-align: center;
-  }
+}
 
 
 /* Footer Styles */
@@ -585,13 +590,7 @@ body {
     color: white;
 }
 
-#navbar-register {
-    margin-bottom: 5%;
-}
 
-#footer-register {
-    margin-top: 5%
-}
 
 #dob-input-div {
     padding-bottom: 30px;
@@ -600,7 +599,6 @@ body {
 #employmentType-input-div {
     padding-bottom: 30px;
 }
-
 
 
 
