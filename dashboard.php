@@ -44,54 +44,7 @@ $savedQuotes = $savedStmt->fetchAll(PDO::FETCH_ASSOC);
   <title>Rose Mortgage Dashboard</title>
   <link rel="stylesheet" href="/css/global.css" />
   <link rel="icon" href="/src/images/Favicon.jpg" />
-  <style>
-    .intro-section__content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-    .intro-section__content input,
-    .intro-section__content select {
-      width: 300px;
-      margin-top: 5px;
-    }
-    .saved-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;  
-    text-align: center;
-    width: 80%;
-}
 
-.saved-section__content {
-    display: flex;
-    flex-wrap: wrap; 
-    justify-content: center; 
-    align-items: center;
-    gap: 20px; 
-    width: 70%; 
-    max-width: 1200px;
-}
-
-.card--mortgage {
-    width: 300px; 
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.15); 
-    text-align: center;
-    font-size: 18px;
-}
-
-.card--mortgage button {
-    font-size: 16px;
-    padding: 10px 20px;
-    width: 100%;
-    max-width: 200px;
-}
-
-  </style>
 </head>
 <body>
   <?php render_navbar() ?>
