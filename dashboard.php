@@ -86,9 +86,9 @@ Welcome back <?= htmlspecialchars($user['FullName']) ?>, are you ready to explor
                     $termDisplay = "N/A";
                 }
               ?>
-              Term of Loans: <?= $termDisplay ?><br>
-              Monthly Repayment: £<?= number_format($quote['MonthlyRepayment'], 2) ?><br>
-              Total Repayment: £<?= number_format($quote['AmountPaidBack'], 2) ?><br>
+              <p>Term of Loans: <?= $termDisplay ?><br></p>
+              <p>Monthly Repayment: £<?= number_format($quote['MonthlyRepayment'], 2) ?><br></p>
+              <p>Total Repayment: £<?= number_format($quote['AmountPaidBack'], 2) ?><br></p>
               <form method="POST" action="dashboard.php" onsubmit="return confirm('Are you sure you want to delete this quote?');">
                 <input type="hidden" name="delete_quote_id" value="<?= $quote['QuoteId'] ?>">
                 <button type="submit" class="btn btn--login">Delete</button>

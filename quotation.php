@@ -127,7 +127,7 @@ if ($formSubmitted) {
         <p class="warning">⚠️ You have already saved 3 mortgage quotes. Please delete one on your dashboard to request more quotes.</p>
       <?php else: ?>
       <form id="mortgageForm" method="POST" class="form-grid">
-        <label for="property">Property Value (£):</label>
+        <label for="property">Purchase Price (£):</label>
         <input type="number" name="property_value" class="profile-page__input" id="property"
           required placeholder="£"
           value="<?php echo isset($_POST['property_value']) ? htmlspecialchars($_POST['property_value']) : ''; ?>" />
