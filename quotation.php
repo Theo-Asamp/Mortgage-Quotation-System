@@ -28,6 +28,7 @@ $today = new DateTime();
 $userAge = $today->diff($dob)->y;
 
 $matches = [];
+$invalidPayment = false;
 $calcResults = [];
 $loanAmount = 0;
 $loanTerm = 0;
@@ -52,58 +53,65 @@ if (
   $loanTermMonths = isset($_POST['loan_term_months']) ? intval($_POST['loan_term_months']) : 0;
   $loanAmount = $propertyValue - $deposit;
   $totalMonths = ($loanTermYears * 12) + $loanTermMonths;
-$termDisplay = '';
-if ($formSubmitted) {
-  $years = intdiv($totalMonths, 12);
-  $months = $totalMonths % 12;
 
-  if ($years > 0 && $months > 0) {
-    $termDisplay = "Term of Loans: {$years} year" . ($years > 1 ? 's' : '') . " and {$months} month" . ($months > 1 ? 's' : '');
-  } elseif ($years > 0) {
-    $termDisplay = "Term of Loans: {$years} year" . ($years > 1 ? 's' : '');
-  } elseif ($months > 0) {
-    $termDisplay = "Term of Loans: {$months} month" . ($months > 1 ? 's' : '');
+  if ($loanAmount <= 0) {
+    $invalidPayment = true;
   }
-}
+
+  $termDisplay = '';
+  if ($formSubmitted) {
+    $years = intdiv($totalMonths, 12);
+    $months = $totalMonths % 12;
+
+    if ($years > 0 && $months > 0) {
+      $termDisplay = "Term of Loans: {$years} year" . ($years > 1 ? 's' : '') . " and {$months} month" . ($months > 1 ? 's' : '');
+    } elseif ($years > 0) {
+      $termDisplay = "Term of Loans: {$years} year" . ($years > 1 ? 's' : '');
+    } elseif ($months > 0) {
+      $termDisplay = "Term of Loans: {$months} month" . ($months > 1 ? 's' : '');
+    }
+  }
 
   $netIncome = $user['AnnualIncome'] - $user['AnnualOutcome'];
   $borrowingCapacity = $netIncome * 4.5;
   $affordableMonthly = $netIncome / 12;
 
-  $stmt = $conn->prepare("SELECT * FROM Product WHERE MinIncome <= ? AND MinCreditScore <= ? AND (EmploymentType = ? OR EmploymentType = 'any')");
-  $stmt->execute([$user['AnnualIncome'], $user['CreditScore'], $user['EmploymentType']]);
-  $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  if (!$invalidPayment) {
+    $stmt = $conn->prepare("SELECT * FROM Product WHERE MinIncome <= ? AND MinCreditScore <= ? AND (EmploymentType = ? OR EmploymentType = 'any')");
+    $stmt->execute([$user['AnnualIncome'], $user['CreditScore'], $user['EmploymentType']]);
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-  foreach ($products as $product) {
-    if ($totalMonths > ($product['MortgageTerm'] * 12)) {
+    foreach ($products as $product) {
+      if ($totalMonths > ($product['MortgageTerm'] * 12)) continue;
+      if (isset($product['MinAge']) && $userAge < intval($product['MinAge'])) continue;
+
+      $rate = floatval($product['InterestRate']);
+      $monthlyRate = ($rate / 100) / 12;
+
+      if ($loanAmount <= 0 || $totalMonths <= 0) continue;
+
+      $monthlyPayment = ($monthlyRate > 0) ?
+        ($loanAmount * ($monthlyRate * pow(1 + $monthlyRate, $totalMonths)) / (pow(1 + $monthlyRate, $totalMonths) - 1)) : ($loanAmount / $totalMonths);
+
+      $totalPayment = $monthlyPayment * $totalMonths;
+
+      if ($totalPayment < 0) {
+        $invalidPayment = true;
         continue;
+      }
+
+      if ($monthlyPayment > $affordableMonthly || $loanAmount > $borrowingCapacity) continue;
+
+      $calcResults[$product['ProductId']] = [
+        'monthly' => round($monthlyPayment, 2),
+        'total' => round($totalPayment, 2)
+      ];
+      $matches[] = $product;
     }
-    if (isset($product['MinAge']) && $userAge < intval($product['MinAge'])) {
-      continue;
-    }
-
-    $rate = floatval($product['InterestRate']);
-    $monthlyRate = ($rate / 100) / 12;
-
-    if ($loanAmount <= 0 || $totalMonths <= 0) continue;
-
-    $monthlyPayment = ($monthlyRate > 0) ?
-      ($loanAmount * ($monthlyRate * pow(1 + $monthlyRate, $totalMonths)) / (pow(1 + $monthlyRate, $totalMonths) - 1)) : ($loanAmount / $totalMonths);
-
-    $totalPayment = $monthlyPayment * $totalMonths;
-
-    if ($monthlyPayment > $affordableMonthly || $loanAmount > $borrowingCapacity) continue;
-
-    $calcResults[$product['ProductId']] = [
-      'monthly' => round($monthlyPayment, 2),
-      'total' => round($totalPayment, 2)
-    ];
-    $matches[] = $product;
   }
 }
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -201,9 +209,11 @@ if ($formSubmitted) {
               <button type="submit" class="btn btn--login" style="margin-top: 15px;">Compare Selected</button>
             </div>
           </form>
-        <?php elseif ($formSubmitted && empty($matches)): ?>
-          <p class="warning">⚠️ No valid mortgage products found. Try again with a different income, deposit, or property value.</p>
-        <?php endif; ?>
+          <?php elseif ($formSubmitted && $invalidPayment): ?>
+            <p class="warning">⚠️ Your deposit is greater than or equal to the purchase price. Please enter a valid amount and try again.</p>
+          <?php elseif ($formSubmitted && empty($matches)): ?>
+            <p class="warning">⚠️ No valid mortgage products found. Try again with a different income, deposit, or property value.</p>
+          <?php endif; ?>
       </div>
     </div>
   </section>
