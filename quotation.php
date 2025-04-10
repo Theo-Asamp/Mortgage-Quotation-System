@@ -63,6 +63,7 @@ if (
     $years = intdiv($totalMonths, 12);
     $months = $totalMonths % 12;
 
+    // Formats term.
     if ($years > 0 && $months > 0) {
       $termDisplay = "Term of Loans: {$years} year" . ($years > 1 ? 's' : '') . " and {$months} month" . ($months > 1 ? 's' : '');
     } elseif ($years > 0) {
@@ -77,6 +78,7 @@ if (
   $affordableMonthly = $netIncome / 12;
 
   if (!$invalidPayment) {
+    // Checks what the user is eligible for.
     $stmt = $conn->prepare("SELECT * FROM Product WHERE MinIncome <= ? AND MinCreditScore <= ? AND (EmploymentType = ? OR EmploymentType = 'any')");
     $stmt->execute([$user['AnnualIncome'], $user['CreditScore'], $user['EmploymentType']]);
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -134,34 +136,34 @@ if (
       <?php if ($tooManyQuotes): ?>
         <p class="warning">⚠️ You have already saved 3 mortgage quotes. Please delete one on your dashboard to request more quotes.</p>
       <?php else: ?>
-      <form id="mortgageForm" method="POST" class="form-grid">
-        <label for="property">Purchase Price (£):</label>
-        <input type="number" name="property_value" class="profile-page__input" id="property"
-          required placeholder="£"
-          value="<?php echo isset($_POST['property_value']) ? htmlspecialchars($_POST['property_value']) : ''; ?>" />
+        <form id="mortgageForm" method="POST" class="form-grid">
+          <label for="property">Purchase Price (£):</label>
+          <input type="number" name="property_value" class="profile-page__input" id="property"
+            required placeholder="£"
+            value="<?php echo isset($_POST['property_value']) ? htmlspecialchars($_POST['property_value']) : ''; ?>" />
 
-        <label for="deposit">Deposit (£):</label>
-        <input type="number" name="deposit" class="profile-page__input" id="deposit" required placeholder="£" value="<?php echo isset($_POST['deposit']) ? htmlspecialchars($_POST['deposit']) : ''; ?>" />
-        <label for="loan_term">Term of Loan (Years):</label>
-        <select name="loan_term" class="profile-page__input" id="loan_term" required>
-        <?php for ($i = 0; $i <= 40; $i++): ?>
-        <option value="<?= $i ?>" <?= (isset($_POST['loan_term']) && $_POST['loan_term'] == $i) ? 'selected' : '' ?>>
-        <?= $i ?> Year<?= $i !== 1 ? 's' : '' ?>
-        </option>
-        <?php endfor; ?>
-        </select>
-        <label for="loan_term_months">Term of Loan (Months):</label>
-        <select name="loan_term_months" class="profile-page__input" id="loan_term_months" required>
-        <?php for ($i = 0; $i <= 12; $i++): ?>
-        <option value="<?= $i ?>" <?= (isset($_POST['loan_term_months']) && $_POST['loan_term_months'] == $i) ? 'selected' : '' ?>>
-        <?= $i ?> Month<?= $i !== 1 ? 's' : '' ?>
-        </option>
-        <?php endfor; ?>
-        </select>
-      </form>
-      <div id="btn-calculate">
-        <button type="submit" class="btn btn--login" form="mortgageForm">Submit</button>
-      </div>
+          <label for="deposit">Deposit (£):</label>
+          <input type="number" name="deposit" class="profile-page__input" id="deposit" required placeholder="£" value="<?php echo isset($_POST['deposit']) ? htmlspecialchars($_POST['deposit']) : ''; ?>" />
+          <label for="loan_term">Term of Loan (Years):</label>
+          <select name="loan_term" class="profile-page__input" id="loan_term" required>
+            <?php for ($i = 0; $i <= 40; $i++): ?>
+              <option value="<?= $i ?>" <?= (isset($_POST['loan_term']) && $_POST['loan_term'] == $i) ? 'selected' : '' ?>>
+                <?= $i ?> Year<?= $i !== 1 ? 's' : '' ?>
+              </option>
+            <?php endfor; ?>
+          </select>
+          <label for="loan_term_months">Term of Loan (Months):</label>
+          <select name="loan_term_months" class="profile-page__input" id="loan_term_months" required>
+            <?php for ($i = 0; $i <= 12; $i++): ?>
+              <option value="<?= $i ?>" <?= (isset($_POST['loan_term_months']) && $_POST['loan_term_months'] == $i) ? 'selected' : '' ?>>
+                <?= $i ?> Month<?= $i !== 1 ? 's' : '' ?>
+              </option>
+            <?php endfor; ?>
+          </select>
+        </form>
+        <div id="btn-calculate">
+          <button type="submit" class="btn btn--login" form="mortgageForm">Submit</button>
+        </div>
 
 
       <?php endif; ?>
@@ -186,15 +188,15 @@ if (
             <div id="results">
               <?php foreach ($matches as $product): ?>
                 <div class="card card--mortgage" style="display: flex; align-items: flex-start; gap: 10px; margin: 30px">
-                <?php $alreadySaved = in_array($product['ProductId'], $savedProductIds); ?>
-                <input type="checkbox"
-                      name="ids[]"
-                      value="<?= $product['ProductId'] ?>"
-                      <?= $alreadySaved ? 'disabled' : 'onclick="return limitSelection(this)"' ?>
-                      style="width: 16px; height: 16px; margin-top: 4px;">
-                <?php if ($alreadySaved): ?>
-                  <span style="color: red; font-size: 0.9em;">(Already Saved)</span>
-                <?php endif; ?>
+                  <?php $alreadySaved = in_array($product['ProductId'], $savedProductIds); ?>
+                  <input type="checkbox"
+                    name="ids[]"
+                    value="<?= $product['ProductId'] ?>"
+                    <?= $alreadySaved ? 'disabled' : 'onclick="return limitSelection(this)"' ?>
+                    style="width: 16px; height: 16px; margin-top: 4px;">
+                  <?php if ($alreadySaved): ?>
+                    <span style="color: red; font-size: 0.9em;">(Already Saved)</span>
+                  <?php endif; ?>
 
                   <div>
                     <strong><?= htmlspecialchars($product['Lender']) ?></strong><br>
@@ -209,11 +211,11 @@ if (
               <button type="submit" class="btn btn--login" style="margin-top: 15px;">Compare Selected</button>
             </div>
           </form>
-          <?php elseif ($formSubmitted && $invalidPayment): ?>
-            <p class="warning">⚠️ Your deposit is greater than or equal to the purchase price. Please enter a valid amount and try again.</p>
-          <?php elseif ($formSubmitted && empty($matches)): ?>
-            <p class="warning">⚠️ No valid mortgage products found. Try again with a different income, deposit, or property value.</p>
-          <?php endif; ?>
+        <?php elseif ($formSubmitted && $invalidPayment): ?>
+          <p class="warning">⚠️ Your deposit is greater than or equal to the purchase price. Please enter a valid amount and try again.</p>
+        <?php elseif ($formSubmitted && empty($matches)): ?>
+          <p class="warning">⚠️ No valid mortgage products found. Try again with a different income, deposit, or property value.</p>
+        <?php endif; ?>
       </div>
     </div>
   </section>

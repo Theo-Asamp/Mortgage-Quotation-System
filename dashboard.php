@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'user') {
-    header("Location: login.php");
-    exit();
+  header("Location: login.php");
+  exit();
 }
 
 require 'db.php';
@@ -14,8 +14,8 @@ $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_quote_id'])) {
-    $deleteStmt = $conn->prepare("DELETE FROM SavedQuotes WHERE QuoteId = ? AND UserId = ?");
-    $deleteStmt->execute([$_POST['delete_quote_id'], $user_id]);
+  $deleteStmt = $conn->prepare("DELETE FROM SavedQuotes WHERE QuoteId = ? AND UserId = ?");
+  $deleteStmt->execute([$_POST['delete_quote_id'], $user_id]);
 }
 
 $savedStmt = $conn->prepare("
@@ -38,6 +38,7 @@ $savedQuotes = $savedStmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -46,14 +47,20 @@ $savedQuotes = $savedStmt->fetchAll(PDO::FETCH_ASSOC);
   <link rel="icon" href="/src/images/Favicon.jpg" />
 
 </head>
+
 <body>
   <?php render_navbar() ?>
 
   <section class="intro-section">
     <div class="intro-section__content">
-      <h2 class="intro-section__title">Dashboard for <?= htmlspecialchars($user['FullName']) ?></h2>
-      <p class="intro-section__text">
-Welcome back <?= htmlspecialchars($user['FullName']) ?>, are you ready to explore and find a quote thats right for you? looking to view your saved quotes? you're at the right place.
+      <?php
+      $firstName = explode(' ', $user['FullName'])[0];
+      $hour = date('H'); // 24-hour format
+      $greeting = ($hour < 12) ? 'Good morning' : 'Good afternoon';
+      ?>
+      <h2 class="intro-section__title"><?= $greeting ?> <?= htmlspecialchars($firstName) ?></h2>
+
+      Welcome back <?= htmlspecialchars($user['FullName']) ?>, are you ready to explore and find a quote thats right for you? looking to view your saved quotes? you're at the right place.
       </p>
       <p>Scroll down to explore your dashboard </p>
     </div>
@@ -73,18 +80,18 @@ Welcome back <?= htmlspecialchars($user['FullName']) ?>, are you ready to explor
             <div>
               <strong><?= htmlspecialchars($quote['Lender']) ?></strong><br>
               Interest Rate: <?= rtrim(rtrim(number_format($quote['InterestAnnually'], 2, '.', ''), '0'), '.') ?>%<br>
-                <?php
-                $years = intdiv($quote['MortgageLength'], 12);
-                $months = $quote['MortgageLength'] % 12;
-                if ($years > 0 && $months > 0) {
-                    $termDisplay = "{$years} year" . ($years > 1 ? 's' : '') . " and {$months} month" . ($months > 1 ? 's' : '');
-                } elseif ($years > 0) {
-                    $termDisplay = "{$years} year" . ($years > 1 ? 's' : '');
-                } elseif ($months > 0) {
-                    $termDisplay = "{$months} month" . ($months > 1 ? 's' : '');
-                } else {
-                    $termDisplay = "N/A";
-                }
+              <?php
+              $years = intdiv($quote['MortgageLength'], 12);
+              $months = $quote['MortgageLength'] % 12;
+              if ($years > 0 && $months > 0) {
+                $termDisplay = "{$years} year" . ($years > 1 ? 's' : '') . " and {$months} month" . ($months > 1 ? 's' : '');
+              } elseif ($years > 0) {
+                $termDisplay = "{$years} year" . ($years > 1 ? 's' : '');
+              } elseif ($months > 0) {
+                $termDisplay = "{$months} month" . ($months > 1 ? 's' : '');
+              } else {
+                $termDisplay = "N/A";
+              }
               ?>
               <p>Term of Loans: <?= $termDisplay ?><br></p>
               <p>Monthly Repayment: £<?= number_format($quote['MonthlyRepayment'], 2) ?><br></p>
@@ -105,46 +112,44 @@ Welcome back <?= htmlspecialchars($user['FullName']) ?>, are you ready to explor
   <hr class="divider" />
 
 
-  
+
 
   <section class="mortgage-options">
-      <h2 class="mortgage-options__title">
-        Find a mortgage quote that's right for you
-      </h2>
-      <p class="mortgage-options__subtitle">
-        Our range of mortgage quotes covers different demographics, use our affordabiility calculator to find how much you may be elegible to borrow.
-      </p>
+    <h2 class="mortgage-options__title">
+      Find a mortgage quote that's right for you
+    </h2>
+    <p class="mortgage-options__subtitle">
+      Our range of mortgage quotes covers different demographics, use our affordabiility calculator to find how much you may be elegible to borrow.
+    </p>
 
-      <div class="options-container">
-        <div class="card card--mortgage">
-          <img src="images/Calculator.png" alt="Calculator Logo" />
-          <h4 class="card__title">Affordability Calculator</h4>
-          <p class="card__description">
-            Input some personal details and see what lenders you might be
-            eligible for.
-          </p>
-          <a class="card__link" href="/affordability.php"
-            >Affordability Calculator</a
-          >
-        </div>
+    <div class="options-container">
+      <div class="card card--mortgage">
+        <img src="images/Calculator.png" alt="Calculator Logo" />
+        <h4 class="card__title">Affordability Calculator</h4>
+        <p class="card__description">
+          Input some personal details and see what lenders you might be
+          eligible for.
+        </p>
+        <a class="card__link" href="/affordability.php">Affordability Calculator</a>
+      </div>
 
-        
+
       <div class="card card--repayments">
         <img src="images/Home mortgage.png" alt="Calculator Logo" />
         <h4 class="card__title">Mortgage Quotation</h4>
         <p class="card__description">
           Search and recieve a quote based on your personal details.
-          </p>
+        </p>
         <a class="card__link" href="/quotation.php">Check available products</a>
       </div>
 
-      </div>
+    </div>
 
     </div>
   </section>
 
   <?php render_footer() ?>
-  
-</body>
-</html>
 
+</body>
+
+</html>
