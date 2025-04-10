@@ -46,7 +46,6 @@ if (
     'loan_term_months' => $_POST['loan_term_months']
   ];
 
-  // Assigns info to vars.
   $propertyValue = floatval($_POST['property_value']);
   $deposit = floatval($_POST['deposit']);
   $loanTermYears = intval($_POST['loan_term']);
@@ -55,7 +54,6 @@ if (
   $loanAmount = $propertyValue - $deposit;
   $totalMonths = ($loanTermYears * 12) + $loanTermMonths;
 
-  // Error checking.
   if ($loanAmount <= 0) {
     $invalidPayment = true;
   }
@@ -65,7 +63,6 @@ if (
     $years = intdiv($totalMonths, 12);
     $months = $totalMonths % 12;
 
-    // Formats terms.
     if ($years > 0 && $months > 0) {
       $termDisplay = "Term of Loans: {$years} year" . ($years > 1 ? 's' : '') . " and {$months} month" . ($months > 1 ? 's' : '');
     } elseif ($years > 0) {
@@ -80,7 +77,6 @@ if (
   $affordableMonthly = $netIncome / 12;
 
   if (!$invalidPayment) {
-    // Checks what the user is eligible for.
     $stmt = $conn->prepare("SELECT * FROM Product WHERE MinIncome <= ? AND MinCreditScore <= ? AND (EmploymentType = ? OR EmploymentType = 'any')");
     $stmt->execute([$user['AnnualIncome'], $user['CreditScore'], $user['EmploymentType']]);
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -236,6 +232,12 @@ if (
       return true;
     }
   </script>
+
+  <script>
+    window.alreadySavedCount = <?= $savedCount ?>;
+  </script>
+  <script src="js/script.js"></script>
+
 </body>
 
 </html>

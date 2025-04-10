@@ -93,7 +93,7 @@ $savedQuotes = $savedStmt->fetchAll(PDO::FETCH_ASSOC);
                 $termDisplay = "N/A";
               }
               ?>
-              <p>Term of Loans: <?= $termDisplay ?><br></p>
+              <p>Term of Loan: <?= $termDisplay ?><br></p>
               <p>Monthly Repayment: £<?= number_format($quote['MonthlyRepayment'], 2) ?><br></p>
               <p>Total Repayment: £<?= number_format($quote['AmountPaidBack'], 2) ?><br></p>
               <form method="POST" action="dashboard.php" onsubmit="return confirm('Are you sure you want to delete this quote?');">

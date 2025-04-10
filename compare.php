@@ -160,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_ids'])) {
                     <?php endforeach; ?>
                 </tr>
                 <tr>
-                    <td>Term of Loans</td>
+                    <td>Term of Loan</td>
                     <?php
                       $years = intdiv($totalMonths, 12);
                       $months = $totalMonths % 12;
