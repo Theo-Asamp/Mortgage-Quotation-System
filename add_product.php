@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <?php render_navbar(); ?>
     <div class="container">
-        <div class="add-section">
+        <div class="add-section-product">
             <h2>Add New Mortgage Product</h2>
             <?php if ($message) echo $message; ?>
             <form method="POST" class="add-form">
@@ -91,7 +91,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </div>
-    <?php render_footer(); ?>
+    <!-- Footer needs to be rendered manually due to css conflicts.. -->
+    <footer class="footer-add-product">
+        <p class="footer-add-product-text">© Rose Brokers 2025</p>
+        <a href="/about.php">About</a> |
+        <a href="/privacy.php">Privacy Policy</a> |
+        <a href="/terms.php">Terms of Use</a> |
+        <a href="/contact.php">Contact Us</a>
+    </footer>
+
+    <style>
+        .footer-add-product {
+            background-color: #01A7F0;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 140px;
+        }
+
+        .footer-add-product a {
+            text-decoration: none;
+            color: white;
+            margin: 0 10px;
+            font-size: 14px;
+        }
+
+        .footer-add-product a:hover {
+            text-decoration: underline;
+        }
+
+        .add-section-product {
+            justify-content: center;
+            align-items: center;
+            padding: 50px 10%;
+            margin-top: 100px;
+            position: relative;
+        }
+
+        .add-section-product h2 {
+            font-size: 28px;
+            color: black;
+            margin-bottom: 10px;
+        }
+
+        .add-section-product p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+    </style>
+
 </body>
 
 </html>
