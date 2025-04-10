@@ -57,7 +57,7 @@ require 'headerFooter.php';
     <?php render_navbar() ?>
 
 
-    <div class="container">
+    <div class="container" id="login-container">
         <div class="login-section">
             <h2>Welcome!</h2>
             <p>Enter your email and password to continue...</p>
