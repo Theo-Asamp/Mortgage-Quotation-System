@@ -35,14 +35,14 @@ require 'headerFooter.php';
             <div class = "Intro_Section">
               <p class="intro-section__text">Under data protection law, an organisation
                that decides how the personal information it collects
-               and holds is used is called a ‘data controller’.
-               We call this use of personal information ‘processing’.
-              If you’re a member or customer of Rose Brokers, the data controller of your personal information is Rose Brokers.
+               and holds is used is called a 'data controller'.
+               We call this use of personal information 'processing'.
+              If you're a member or customer of Rose Brokers, the data controller of your personal information is Rose Brokers. 
             </p></div>
             <div class id ="your_responsbility" >
               <h1>Your Responsibility</h1>
               <p class="intro-section__text">At Rose Brokers, we believe privacy is a shared responsibility.
-                 We’re committed to safeguarding your data, but we also encourage you to stay informed
+                 We're committed to safeguarding your data, but we also encourage you to stay informed
                   about how your information is used. Have you reviewed your privacy settings and understood your rights? 
                  Knowing your responsibilities helps us protect what matters most—your trust.</p>
             </div>
@@ -56,12 +56,14 @@ third parties, like your fingerprint or a biometric map of your face and the sel
 <br>Information about your work or profession, your nationality, education and social and economic demographic.
 <br>Details of the accounts and products you hold and/or previously held with us, and how you use them.
 <br>Information about your financial position and history, which may include source of funds and wealth.
-<br>Personal information gathered from when you’ve applied for a product
+<br>Personal information gathered from when you've applied for a product
  or service.
 
             </p></div>
           
     </section>
+
+
 
 
 

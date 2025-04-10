@@ -37,7 +37,7 @@ require 'headerFooter.php';
             United Kingdom</p>
 
             <h1>Office Hours</h1>
-            <p class="intro-section__text">Monday–Friday: 9:00 AM – 5:00 PM</p>
+            <p class="intro-section__text">Monday-Friday: 9:00 AM -  5:00 PM</p> 
 
             <p class="intro-section__text">We look forward to hearing from you!</p>
         </div>
