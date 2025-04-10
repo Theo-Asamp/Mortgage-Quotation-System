@@ -26,9 +26,9 @@ require 'headerFooter.php';
         <div class="intro-section__content">
             <h2 class="intro-section__title">About Rose Brokers</h2>
             <p class="intro-section__text"> Rose Brokers is a UK-based comparison service that started by helping customers find the best car insurance quotes. 
-                With a growing customer base and a passion for making things easier, we’re now expanding our services to include mortgage quotations.
-                We understand that searching for the right mortgage can feel overwhelming, so we’ve created a simple and user-friendly Mortgage Quote System. 
-                It’s designed to give you quick, reliable estimates based on your personal details, helping you make more informed choices.
+                With a growing customer base and a passion for making things easier, we're now expanding our services to include mortgage quotations.
+                We understand that searching for the right mortgage can feel overwhelming, so we've created a simple and user-friendly Mortgage Quote System. 
+                It's designed to give you quick, reliable estimates based on your personal details, helping you make more informed choices.
                 At Rose Brokers, we aim to make financial decisions easier.
             </p>
 
