@@ -136,6 +136,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="AnnualOutcome">Annual outgoings<span style="color: red;">*</span></label>
                 <input type="AnnualOutcome" id="AnnualOutcome" name="AnnualOutcome" required>
 
+                <div id="accept-privacy-div">
+                    <input type="checkbox" name="accept-privacy" id="accept-privacy">
+                    <p>I accept the <a href="/terms.php">TOS</a> and <a href="/privacy.php"> privacy policy.</a></p>
+                </div>
+
+
+
                 <button type="submit" class="btn btn--register">Register</button>
             </form>
             <a href="login.php"><button class="btn btn--login" style="margin-top: 20px" ;>Log In</button></a>
@@ -144,6 +151,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     <?php render_footer() ?>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.querySelector(".login-form");
+            const checkbox = document.getElementById("accept-privacy");
+
+            form.addEventListener("submit", function(e) {
+                if (!checkbox.checked) {
+                    e.preventDefault();
+                    alert("You must accept the Terms of Service and Privacy Policy before registering.");
+                }
+            });
+        });
+    </script>
+
 
 </body>
 

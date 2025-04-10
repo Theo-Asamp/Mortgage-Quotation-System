@@ -628,7 +628,7 @@ body {
     margin: auto;
     width: 50%;
     padding: 10px;
-    
+
 }
 
 
@@ -653,7 +653,7 @@ body {
 .saved-section {
     display: flex;
     flex-direction: column;
-    align-items: center;  
+    align-items: center;
     text-align: center;
     width: 80%;
 
@@ -662,20 +662,20 @@ body {
 
 .saved-section__content {
     display: flex;
-    flex-wrap: wrap; 
-    justify-content: center; 
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
-    gap: 20px; 
-    width: 70%; 
+    gap: 20px;
+    width: 70%;
     max-width: 1200px;
 }
 
 .card--mortgage {
-    width: 300px; 
+    width: 300px;
     padding: 20px;
     background-color: #ffffff;
     border-radius: 12px;
-    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.15); 
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.15);
     text-align: center;
     font-size: 18px;
 }
@@ -693,18 +693,34 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
-  }
-  .intro-section__content input,
-  .intro-section__content select {
+}
+
+.intro-section__content input,
+.intro-section__content select {
     width: 300px;
     margin-top: 5px;
-  }
+}
 
 
 
 #quatation-div {
     padding-top: 40px;
 }
+
+#accept-privacy-div {
+    display: flex;
+}
+
+#accept-privacy-div p {
+    margin: 0px;
+}
+
+#accept-privacy {
+    height: 15px;
+    width: 15px;
+}
+
+
 
 @media (max-width: 768px) {
     .intro-section {
