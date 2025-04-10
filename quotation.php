@@ -46,6 +46,7 @@ if (
     'loan_term_months' => $_POST['loan_term_months']
   ];
 
+  // Assigns info to vars.
   $propertyValue = floatval($_POST['property_value']);
   $deposit = floatval($_POST['deposit']);
   $loanTermYears = intval($_POST['loan_term']);
@@ -54,6 +55,7 @@ if (
   $loanAmount = $propertyValue - $deposit;
   $totalMonths = ($loanTermYears * 12) + $loanTermMonths;
 
+  // Error checking.
   if ($loanAmount <= 0) {
     $invalidPayment = true;
   }
@@ -63,7 +65,7 @@ if (
     $years = intdiv($totalMonths, 12);
     $months = $totalMonths % 12;
 
-    // Formats term.
+    // Formats terms.
     if ($years > 0 && $months > 0) {
       $termDisplay = "Term of Loans: {$years} year" . ($years > 1 ? 's' : '') . " and {$months} month" . ($months > 1 ? 's' : '');
     } elseif ($years > 0) {
