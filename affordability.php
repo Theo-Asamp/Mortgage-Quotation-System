@@ -37,12 +37,12 @@ require 'headerFooter.php';
       <form id="mortgageForm" method="POST">
         <label class="card__title">Annual Income (£):</label><br />
         <p>This is how much you earn yearly in pounds and pence.</p>
-        <input type="number" name="income" required placeholder="£100,000"/><br /><br />
+        <input type="number" name="income" required placeholder="£100,000"  value="<?php echo isset($_POST['income']) ? htmlspecialchars($_POST['income']) : ''; ?>" /><br /><br />
 
         <label class="card__title">Annual Outgoings (£):</label><br />
         <p>This is, on average, how much you spend yearly in pounds and pence.
         </p>
-        <input type="number" name="outgoings" required placeholder="£40,000"/><br /><br />
+        <input type="number" name="outgoings" required placeholder="£40,000" value="<?php echo isset($_POST['outgoings']) ? htmlspecialchars($_POST['outgoings']) : ''; ?>" /><br /><br />
 
         <button type="submit" class="btn btn--login">Calculate my borrowing capacity</button>
       </form>
